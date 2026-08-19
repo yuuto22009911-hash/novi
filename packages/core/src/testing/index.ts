@@ -46,15 +46,25 @@ export function testSlotContract({
 }: TestSlotContractOptions): void {
   describe(`${name}: slot 契約`, () => {
     it('必須 slot をすべて data-slot で出力する', () => {
-      const { container } = render(renderElement())
-      const result = checkSlotContract(container, contract)
+      const result = checkSlotContract(renderAndGetRoot(renderElement()), contract)
       expect(result.missing, formatSlotContractFailure(name, result)).toEqual([])
     })
 
     it('語彙にない data-slot を出力しない', () => {
-      const { container } = render(renderElement())
-      const result = checkSlotContract(container, contract)
+      const result = checkSlotContract(renderAndGetRoot(renderElement()), contract)
       expect(result.unknown, formatSlotContractFailure(name, result)).toEqual([])
     })
   })
+}
+
+/**
+ * レンダリングして、**ポータルを含む**探索対象を返す。
+ *
+ * オーバーレイ系（Modal / Popover / Tooltip / Menu / Select）は
+ * `document.body` 直下のポータルへ描画される。
+ * `render()` が返す `container` だけを見ると、
+ * **構造がいちばん重要なコンポーネントで契約テストが機能しない**。
+ */
+function renderAndGetRoot(element: ReactElement): ParentNode {
+  return render(element).baseElement
 }

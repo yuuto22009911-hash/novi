@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import { createPortal } from 'react-dom'
 import { describe, expect, it } from 'vitest'
 import { NOVI_CONTRACTS } from '../contracts/registry'
 import { checkSlotContract, formatSlotContractFailure } from './check-slot-contract'
@@ -135,6 +136,34 @@ describe('checkSlotContract', () => {
       </div>,
     )
     expect(checkSlotContract(container, modal).found).toEqual(['backdrop', 'body', 'panel'])
+  })
+})
+
+describe('ポータルへの描画', () => {
+  /** RAC の Popover と同じく document.body 直下へ描画するダミー。 */
+  function PortaledModal() {
+    return (
+      <>
+        <div data-slot="backdrop" />
+        {createPortal(
+          <div data-slot="panel">
+            <div data-slot="body">本文</div>
+          </div>,
+          document.body,
+        )}
+      </>
+    )
+  }
+
+  it('container だけを見るとポータル内の slot を見落とす', () => {
+    const { container } = render(<PortaledModal />)
+    // オーバーレイ系はここで必ず落ちる。だから testSlotContract は baseElement を見る
+    expect(checkSlotContract(container, modal).missing).toEqual(['panel', 'body'])
+  })
+
+  it('baseElement を見ればポータル内の slot も検出できる', () => {
+    const { baseElement } = render(<PortaledModal />)
+    expect(checkSlotContract(baseElement, modal).missing).toEqual([])
   })
 })
 

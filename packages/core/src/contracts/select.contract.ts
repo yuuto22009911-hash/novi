@@ -57,6 +57,10 @@ export interface SelectProps extends NoviBaseProps {
   selectedKey?: string | null
   defaultSelectedKey?: string
   onSelectionChange?: (key: string | null) => void
+  /** 開閉状態。制御したい場合に使う */
+  isOpen?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (isOpen: boolean) => void
   isDisabled?: boolean
   isRequired?: boolean
   isInvalid?: boolean

@@ -26,5 +26,12 @@ export {
   radioGroupStyles,
   radioStyles,
 } from './radio'
+export {
+  Select,
+  SelectItem,
+  type SelectItemProps,
+  type SelectStyleProps,
+  selectStyles,
+} from './select'
 export { Switch, type SwitchStyleProps, switchStyles } from './switch'
 export { TextArea, type TextareaStyleProps, textareaStyles } from './textarea'

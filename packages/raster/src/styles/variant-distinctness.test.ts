@@ -4,6 +4,7 @@ import { buttonStyles } from '../button/button.styles'
 import { checkboxStyles } from '../checkbox/checkbox.styles'
 import { inputStyles } from '../input/input.styles'
 import { radioStyles } from '../radio/radio.styles'
+import { selectStyles } from '../select/select.styles'
 import { switchStyles } from '../switch/switch.styles'
 import { textareaStyles } from '../textarea/textarea.styles'
 
@@ -24,6 +25,7 @@ const WITH_VARIANT: [name: string, styles: StyleFn, slot: string][] = [
   ['Button', buttonStyles as unknown as StyleFn, 'root'],
   ['Input', inputStyles as unknown as StyleFn, 'inputWrapper'],
   ['TextArea', textareaStyles as unknown as StyleFn, 'inputWrapper'],
+  ['Select', selectStyles as unknown as StyleFn, 'trigger'],
 ]
 
 /** size 語彙を持つコンポーネント。 */
