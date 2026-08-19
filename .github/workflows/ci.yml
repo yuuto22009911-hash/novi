@@ -27,6 +27,9 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: 設計上の制約を検査
+        run: pnpm check:rules
+
       - name: Typecheck
         run: pnpm typecheck
 
