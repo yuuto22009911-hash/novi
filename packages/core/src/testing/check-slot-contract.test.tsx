@@ -98,6 +98,33 @@ describe('checkSlotContract', () => {
     expect(result.unknown).toEqual([])
   })
 
+  it('入れ子の別コンポーネント由来の slot は違反にしない', () => {
+    // RadioGroup の中の Radio のように、別コンポーネントの slot が同じツリーに出ることがある。
+    // これを語彙外と誤検出すると、契約テストが実用にならない。
+    const { container } = render(
+      <div data-slot="backdrop">
+        <div data-slot="panel">
+          <div data-slot="body">
+            {/* Checkbox の slot。Modal の語彙には無いが、発明された名前ではない */}
+            <span data-slot="control" />
+          </div>
+        </div>
+      </div>,
+    )
+    const result = checkSlotContract(container, modal)
+
+    expect(result.unknown).toEqual([])
+    expect(result.fromNestedComponents).toEqual(['control'])
+  })
+
+  it('どの契約にも無い名前は依然として違反にする', () => {
+    const { container } = render(<UnknownSlotModal />)
+    const result = checkSlotContract(container, modal)
+
+    expect(result.unknown).toEqual(['wrapper'])
+    expect(result.fromNestedComponents).toEqual([])
+  })
+
   it('同じ slot が複数回現れても重複して数えない', () => {
     const { container } = render(
       <div data-slot="backdrop">

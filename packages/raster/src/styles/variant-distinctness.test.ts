@@ -1,7 +1,11 @@
 import { NOVI_COLORS, NOVI_SIZES, NOVI_VARIANTS } from '@novi-ui/core'
 import { describe, expect, it } from 'vitest'
 import { buttonStyles } from '../button/button.styles'
+import { checkboxStyles } from '../checkbox/checkbox.styles'
 import { inputStyles } from '../input/input.styles'
+import { radioStyles } from '../radio/radio.styles'
+import { switchStyles } from '../switch/switch.styles'
+import { textareaStyles } from '../textarea/textarea.styles'
 
 /**
  * 全コンポーネント横断の検査。
@@ -15,27 +19,45 @@ import { inputStyles } from '../input/input.styles'
 
 type StyleFn = (props: Record<string, unknown>) => Record<string, () => string>
 
-const COMPONENTS: [name: string, styles: StyleFn, slot: string][] = [
+/** variant 語彙を持つコンポーネント。 */
+const WITH_VARIANT: [name: string, styles: StyleFn, slot: string][] = [
   ['Button', buttonStyles as unknown as StyleFn, 'root'],
   ['Input', inputStyles as unknown as StyleFn, 'inputWrapper'],
+  ['TextArea', textareaStyles as unknown as StyleFn, 'inputWrapper'],
+]
+
+/** size 語彙を持つコンポーネント。 */
+const WITH_SIZE: [name: string, styles: StyleFn, slot: string][] = [
+  ...WITH_VARIANT,
+  ['Checkbox', checkboxStyles as unknown as StyleFn, 'control'],
+  ['Radio', radioStyles as unknown as StyleFn, 'control'],
+  ['Switch', switchStyles as unknown as StyleFn, 'track'],
+]
+
+/** color 語彙を持つコンポーネント。 */
+const WITH_COLOR: [name: string, styles: StyleFn, slot: string][] = [
+  ['Button', buttonStyles as unknown as StyleFn, 'root'],
+  ['Checkbox', checkboxStyles as unknown as StyleFn, 'root'],
+  ['Radio', radioStyles as unknown as StyleFn, 'root'],
+  ['Switch', switchStyles as unknown as StyleFn, 'root'],
 ]
 
 describe('variant / size がテーマ内で必ず区別できる', () => {
-  it.each(COMPONENTS)('%s: 全 variant が異なるクラスを生む（AC-02-1）', (_n, styles, slot) => {
+  it.each(WITH_VARIANT)('%s: 全 variant が異なるクラスを生む（AC-02-1）', (_n, styles, slot) => {
     const classes = NOVI_VARIANTS.map((variant) => styles({ variant })[slot]?.())
     const duplicated = classes.filter((c, i) => classes.indexOf(c) !== i)
     expect(duplicated, '同じクラスを生む variant がある').toEqual([])
   })
 
-  it.each(COMPONENTS)('%s: 全 size が異なるクラスを生む', (_n, styles, slot) => {
+  it.each(WITH_SIZE)('%s: 全 size が異なるクラスを生む', (_n, styles, slot) => {
     const classes = NOVI_SIZES.map((size) => styles({ size })[slot]?.())
     expect(new Set(classes).size).toBe(NOVI_SIZES.length)
   })
 })
 
 describe('色を持つコンポーネントは全 color を区別できる', () => {
-  it('Button: 全 color が異なるクラスを生む（AC-02-3）', () => {
-    const classes = NOVI_COLORS.map((color) => buttonStyles({ color }).root())
+  it.each(WITH_COLOR)('%s: 全 color が異なるクラスを生む（AC-02-3）', (_n, styles, slot) => {
+    const classes = NOVI_COLORS.map((color) => styles({ color })[slot]?.())
     expect(new Set(classes).size).toBe(NOVI_COLORS.length)
   })
 })

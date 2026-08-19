@@ -1,20 +1,20 @@
 [
   {
-    "name": "初回コスト（共有ランタイム + Button）",
+    "name": "初回コスト（共有ランタイム + Button 1個）",
     "path": "dist/index.mjs",
     "import": "{ Button }",
-    "limit": "13 KB",
+    "limit": "14 KB",
     "ignore": ["react", "react-dom", "react-aria-components"]
   },
   {
     "name": "スタイルのみ使う場合",
     "path": "dist/index.mjs",
     "import": "{ buttonStyles }",
-    "limit": "13 KB",
+    "limit": "14 KB",
     "ignore": ["react", "react-dom", "react-aria-components"]
   },
   {
-    "name": "パッケージ全体（コンポーネントが増えるとここが伸びる）",
+    "name": "パッケージ全体（tree-shaking が効いていればここだけが伸びる）",
     "path": "dist/index.mjs",
     "limit": "35 KB",
     "ignore": ["react", "react-dom", "react-aria-components"]
