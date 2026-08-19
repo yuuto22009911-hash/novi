@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { KeyboardEventHandler, ReactNode } from 'react'
 import type { NoviBaseProps } from '../props'
 import type { ClassNames } from '../slots'
 import type { NoviRadius, NoviSize, NoviVariant } from '../tokens'
@@ -52,6 +52,11 @@ export interface InputProps extends NoviBaseProps {
   value?: string
   defaultValue?: string
   onChange?: (value: string) => void
+  /**
+   * キー操作。**IME 変換中のキーはここに届かない**（テーマが core の `useImeSafeKeys` を通す）。
+   * 変換確定の Enter で送信が暴発する事故を、利用側が意識せずに防げる。
+   */
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>
   isDisabled?: boolean
   isReadOnly?: boolean
   isRequired?: boolean

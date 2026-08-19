@@ -23,6 +23,7 @@
     "build": "tsdown && node scripts/generate-theme-css.mjs",
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit",
+    "check:design": "node scripts/check-design-rules.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

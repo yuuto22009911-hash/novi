@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { KeyboardEventHandler, ReactNode } from 'react'
 import type { NoviBaseProps } from '../props'
 import type { ClassNames } from '../slots'
 import type { NoviRadius, NoviSize, NoviVariant } from '../tokens'
@@ -36,6 +36,8 @@ export interface TextareaProps extends NoviBaseProps {
   value?: string
   defaultValue?: string
   onChange?: (value: string) => void
+  /** キー操作。**IME 変換中のキーはここに届かない**（`useImeSafeKeys` を経由する）。 */
+  onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement>
   rows?: number
   maxLength?: number
   isDisabled?: boolean
