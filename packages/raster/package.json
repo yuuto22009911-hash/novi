@@ -27,7 +27,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "size": "size-limit"
+    "size": "size-limit",
+    "check:treeshaking": "node scripts/check-treeshaking.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",

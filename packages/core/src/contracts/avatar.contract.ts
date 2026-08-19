@@ -25,5 +25,7 @@ export interface AvatarProps extends NoviBaseProps {
   name?: string
   /** 画像がないときに表示する内容。未指定なら name のイニシャル */
   fallback?: ReactNode
+  /** 右下に重ねる小さな印。オンライン状態などに使う */
+  badge?: ReactNode
   classNames?: ClassNames<typeof avatarSlots>
 }

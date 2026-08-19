@@ -19,7 +19,6 @@ import { selectStyles } from './select.styles'
 function TriggerIcon() {
   return (
     <svg viewBox="0 0 16 16" width="0.75em" height="0.75em" fill="none" aria-hidden="true">
-      <title>選択肢を開く</title>
       <path d="M4 6.5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" />
     </svg>
   )

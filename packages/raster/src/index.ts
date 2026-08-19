@@ -8,7 +8,18 @@
  * CI（`scripts/check-dist-rules.mjs`）がこれを検査している。
  */
 
+export { Avatar, type AvatarStyleProps, avatarStyles, initialsOf } from './avatar'
+export { Badge, type BadgeStyleProps, badgeStyles } from './badge'
 export { Button, type ButtonStyleProps, buttonStyles } from './button'
+export {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CardImage,
+  type CardStyleProps,
+  cardStyles,
+} from './card'
 export {
   Checkbox,
   CheckboxGroup,
@@ -18,6 +29,7 @@ export {
   checkboxStyles,
 } from './checkbox'
 export { Input, type InputStyleProps, inputStyles } from './input'
+export { Progress, type ProgressStyleProps, progressStyles } from './progress'
 export {
   Radio,
   RadioGroup,
@@ -33,5 +45,7 @@ export {
   type SelectStyleProps,
   selectStyles,
 } from './select'
+export { Skeleton, type SkeletonStyleProps, skeletonStyles } from './skeleton'
+export { Spinner, type SpinnerStyleProps, spinnerStyles } from './spinner'
 export { Switch, type SwitchStyleProps, switchStyles } from './switch'
 export { TextArea, type TextareaStyleProps, textareaStyles } from './textarea'

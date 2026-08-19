@@ -26,6 +26,9 @@
     },
     "size": {
       "dependsOn": ["build"]
+    },
+    "check:treeshaking": {
+      "dependsOn": ["build"]
     }
   }
 }

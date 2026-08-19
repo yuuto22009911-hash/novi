@@ -48,7 +48,6 @@ export function Button({
           aria-hidden="true"
         >
           <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" aria-hidden="true">
-            <title>読み込み中</title>
             <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="2" opacity="0.25" />
             <path d="M14 8a6 6 0 0 0-6-6" stroke="currentColor" strokeWidth="2" />
           </svg>

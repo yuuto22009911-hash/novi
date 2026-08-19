@@ -15,7 +15,7 @@
     "typecheck": "turbo run typecheck",
     "lint": "biome check . && pnpm check:source && turbo run check:design",
     "check:source": "node scripts/check-source-rules.mjs",
-    "check:dist": "node scripts/check-dist-rules.mjs",
+    "check:dist": "node scripts/check-dist-rules.mjs && turbo run check:treeshaking",
     "format": "biome check --write .",
     "size": "turbo run size",
     "changeset": "changeset",

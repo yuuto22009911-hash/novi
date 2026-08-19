@@ -14,7 +14,6 @@ import { checkboxGroupStyles, checkboxStyles } from './checkbox.styles'
 function CheckMark({ isIndeterminate }: { isIndeterminate: boolean }) {
   return (
     <svg viewBox="0 0 16 16" width="0.75em" height="0.75em" fill="none" aria-hidden="true">
-      <title>{isIndeterminate ? '一部選択' : '選択済み'}</title>
       {isIndeterminate ? (
         <path d="M3 8h10" stroke="currentColor" strokeWidth="2" />
       ) : (
