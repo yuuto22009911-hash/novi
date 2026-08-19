@@ -98,6 +98,42 @@ describe('useImeSafeKeys', () => {
     expect(handler).not.toHaveBeenCalled()
   })
 
+  it('解除待ちの間に次の変換が始まっても抑制が続く（高速入力）', () => {
+    const handler = vi.fn()
+    render(<Subject onKeyDown={handler} />)
+    const input = screen.getByLabelText('入力')
+
+    // 1回目の変換を確定 → 解除タイマーが動いている状態で、すぐ次の変換を始める
+    fireEvent.compositionStart(input)
+    fireEvent.compositionEnd(input)
+    fireEvent.compositionStart(input)
+
+    // ここで解除タイマーが発火しても、2回目の変換中なので抑制されたままでなければならない
+    flushRelease()
+    fireEvent.keyDown(input, { key: 'Enter', isComposing: true })
+
+    expect(handler).not.toHaveBeenCalled()
+  })
+
+  it('解除待ちの間にもう一度確定しても解除が1回にまとまる', () => {
+    const handler = vi.fn()
+    render(<Subject onKeyDown={handler} />)
+    const input = screen.getByLabelText('入力')
+
+    fireEvent.compositionStart(input)
+    fireEvent.compositionEnd(input)
+    fireEvent.compositionEnd(input)
+
+    // 解除前は抑制されている
+    fireEvent.keyDown(input, { key: 'Enter', isComposing: false })
+    expect(handler).not.toHaveBeenCalled()
+
+    // 解除後は通る
+    flushRelease()
+    fireEvent.keyDown(input, { key: 'Enter', isComposing: false })
+    expect(handler).toHaveBeenCalledExactlyOnceWith('Enter')
+  })
+
   it('Enter 以外のキーも変換中は抑制する', () => {
     const handler = vi.fn()
     render(<Subject onKeyDown={handler} />)

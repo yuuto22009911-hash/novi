@@ -1,0 +1,25 @@
+[
+  {
+    "name": "A: 型のみ（テーマ実装の大半がこれ）",
+    "path": "dist/index.mjs",
+    "import": "{}",
+    "limit": "10 B"
+  },
+  {
+    "name": "B: 単一コンポーネントの slot 契約 + 語彙",
+    "path": "dist/index.mjs",
+    "import": "{ buttonSlots, buttonRequiredSlots, NOVI_VARIANTS, NOVI_SIZES }",
+    "limit": "300 B"
+  },
+  {
+    "name": "C: レジストリ全体（ツール側の使い方）",
+    "path": "dist/index.mjs",
+    "import": "{ NOVI_CONTRACTS }",
+    "limit": "2 KB"
+  },
+  {
+    "name": "client エントリ（フック + Toast）",
+    "path": "dist/client/index.mjs",
+    "limit": "2 KB"
+  }
+]

@@ -1,66 +1,7 @@
 import { describe, expect, it } from 'vitest'
+import { contrastRatio } from '../testing/color'
 import { NOVI_COLORS, NOVI_RADII } from '../tokens'
 import { DARK_COLORS, LIGHT_COLORS, SCHEME_INDEPENDENT_TOKENS, TOKEN_PREFIX } from './definitions'
-
-// ─────────────────────────────────────────────────────────────
-// OKLCH → 相対輝度 → コントラスト比
-// 目分量で色を決めないために、実際に計算して検証する。
-// ─────────────────────────────────────────────────────────────
-
-interface Oklch {
-  l: number
-  c: number
-  h: number
-  alpha: number
-}
-
-function parseOklch(value: string): Oklch | null {
-  const m = value.match(/^oklch\(\s*([\d.]+)%\s+([\d.]+)\s+([\d.]+)\s*(?:\/\s*([\d.]+)\s*)?\)$/)
-  if (!m) return null
-  return {
-    l: Number(m[1]) / 100,
-    c: Number(m[2]),
-    h: Number(m[3]),
-    alpha: m[4] === undefined ? 1 : Number(m[4]),
-  }
-}
-
-/** OKLCH を線形 sRGB に変換する。 */
-function oklchToLinearSrgb({ l: L, c, h }: Oklch): [number, number, number] {
-  const rad = (h * Math.PI) / 180
-  const a = c * Math.cos(rad)
-  const b = c * Math.sin(rad)
-
-  const l_ = L + 0.3963377774 * a + 0.2158037573 * b
-  const m_ = L - 0.1055613458 * a - 0.0638541728 * b
-  const s_ = L - 0.0894841775 * a - 1.291485548 * b
-
-  const lc = l_ ** 3
-  const mc = m_ ** 3
-  const sc = s_ ** 3
-
-  return [
-    4.0767416621 * lc - 3.3077115913 * mc + 0.2309699292 * sc,
-    -1.2684380046 * lc + 2.6097574011 * mc - 0.3413193965 * sc,
-    -0.0041960863 * lc - 0.7034186147 * mc + 1.707614701 * sc,
-  ]
-}
-
-/** WCAG の相対輝度。 */
-function relativeLuminance(value: string): number {
-  const parsed = parseOklch(value)
-  if (!parsed) throw new Error(`OKLCH として解釈できません: ${value}`)
-  const [r, g, b] = oklchToLinearSrgb(parsed)
-  const clamp = (x: number) => Math.min(1, Math.max(0, x))
-  return 0.2126 * clamp(r) + 0.7152 * clamp(g) + 0.0722 * clamp(b)
-}
-
-function contrastRatio(a: string, b: string): number {
-  const la = relativeLuminance(a)
-  const lb = relativeLuminance(b)
-  const [hi, lo] = la > lb ? [la, lb] : [lb, la]
-  return (hi + 0.05) / (lo + 0.05)
-}
 
 const SCHEMES = [
   ['light', LIGHT_COLORS],

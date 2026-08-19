@@ -10,6 +10,14 @@ export {
   type SlotContractResult,
 } from './check-slot-contract'
 
+export {
+  chromaOf,
+  contrastRatio,
+  type Oklch,
+  parseOklch,
+  relativeLuminance,
+} from './color'
+
 export interface TestSlotContractOptions {
   /** テスト名に使う。例: 'Modal' */
   name: string

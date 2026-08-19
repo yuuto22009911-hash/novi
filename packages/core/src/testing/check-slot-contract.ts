@@ -26,8 +26,9 @@ export function checkSlotContract(
 ): SlotContractResult {
   const found = new Set<string>()
   for (const element of container.querySelectorAll('[data-slot]')) {
-    const name = element.getAttribute('data-slot')
-    if (name !== null && name !== '') found.add(name)
+    // セレクタで絞っているため属性は必ず存在する。空文字だけを除く。
+    const name = element.getAttribute('data-slot') ?? ''
+    if (name !== '') found.add(name)
   }
 
   const vocabulary = new Set(contract.slots)

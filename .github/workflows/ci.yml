@@ -24,17 +24,21 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Lint
+      - name: Lint（Biome + ソースの設計制約）
         run: pnpm lint
-
-      - name: 設計上の制約を検査
-        run: pnpm check:rules
 
       - name: Typecheck
         run: pnpm typecheck
 
-      - name: Test
-        run: pnpm test
+      - name: Test（カバレッジ 90% ゲート込み）
+        run: pnpm test:coverage
 
       - name: Build
         run: pnpm build
+
+      # 以下は build 後でないと検査できない。publish するまで気づけない類の問題を潰す
+      - name: 成果物の設計制約（exports 実在 / RSC 安全 / use client 保持 / access public）
+        run: pnpm check:dist
+
+      - name: バンドルサイズ
+        run: pnpm size

@@ -1,6 +1,10 @@
 packages:
   - 'packages/*'
   - 'apps/*'
+allowBuilds:
+  # size-limit がバンドルサイズ測定に使う。プラットフォーム別バイナリの取得に
+  # postinstall が必要なため許可する。dev 依存であり、配布物には含まれない。
+  esbuild: true
 minimumReleaseAgeExclude:
   - '@changesets/cli@3.0.1'
   - '@changesets/write@1.0.1'
