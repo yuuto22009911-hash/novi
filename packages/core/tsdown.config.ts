@@ -1,7 +1,9 @@
 import { defineConfig } from 'tsdown'
 
 export default defineConfig({
-  entry: ['src/index.ts'],
+  // メインエントリは型・契約・語彙のみで、React ランタイムを一切 import しない。
+  // フックは 'use client' が必要なため別エントリに分ける（RSC で壊れないようにするため）。
+  entry: ['src/index.ts', 'src/hooks/index.ts'],
   format: ['esm'],
   dts: true,
   clean: true,
