@@ -1,0 +1,29 @@
+import type { ReactNode } from 'react'
+import type { NoviBaseProps } from '../props'
+import type { ClassNames } from '../slots'
+import type { NoviRadius, NoviSize } from '../tokens'
+
+/** Avatar を構成する部位。`badge` はオンライン状態などを重ねるための場所。 */
+export const avatarSlots = ['root', 'image', 'fallback', 'badge'] as const
+
+export const avatarRequiredSlots = ['root'] as const
+
+export type AvatarSlot = (typeof avatarSlots)[number]
+export type AvatarRequiredSlot = (typeof avatarRequiredSlots)[number]
+
+/**
+ * 人や組織を表す画像。読み込みに失敗したら fallback を表示する。
+ *
+ * @example
+ * <Avatar src="/me.jpg" name="小島 佑翔" />
+ */
+export interface AvatarProps extends NoviBaseProps {
+  size?: NoviSize
+  radius?: NoviRadius
+  src?: string
+  /** 画像の代替テキストと、fallback のイニシャル生成に使う */
+  name?: string
+  /** 画像がないときに表示する内容。未指定なら name のイニシャル */
+  fallback?: ReactNode
+  classNames?: ClassNames<typeof avatarSlots>
+}
