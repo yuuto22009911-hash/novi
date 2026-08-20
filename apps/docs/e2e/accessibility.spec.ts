@@ -39,7 +39,7 @@ for (const scheme of SCHEMES) {
 }
 
 test.describe('サイト全体', () => {
-  for (const path of ['/', '/docs/getting-started/']) {
+  for (const path of ['/', '/docs/getting-started/', '/docs/theming/', '/docs/themes/raster/']) {
     test(`${path}: violations 0`, async ({ page }) => {
       await page.goto(path)
       const results = await new AxeBuilder({ page })

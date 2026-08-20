@@ -83,3 +83,22 @@ test('デモの JSX がテーマ切替で変わらない（AC-01-4）', async ({
   expect(withoutImport).toContain('<Button variant="solid" color="primary">保存</Button>')
   expect(code).toContain("from '@novi-ui/raster'")
 })
+
+test('theming ページの色見本はプレビュー内でだけ解決される（FR-07）', async ({ page }) => {
+  await page.goto('/docs/theming/')
+
+  const header = page.getByRole('banner')
+  const swatch = page.locator('[data-testid="preview"] li span').first()
+
+  const headerBefore = await header.evaluate((el) => getComputedStyle(el).backgroundColor)
+  const swatchBefore = await swatch.evaluate((el) => getComputedStyle(el).backgroundColor)
+
+  // 変数が解決されていなければ背景は透明になる。見本として意味を成さない
+  expect(swatchBefore).not.toBe('rgba(0, 0, 0, 0)')
+
+  await page.getByRole('button', { name: 'ダーク' }).click()
+
+  // 色見本だけがスキームに追従し、サイトの外枠は動かない
+  expect(await swatch.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe(swatchBefore)
+  expect(await header.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(headerBefore)
+})

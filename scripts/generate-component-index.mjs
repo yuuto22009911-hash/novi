@@ -47,6 +47,25 @@ const { COLOR_RULE, DESIGN_RULES, DESIGN_RULE_EXCEPTIONS } = await import(
 const { RASTER_CONTROL_HEIGHTS, RASTER_MOTION, RASTER_RADII, RASTER_TEXT } = await import(
   join(REPO_ROOT, 'packages', 'raster', 'src', 'tokens', 'raster-tokens.ts')
 )
+const { TOKEN_GROUPS, cssVariableName } = await import(join(RASTER_SCRIPTS, 'tokens.data.mjs'))
+
+/**
+ * 上書きできる CSS 変数の一覧。**CSS を出力しているのと同じ定義から作る。**
+ *
+ * ドキュメントに載る変数名と実際に出力される名前がズレると、
+ * 利用者の上書きが黙って効かなくなる。原因も分からない。
+ */
+const cssVariablesOf = () =>
+  TOKEN_GROUPS.map((group) => ({
+    id: group.id,
+    label: group.label,
+    description: group.description,
+    variables: Object.entries(group.values).map(([name, value]) => ({
+      name: cssVariableName(group.prefix, name),
+      value,
+      dark: group.dark?.[name] ?? null,
+    })),
+  }))
 
 /** 契約名と Raster の export 名が食い違う箇所。ここ以外は同名で対応する。 */
 const RASTER_EXPORT_ALIASES = { Textarea: 'TextArea', Toast: 'NoviToastRegion' }
@@ -234,6 +253,7 @@ const index = {
       pkg: '@novi-ui/raster',
       label: 'Raster',
       description: 'ミニマル / スイス系',
+      cssVariables: cssVariablesOf(),
       // 検査スクリプトと同じ定義から作る。AI に説明した規則と CI が落とす規則を一致させる
       designRules: {
         numeric: {

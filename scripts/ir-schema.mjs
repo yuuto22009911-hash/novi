@@ -96,6 +96,7 @@ export function validateComponentIndex(index) {
         if (!isNonEmptyString(theme[field])) push(`${at}.${field}: 空でない文字列が必要です`)
       }
       errors.push(...validateDesignRules(theme.designRules, `${at}.designRules`))
+      errors.push(...validateCssVariables(theme.cssVariables, `${at}.cssVariables`))
     }
   }
 
@@ -199,6 +200,53 @@ function validateSlots(slots, at) {
   // 必須 slot が全体に含まれていないと、契約テストが検査できない対象を要求することになる
   for (const slot of required) {
     if (!all.includes(slot)) errors.push(`${at}.required: '${slot}' が all にありません`)
+  }
+
+  return errors
+}
+
+/**
+ * 上書きできる CSS 変数の一覧。
+ *
+ * 名前が実際の出力とズレると利用者の上書きが黙って効かなくなるため、
+ * 形だけでなく `--novi-` で始まることまで見る。
+ *
+ * @param {unknown} groups @param {string} at @returns {string[]}
+ */
+function validateCssVariables(groups, at) {
+  if (!Array.isArray(groups) || groups.length === 0) return [`${at}: 1件以上の配列が必要です`]
+
+  const errors = []
+
+  for (const group of groups) {
+    if (!isPlainObject(group)) {
+      errors.push(`${at}[]: オブジェクトが必要です`)
+      continue
+    }
+    for (const field of ['id', 'label', 'description']) {
+      if (!isNonEmptyString(group[field])) {
+        errors.push(`${at}[${group.id ?? '?'}].${field}: 空でない文字列が必要です`)
+      }
+    }
+    if (!Array.isArray(group.variables) || group.variables.length === 0) {
+      errors.push(`${at}[${group.id ?? '?'}].variables: 1件以上の配列が必要です`)
+      continue
+    }
+    for (const variable of group.variables) {
+      if (!isPlainObject(variable)) {
+        errors.push(`${at}[${group.id}].variables[]: オブジェクトが必要です`)
+        continue
+      }
+      if (!isNonEmptyString(variable.name) || !variable.name.startsWith('--novi-')) {
+        errors.push(`${at}[${group.id}].variables[].name: --novi- で始まる名前が必要です`)
+      }
+      if (!isNonEmptyString(variable.value)) {
+        errors.push(`${at}[${group.id}].variables[${variable.name ?? '?'}].value: 必要です`)
+      }
+      if (variable.dark !== null && !isNonEmptyString(variable.dark)) {
+        errors.push(`${at}[${group.id}].variables[${variable.name ?? '?'}].dark: 文字列か null`)
+      }
+    }
   }
 
   return errors

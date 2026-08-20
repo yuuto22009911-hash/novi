@@ -27,6 +27,9 @@ export function SiteHeader() {
           <Link href="/docs/components/button/" className="text-site-muted hover:text-site-fg">
             コンポーネント
           </Link>
+          <Link href="/docs/theming/" className="text-site-muted hover:text-site-fg">
+            テーマの調整
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">

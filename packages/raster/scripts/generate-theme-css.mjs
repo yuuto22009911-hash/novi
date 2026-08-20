@@ -12,22 +12,15 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const {
-  RASTER_DARK_COLORS,
-  RASTER_LIGHT_COLORS,
-  RASTER_MOTION,
-  RASTER_RADII,
-  RASTER_SHADOWS,
-  RASTER_TEXT,
-} = await import('../src/tokens/raster-tokens.ts')
+import { cssVariableName, TOKEN_GROUPS } from './tokens.data.mjs'
 
 const PKG_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = join(PKG_ROOT, 'dist')
 
-/** @param {Record<string,string>} tokens @param {string} group @param {string} indent */
-const decls = (tokens, group, indent) =>
+/** @param {Record<string,string>} tokens @param {string} prefix @param {string} indent */
+const decls = (tokens, prefix, indent) =>
   Object.entries(tokens)
-    .map(([name, value]) => `${indent}--novi-${group}${name}: ${value};`)
+    .map(([name, value]) => `${indent}${cssVariableName(prefix, name)}: ${value};`)
     .join('\n')
 
 /** @param {string} selector @param {string} indent */
@@ -35,20 +28,18 @@ function tokenBlock(selector, indent) {
   const inner = `${indent}  `
   return [
     `${indent}${selector} {`,
-    decls(RASTER_RADII, 'radius-', inner),
-    decls(RASTER_SHADOWS, 'shadow-', inner),
-    decls(RASTER_TEXT, 'text-', inner),
-    decls(RASTER_MOTION, '', inner),
-    decls(RASTER_LIGHT_COLORS, 'color-', inner),
+    ...TOKEN_GROUPS.map((group) => decls(group.values, group.prefix, inner)),
     `${indent}}`,
   ].join('\n')
 }
 
-/** @param {string} selector @param {string} indent */
+/** ダークで差し替わるのは色だけ。他のトークンはスキームに依存しない。 */
 function darkBlock(selector, indent) {
   return [
     `${indent}${selector} {`,
-    decls(RASTER_DARK_COLORS, 'color-', `${indent}  `),
+    ...TOKEN_GROUPS.filter((group) => group.dark !== undefined).map((group) =>
+      decls(group.dark ?? {}, group.prefix, `${indent}  `),
+    ),
     `${indent}}`,
   ].join('\n')
 }
