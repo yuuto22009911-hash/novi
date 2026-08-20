@@ -3,6 +3,13 @@
   "version": "0.1.1",
   "description": "Novi UI theme 1 — minimal / Swiss. Sharp corners, no shadows, hairline rules, restrained motion.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuuto22009911-hash/novi.git",
+    "directory": "packages/raster"
+  },
+  "homepage": "https://novi-42r.pages.dev",
+  "bugs": "https://github.com/yuuto22009911-hash/novi/issues",
   "type": "module",
   "sideEffects": false,
   "publishConfig": {

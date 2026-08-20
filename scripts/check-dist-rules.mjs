@@ -106,6 +106,33 @@ const RULES = [
     },
   },
   {
+    // provenance は package.json の repository とワークフローの出所が一致することを要求する。
+    // 欠けていると publish の瞬間に 422 で落ちる（実際に落ちた）。
+    // ビルドもテストも通るため、ここで検査しないと気づく方法が無い
+    name: '公開パッケージが provenance 用の repository を宣言している',
+    run() {
+      const problems = []
+      for (const { json } of publishablePackages()) {
+        const url = json.repository?.url
+        if (typeof url !== 'string' || url === '') {
+          problems.push(
+            `${json.name}: repository.url がありません` +
+              '\n      OIDC の provenance 検証に失敗し、publish が 422 で落ちます',
+          )
+          continue
+        }
+        if (!url.includes('github.com/yuuto22009911-hash/novi')) {
+          problems.push(`${json.name}: repository.url が実際のリポジトリと違います（${url}）`)
+        }
+        // monorepo では directory が無いと npm がパッケージの場所を辿れない
+        if (typeof json.repository?.directory !== 'string') {
+          problems.push(`${json.name}: repository.directory がありません`)
+        }
+      }
+      return problems
+    },
+  },
+  {
     name: '公開パッケージが access: public を宣言している',
     run() {
       return publishablePackages()

@@ -3,6 +3,13 @@
   "version": "0.1.1",
   "description": "Behavior, accessibility, type contracts and token conventions for Novi UI. Ships zero styles.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuuto22009911-hash/novi.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://novi-42r.pages.dev",
+  "bugs": "https://github.com/yuuto22009911-hash/novi/issues",
   "type": "module",
   "sideEffects": false,
   "publishConfig": {

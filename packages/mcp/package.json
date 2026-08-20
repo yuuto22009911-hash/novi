@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "description": "Novi UI MCP server — read-only and offline. Serves component API, slot contracts and Raster design rules to AI agents.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuuto22009911-hash/novi.git",
+    "directory": "packages/mcp"
+  },
+  "homepage": "https://novi-42r.pages.dev",
+  "bugs": "https://github.com/yuuto22009911-hash/novi/issues",
   "type": "module",
   "engines": {
     "node": "^22.18.0 || >=24.11.0"
