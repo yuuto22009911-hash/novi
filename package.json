@@ -19,7 +19,7 @@
     "format": "biome check --write .",
     "size": "turbo run size",
     "changeset": "changeset",
-    "release": "turbo run build && changeset publish"
+    "release": "turbo run build && pnpm publish -r --access public --no-git-checks"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.9",

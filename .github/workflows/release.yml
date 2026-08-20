@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Changesets が version PR を作る / タグを打つために必要
+      contents: write
+      pull-requests: write
+      # OIDC トークンの発行に必須。これが無いと Trusted Publishing が動かない
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          # registry-url は指定しない。
+          # 指定すると .npmrc に NODE_AUTH_TOKEN を参照する行が書かれ、
+          # 値が空でも「トークンあり」と解釈されて OIDC に切り替わらない。
+
+      - run: pnpm install --frozen-lockfile
+
+      # 公開してしまってからでは取り返しがつかないので、CI と同じ検証を通す
+      - name: Lint（Biome + 設計制約）
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test:coverage
+
+      - name: Build
+        run: pnpm build
+
+      - name: 成果物の設計制約（exports / RSC 安全 / use client / access public / tree-shaking）
+        run: pnpm check:dist
+
+      - name: バンドルサイズ
+        run: pnpm size
+
+      # npm 11.5.1 以降が Trusted Publishing に必要。
+      # pnpm publish は内部で npm を使うため、ランナーの npm を上げておく
+      - name: npm を更新（Trusted Publishing の要件）
+        run: npm install -g npm@latest
+
+      # changeset があれば version PR を作り、無ければ publish する。
+      # NODE_AUTH_TOKEN は**設定しない**。空文字でも値として扱われ OIDC に落ちない
+      - name: リリース（Changesets + OIDC）
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+          version: pnpm changeset version
+          commit: 'chore: release packages'
+          title: 'chore: release packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
