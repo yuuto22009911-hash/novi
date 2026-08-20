@@ -11,6 +11,7 @@ import { tv } from 'tailwind-variants'
 
 const slots = {
   root: [
+    'text-[var(--novi-color-fg)]',
     'outline-none',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',

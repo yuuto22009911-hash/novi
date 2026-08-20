@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".next/**", "out/**", "!.next/cache/**"]
     },
     "typecheck": {
       "dependsOn": ["^build"]
@@ -29,6 +29,9 @@
     },
     "check:treeshaking": {
       "dependsOn": ["build"]
+    },
+    "generate": {
+      "outputs": [".generated/**"]
     }
   }
 }

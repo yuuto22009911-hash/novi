@@ -12,6 +12,7 @@ import { disabledState, focusRing } from '../styles/focus-ring'
 const slots = {
   // 影は使わない。面の区切りは 1px の境界線だけで表す
   root: [
+    'text-[var(--novi-color-fg)]',
     'flex flex-col',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border)]',

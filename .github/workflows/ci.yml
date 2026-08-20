@@ -24,21 +24,49 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Lint（Biome + ソースの設計制約）
+      - name: Lint（Biome + 設計制約）
         run: pnpm lint
 
       - name: Typecheck
         run: pnpm typecheck
 
-      - name: Test（カバレッジ 90% ゲート込み）
+      - name: Test（カバレッジゲート込み）
         run: pnpm test:coverage
 
       - name: Build
         run: pnpm build
 
       # 以下は build 後でないと検査できない。publish するまで気づけない類の問題を潰す
-      - name: 成果物の設計制約（exports 実在 / RSC 安全 / use client 保持 / access public）
+      - name: 成果物の設計制約（exports / RSC 安全 / use client / access public / tree-shaking）
         run: pnpm check:dist
 
       - name: バンドルサイズ
         run: pnpm size
+
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - name: Playwright を用意
+        run: pnpm --filter @novi-ui/docs exec playwright install chromium --with-deps
+
+      # jsdom では検証できないものをここで担保する:
+      # axe（レイアウトと計算済みスタイルを見る）/ カラースキームのカスケード / 見た目の回帰
+      - name: ブラウザ検証（axe / テーマ切替 / 視覚回帰）
+        run: pnpm --filter @novi-ui/docs test:browser
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: apps/docs/.playwright
+          retention-days: 7

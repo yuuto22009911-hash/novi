@@ -21,6 +21,7 @@ const slots = {
     'data-[entering]:motion-safe:animate-[novi-fade-in_120ms_ease-out]',
   ].join(' '),
   panel: [
+    'text-[var(--novi-color-fg)]',
     'w-full outline-none',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',

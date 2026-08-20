@@ -101,7 +101,10 @@ export function Modal({
       className={s.backdrop({ class: classNames?.backdrop })}
     >
       <RACModal data-slot="panel" className={s.panel({ class: [className, classNames?.panel] })}>
-        <Dialog className="outline-none">{children}</Dialog>
+        {/* RAC の ModalOverlay / Modal は id を受け取らないため Dialog に付ける */}
+        <Dialog id={id} className="outline-none">
+          {children}
+        </Dialog>
       </RACModal>
     </ModalOverlay>
   )

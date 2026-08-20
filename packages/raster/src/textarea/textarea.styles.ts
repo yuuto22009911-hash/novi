@@ -14,6 +14,7 @@ const slots = {
   root: 'flex flex-col gap-1.5',
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
   inputWrapper: [
+    'text-[var(--novi-color-fg)]',
     'flex w-full',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',

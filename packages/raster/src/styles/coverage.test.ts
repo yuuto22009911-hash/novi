@@ -1,6 +1,10 @@
 import { NOVI_CONTRACTS, NOVI_MVP_COMPONENT_COUNT } from '@novi-ui/core'
 import { describe, expect, it } from 'vitest'
-import * as raster from '../index'
+import * as rasterNamespace from '../index'
+
+// 公開 API を網羅的に検査するため、名前空間をプレーンなオブジェクトに写す。
+// 動的アクセスの抑制コメントを検査箇所ごとに撒かずに済む
+const raster: Record<string, unknown> = { ...rasterNamespace }
 
 /**
  * テーマが MVP をすべて実装しているかを検査する（T-34 / T-37）。
@@ -11,7 +15,7 @@ import * as raster from '../index'
  */
 
 /** 契約名 → 公開されているコンポーネント名。 */
-const IMPLEMENTED: Record<string, keyof typeof raster> = {
+const IMPLEMENTED: Record<string, string> = {
   Accordion: 'Accordion',
   Avatar: 'Avatar',
   Badge: 'Badge',
@@ -63,7 +67,7 @@ describe('スタイル定義の公開（T-37 / AC-06-2 / FR-04）', () => {
   })
 
   it.each(styleExports)('%s が関数として呼べる', (name) => {
-    const styles = raster[name as keyof typeof raster] as unknown
+    const styles = raster[name]
     expect(typeof styles).toBe('function')
     expect(typeof (styles as () => unknown)()).toBe('object')
   })
@@ -73,7 +77,7 @@ describe('色のトークン経由（AC-06-3 / FR-06）', () => {
   const styleExports = Object.keys(raster).filter((name) => name.endsWith('Styles'))
 
   it.each(styleExports)('%s がリテラルな色値を含まない', (name) => {
-    const styles = raster[name as keyof typeof raster] as () => Record<string, () => string>
+    const styles = raster[name] as () => Record<string, () => string>
     const all = Object.values(styles())
       .map((fn) => fn())
       .join(' ')

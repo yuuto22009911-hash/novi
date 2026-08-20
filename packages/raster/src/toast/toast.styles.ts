@@ -13,6 +13,7 @@ const slots = {
   // 右下に固定する。操作の起点から遠く、視線移動が最小になる位置
   region: 'fixed bottom-4 right-4 z-50 flex flex-col gap-2 outline-none max-w-sm',
   root: [
+    'text-[var(--novi-color-fg)]',
     'flex items-start gap-3 px-4 py-3 outline-none',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',

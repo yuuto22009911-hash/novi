@@ -49,11 +49,18 @@ const css = `/* 自動生成。編集しないこと。src/tokens/definitions.ts
     box-sizing: border-box;
   }
 
-  /* フォーカスリングはコンポーネント側で :focus-visible に付ける */
-  :where(button, input, select, textarea) {
-    font: inherit;
-    color: inherit;
-  }
+  /*
+   * ここで color や font を触ってはいけない。
+   *
+   * @layer の順序は詳細度に優先する。利用者の Tailwind が先に
+   * utilities レイヤーを宣言していると、後から宣言される novi.reset が
+   * ユーティリティに勝ってしまい、text-[...] が効かなくなる。
+   * :where() で詳細度を 0 にしても、レイヤー順の問題は解決しない。
+   *
+   * 実際に 2026-08-20、:where(button) への color: inherit が
+   * ボタンの文字色を上書きし、コントラスト比 2.84 の違反を生んでいた。
+   * リセットは box-sizing だけに留める。
+   */
 }
 
 @layer novi.base {

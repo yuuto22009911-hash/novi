@@ -1,0 +1,33 @@
+{
+  "name": "@novi-ui/docs",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node scripts/generate-component-index.mjs",
+    "dev": "pnpm generate && next dev",
+    "build": "pnpm generate && next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test:browser": "playwright test",
+    "test:browser:update": "playwright test --update-snapshots"
+  },
+  "dependencies": {
+    "@novi-ui/core": "workspace:*",
+    "@novi-ui/raster": "workspace:*",
+    "next": "16.3.1",
+    "react": "^19.0.0",
+    "react-aria-components": "^1.20.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.50.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.2.4",
+    "tailwindcss": "^4.3.3",
+    "typescript": "6.0.3"
+  }
+}

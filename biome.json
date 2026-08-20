@@ -6,7 +6,17 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/node_modules",
+      "!**/.next",
+      "!**/out",
+      "!**/.generated",
+      "!**/next-env.d.ts",
+      "!**/e2e/__screenshots__"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -32,6 +42,11 @@
       "source": {
         "organizeImports": "on"
       }
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
     }
   }
 }

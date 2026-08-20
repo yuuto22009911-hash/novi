@@ -18,6 +18,7 @@ const slots = {
   // RAC の Group を使う。Group は data-focus-visible / data-invalid を出すので、
   // Button と同じ focusRing 定義がそのまま使える（属性名を書き換える必要がない）。
   inputWrapper: [
+    'text-[var(--novi-color-fg)]',
     'flex items-center gap-2 w-full',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',

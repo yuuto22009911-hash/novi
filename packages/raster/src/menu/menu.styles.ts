@@ -4,6 +4,7 @@ import { tv } from 'tailwind-variants'
 const slots = {
   trigger: 'outline-none',
   popover: [
+    'text-[var(--novi-color-fg)]',
     'min-w-40 outline-none',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',

@@ -32,7 +32,7 @@ const decls = (tokens, group, indent) =>
 
 /** @param {string} selector @param {string} indent */
 function tokenBlock(selector, indent) {
-  const inner = indent + '  '
+  const inner = `${indent}  `
   return [
     `${indent}${selector} {`,
     decls(RASTER_RADII, 'radius-', inner),
@@ -48,7 +48,7 @@ function tokenBlock(selector, indent) {
 function darkBlock(selector, indent) {
   return [
     `${indent}${selector} {`,
-    decls(RASTER_DARK_COLORS, 'color-', indent + '  '),
+    decls(RASTER_DARK_COLORS, 'color-', `${indent}  `),
     `${indent}}`,
   ].join('\n')
 }

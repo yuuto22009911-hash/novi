@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/* テーマのトークンは scoped 版を読む。プレビュー領域の中だけに効かせるため。
+   サイト UI までテーマに追従すると、切り替えるたび画面全体が変わって
+   何を比較しているのか分からなくなる（ADR-D1） */
+@import "@novi-ui/core/base.css";
+@import "@novi-ui/raster/raster.scoped.css";
+
+/* raster の dist を Tailwind の走査対象に加える。
+   これがないとテーマが出力するクラスの CSS が生成されない */
+@source "../../../packages/raster/dist";
+
+/* ─────────────────────────────────────────────
+   サイト UI 独自のトークン。テーマとは独立させる
+   ───────────────────────────────────────────── */
+@theme {
+  --color-site-bg: oklch(99% 0 0);
+  --color-site-fg: oklch(20% 0 0);
+  --color-site-muted: oklch(48% 0 0);
+  --color-site-border: oklch(90% 0 0);
+  --color-site-subtle: oklch(97% 0 0);
+  --color-site-accent: oklch(48% 0.18 250);
+}
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  /* サイト UI のダークは prefers-color-scheme で決める。
+     テーマ切替（プレビュー内）とは別系統 */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-site-bg: oklch(15% 0 0);
+      --color-site-fg: oklch(95% 0 0);
+      --color-site-muted: oklch(70% 0 0);
+      --color-site-border: oklch(27% 0 0);
+      --color-site-subtle: oklch(20% 0 0);
+      --color-site-accent: oklch(74% 0.14 250);
+    }
+  }
+
+  body {
+    background: var(--color-site-bg);
+    color: var(--color-site-fg);
+    font-family: system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 和欧混植の間隔を整える。日本語のドキュメントで読みやすさに直接効く */
+  :lang(ja) {
+    text-autospace: normal;
+    line-break: strict;
+  }
+}
+
+@layer components {
+  .site-container {
+    margin-inline: auto;
+    max-width: 72rem;
+    padding-inline: 1.5rem;
+  }
+}

@@ -152,7 +152,9 @@ export function Menu({
         data-slot="popover"
         className={s.popover({ class: [className, classNames?.popover] })}
       >
+        {/* RAC の Popover は id を受け取らないため Menu 本体に付ける */}
         <RACMenu
+          id={id}
           data-slot="list"
           className={s.list({ class: classNames?.list })}
           onAction={(key) => onAction?.(String(key))}

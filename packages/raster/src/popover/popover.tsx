@@ -67,7 +67,10 @@ export function Popover({
         data-slot="root"
         className={s.root({ class: [className, classNames?.root] })}
       >
-        <Dialog className="outline-none">{content}</Dialog>
+        {/* RAC の Popover は id を受け取らないため Dialog に付ける */}
+        <Dialog id={id} className="outline-none">
+          {content}
+        </Dialog>
       </RACPopover>
     </DialogTrigger>
   )
@@ -115,7 +118,8 @@ export function Tooltip({
         data-slot="root"
         className={s.root({ class: [className, classNames?.root] })}
       >
-        <span data-slot="content" className={s.content({ class: classNames?.content })}>
+        {/* RAC の Tooltip は id を受け取らないため中身に付ける */}
+        <span id={id} data-slot="content" className={s.content({ class: classNames?.content })}>
           {content}
         </span>
       </RACTooltip>

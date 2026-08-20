@@ -14,6 +14,7 @@ const slots = {
   root: 'flex flex-col gap-1.5',
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
   trigger: [
+    'text-[var(--novi-color-fg)]',
     'flex items-center justify-between gap-2 w-full',
     'text-left',
     'bg-[var(--novi-color-bg)]',
@@ -33,6 +34,7 @@ const slots = {
   // 影を使わず、1px の境界線と背景の差だけで浮かせる
   popover: [
     'bg-[var(--novi-color-bg)]',
+    'text-[var(--novi-color-fg)]',
     'border border-[var(--novi-color-border)]',
     'rounded-[var(--novi-radius-none)]',
     'shadow-none',
