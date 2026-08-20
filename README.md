@@ -6,15 +6,22 @@ React Aria Components を土台にした React UI ライブラリ。
 挙動とアクセシビリティを `@novi-ui/core` が一手に引き受け、テーマパッケージは**構造とスタイルだけ**を持つ。
 同じコンポーネントが、テーマを切り替えるだけで別人になる。
 
-> **開発初期です。** まだ公開していません。
+> **開発初期です。** API は変わる可能性があります。
+
+- ドキュメント: https://novi-42r.pages.dev
+- AI 向け: [llms.txt](https://novi-42r.pages.dev/llms.txt) / [llms-full.txt](https://novi-42r.pages.dev/llms-full.txt)
 
 ## パッケージ
 
 | パッケージ | 役割 |
 |---|---|
-| `@novi-ui/core` | 挙動・a11y・型契約・トークン規約。**スタイルを1行も持たない** |
-| `@novi-ui/raster` | 美学1: ミニマル / スイス系（予定） |
-| `@novi-ui/mcp` | AI エージェント向け MCP サーバ（予定） |
+| [`@novi-ui/core`](https://www.npmjs.com/package/@novi-ui/core) | 挙動・a11y・型契約・トークン規約。**スタイルを1行も持たない** |
+| [`@novi-ui/raster`](https://www.npmjs.com/package/@novi-ui/raster) | 美学1: ミニマル / スイス系。20 コンポーネント |
+| [`@novi-ui/mcp`](https://www.npmjs.com/package/@novi-ui/mcp) | AI エージェント向け MCP サーバ。読み取り専用・オフライン |
+
+```bash
+pnpm add @novi-ui/core @novi-ui/raster react-aria-components
+```
 
 ## なぜ core と テーマ を分けるのか
 
