@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useNoviTheme } from '../lib/use-novi-theme'
+import { useNoviTheme } from '../lib/theme-components'
 
 /**
  * 全コンポーネントのデモ。

@@ -1,11 +1,12 @@
-import * as raster from '@novi-ui/raster'
-
 /**
- * テーマ名 → 実装の対応表。
+ * テーマのメタ情報。**実装（コンポーネント本体）をここに置かない。**
  *
- * デモはここ経由でコンポーネントを解決するため、
- * **どのテーマかを知らずに書ける**。テーマを切り替えても JSX は1文字も変わらない。
- * 2本目のテーマはここに1行足すだけでサイト全体が対応する。
+ * このファイルは layout とヘッダーから読まれるため、全ページのバンドルに入る。
+ * かつて `import * as raster` がここにあり、デモの無いページまで
+ * ライブラリ全体（約 900KB）を読み込んでいた。
+ * 実装は `theme-components.ts` にあり、デモを持つ画面だけが読む。
+ *
+ * 2本目のテーマはここと theme-components.ts に1行ずつ足すだけでサイト全体が対応する。
  */
 export const themeRegistry = {
   raster: {
@@ -13,7 +14,6 @@ export const themeRegistry = {
     description: 'ミニマル / スイス系',
     // コード例の import 文に差し込む。切り替えで変わるのはこの1行だけ
     pkg: '@novi-ui/raster',
-    components: raster,
   },
 } as const
 

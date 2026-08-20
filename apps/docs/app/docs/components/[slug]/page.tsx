@@ -63,12 +63,14 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
         <ComponentDemo slug={slug} />
 
-        <section className="flex flex-col gap-3">
+        {/* 折り返し以下の表はスクロールされるまで描画を省く（T-38）。
+            contain-intrinsic-size が概算の高さを確保し、スクロールバーの飛びを防ぐ */}
+        <section className="flex flex-col gap-3 [contain-intrinsic-size:auto_600px] [content-visibility:auto]">
           <h2 className="text-lg font-medium tracking-tight">Props</h2>
           <PropsTable name={demo.component} />
         </section>
 
-        <section className="flex flex-col gap-3">
+        <section className="flex flex-col gap-3 [contain-intrinsic-size:auto_200px] [content-visibility:auto]">
           <h2 className="text-lg font-medium tracking-tight">Slot</h2>
           <p className="text-sm text-site-muted">
             構成部位に <code className="font-mono text-xs">data-slot</code> が出力されます。 CSS
@@ -77,7 +79,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <SlotTable name={demo.component} />
         </section>
 
-        <section className="flex flex-col gap-3">
+        <section className="flex flex-col gap-3 [contain-intrinsic-size:auto_200px] [content-visibility:auto]">
           <h2 className="text-lg font-medium tracking-tight">アクセシビリティ</h2>
           <ul className="flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-site-muted">
             {/* 契約の @a11y をそのまま出す。ページごとに書き直すとテーマや実装とズレる */}

@@ -1,26 +1,30 @@
 'use client'
 
-import { DEMO_RENDERERS } from '../demos'
-import { findDemoMeta } from '../demos/meta'
-import { CodeExample } from './code-example'
-import { Preview } from './preview'
+import dynamic from 'next/dynamic'
 
 /**
- * ライブデモとコード例の組。
+ * デモの遅延読み込み（T-38）。
  *
- * テーマを切り替えると Preview の中身は変わるが、
- * コード例は import 文の1行以外まったく変わらない。
+ * デモ本体はライブラリ全体（raster + react-aria-components、約 350KB）を引き込む。
+ * 静的エクスポートなので HTML は先に描画済みで、この分割によって
+ * ページ外殻（ナビ・本文・テーマ切替）が先にハイドレートし、デモが後から追いつく。
+ *
+ * `loading` はデモとおおよそ同じ高さを占める。無いと読み込み完了時にレイアウトが動く（CLS）。
  */
-export function ComponentDemo({ slug }: { slug: string }) {
-  const meta = findDemoMeta(slug)
-  const render = DEMO_RENDERERS[slug]
-  if (meta === undefined || render === undefined) return null
+const ComponentDemoBody = dynamic(() => import('./component-demo-body'), {
+  loading: () => (
+    <div
+      aria-hidden="true"
+      className="h-64 animate-pulse border border-site-border bg-site-subtle"
+    />
+  ),
+})
 
+export function ComponentDemo({ slug }: { slug: string }) {
   return (
     <section className="flex flex-col gap-4">
       <h2 className="sr-only">デモ</h2>
-      <Preview>{render()}</Preview>
-      <CodeExample code={meta.code} imports={meta.imports} />
+      <ComponentDemoBody slug={slug} />
     </section>
   )
 }

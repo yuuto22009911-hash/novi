@@ -1,5 +1,14 @@
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { HeroPreview } from '../components/hero-preview'
+
+// デモはライブラリ全体を引き込むため遅延させる（T-38）。
+// HTML は静的に描画済みなので、遅れて届くのはインタラクションだけ
+const HeroPreview = dynamic(() =>
+  import('../components/hero-preview').then((m) => ({ default: m.HeroPreview })),
+)
+const SiteInNovi = dynamic(() =>
+  import('../components/site-in-novi').then((m) => ({ default: m.SiteInNovi })),
+)
 
 export default function HomePage() {
   return (
@@ -43,6 +52,16 @@ export default function HomePage() {
             </div>
           ))}
         </dl>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-xl font-medium tracking-tight">サイトそのものも作れます</h2>
+        <p className="max-w-2xl text-sm leading-relaxed text-site-muted">
+          このページの外枠がテーマに染まらないのは、比較対象をはっきりさせるための設計です。
+          下はこのサイト自身の UI を Novi だけで組み直したものです。
+          右上でテーマを切り替えると、この「サイト」ごと別の見た目になります。
+        </p>
+        <SiteInNovi />
       </section>
 
       <section className="flex flex-col gap-4">

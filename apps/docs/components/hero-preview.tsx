@@ -1,6 +1,6 @@
 'use client'
 
-import { useNoviTheme } from '../lib/use-novi-theme'
+import { useNoviTheme } from '../lib/theme-components'
 import { CodeExample } from './code-example'
 import { Preview } from './preview'
 

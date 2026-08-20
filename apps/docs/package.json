@@ -10,7 +10,8 @@
     "start": "next start",
     "typecheck": "pnpm generate && tsc --noEmit",
     "test:browser": "playwright test",
-    "test:browser:update": "playwright test --update-snapshots"
+    "test:browser:update": "playwright test --update-snapshots",
+    "perf": "npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json"
   },
   "dependencies": {
     "@novi-ui/core": "workspace:*",

@@ -74,3 +74,31 @@ jobs:
           name: playwright-report
           path: apps/docs/.playwright
           retention-days: 7
+
+  perf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          # .node-version を唯一の情報源にする。
+          # Cloudflare Pages も同じファイルを読むため、環境差が生まれない
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      # LCP ≤ 2.5s / CLS ≤ 0.1 / TBT ≤ 200ms / performance 90+ / a11y 100 をゲートにする。
+      # INP はフィールド指標でラボでは測れないため、ラボの代理である TBT で縛る。
+      # 3回計測して外れ値に強くする（初回はキャッシュが冷えていて必ず遅い）
+      - name: Lighthouse（LCP / CLS / TBT ゲート）
+        run: pnpm --filter @novi-ui/docs perf
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: lighthouse-reports
+          path: apps/docs/.lighthouseci
+          retention-days: 7

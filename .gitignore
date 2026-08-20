@@ -10,6 +10,9 @@ coverage/
 .env.*
 !.env.example
 
+# Lighthouse CI
+.lighthouseci/
+
 # Playwright
 test-results/
 playwright-report/

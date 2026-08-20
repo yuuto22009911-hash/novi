@@ -78,17 +78,5 @@ export function useThemeState(): ThemeState {
   return state
 }
 
-/**
- * 現在のテーマのコンポーネント群を返す。
- *
- * デモはこれ経由で解決するため、**特定のテーマを import しない**。
- * 直接 import した瞬間、そのデモはテーマ切替に追従しなくなる（CI で検査している）。
- *
- * @example
- * const { Button } = useNoviTheme()
- * return <Button variant="solid">保存</Button>
- */
-export function useNoviTheme() {
-  const { theme } = useThemeState()
-  return themeRegistry[theme].components
-}
+// useNoviTheme（コンポーネントの解決）は theme-components.tsx にある。
+// このファイルは layout 経由で全ページに入るため、実装を引き込んではいけない
