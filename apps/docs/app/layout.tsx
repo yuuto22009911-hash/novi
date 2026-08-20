@@ -5,6 +5,15 @@ import { DEFAULT_THEME, SCHEME_ATTR, STORAGE_KEY, THEME_ATTR } from '../lib/them
 import { NoviThemeProvider } from '../lib/use-novi-theme'
 import './globals.css'
 
+/**
+ * Cloudflare Web Analytics の beacon トークン。
+ *
+ * HTML に埋め込まれ訪問者全員がソースで読める**公開値**なので、
+ * 環境変数ではなくここに直接置く。秘匿しても意味がなく、
+ * 環境変数にすると静的エクスポート時のビルド設定が増えるだけになる。
+ */
+const CF_ANALYTICS_TOKEN = '762917d92dd946a9a6e06c77d40e314f'
+
 export const metadata: Metadata = {
   title: { default: 'Novi UI', template: '%s — Novi UI' },
   description: '1つの core に、複数の美学。AI に書かせても崩れない React UI ライブラリ。',
@@ -38,6 +47,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SiteHeader />
           <main className="site-container py-10">{children}</main>
         </NoviThemeProvider>
+
+        {/*
+          Cloudflare Web Analytics。Cookie を使わないため同意バナーが不要で、
+          プライバシー方針とも整合する（ADR-D4）。
+          token は HTML に埋め込む公開値であり秘匿情報ではない。
+
+          next/script は使わない。静的エクスポートではハイドレーション後に
+          クライアント側から注入される形になり、HTML に実タグが残らないため、
+          JS が動かない環境で計測が落ちる。Cloudflare の案内どおり素のタグを置く。
+          defer で読み込むので LCP には影響しない。
+        */}
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={`{"token": "${CF_ANALYTICS_TOKEN}"}`}
+        />
       </body>
     </html>
   )
