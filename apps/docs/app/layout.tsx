@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
 import { SiteHeader } from '../components/site-header'
 import { DEFAULT_THEME, SCHEME_ATTR, STORAGE_KEY, THEME_ATTR } from '../lib/theme-registry'
@@ -13,6 +13,13 @@ import './globals.css'
  * 環境変数にすると静的エクスポート時のビルド設定が増えるだけになる。
  */
 const CF_ANALYTICS_TOKEN = '762917d92dd946a9a6e06c77d40e314f'
+
+// ノッチのある端末で左右に白帯を作らない。safe-area は site-container の余白が吸収する
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+}
 
 export const metadata: Metadata = {
   title: { default: 'Novi UI', template: '%s — Novi UI' },

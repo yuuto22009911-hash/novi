@@ -31,10 +31,13 @@ export function SiteInNovi() {
   return (
     <Preview className="items-stretch">
       <div className="flex w-full flex-col">
-        {/* ヘッダー。実物と同じ構成: サイト名 / ナビ / テーマ選択 */}
-        <header className="flex items-center justify-between gap-4 border-b border-[var(--novi-color-border)] pb-3">
+        {/* ヘッダー。実物と同じ構成: サイト名 / ナビ / テーマ選択。狭い画面では折り返す */}
+        <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--novi-color-border)] pb-3">
           <span className="font-medium text-[var(--novi-color-fg)]">Novi UI</span>
-          <nav aria-label="ミニチュアのナビゲーション" className="flex items-center gap-1">
+          <nav
+            aria-label="ミニチュアのナビゲーション"
+            className="flex flex-wrap items-center gap-1"
+          >
             <Button variant="plain" size="sm">
               はじめに
             </Button>

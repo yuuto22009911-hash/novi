@@ -56,6 +56,39 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
       </nav>
 
       <article className="flex min-w-0 flex-1 flex-col gap-10">
+        {/* サイドバーが出ない幅では、これが唯一のコンポーネント間導線になる。
+            JS 不要の details で畳んでおく（開閉状態はページ遷移ごとにリセットされてよい） */}
+        <details className="border border-site-border lg:hidden">
+          {/* 開閉の目印は details 標準の三角に任せる。隠すと開けることが伝わらない。
+              display を変えると三角（::marker）が消えるため、余白だけで 48px を作る */}
+          <summary className="cursor-pointer px-4 py-3.5 text-sm font-medium">
+            コンポーネント一覧
+          </summary>
+          <nav aria-label="コンポーネント" className="border-t border-site-border px-4 py-2">
+            <ul className="flex flex-wrap gap-x-5 text-sm">
+              {DEMO_META.map((d) => {
+                const s = d.title.toLowerCase()
+                return (
+                  <li key={s}>
+                    <Link
+                      href={`/docs/components/${s}/`}
+                      aria-current={s === slug ? 'page' : undefined}
+                      className={[
+                        'flex h-12 items-center',
+                        s === slug
+                          ? 'font-medium text-site-fg'
+                          : 'text-site-muted hover:text-site-fg',
+                      ].join(' ')}
+                    >
+                      {d.title}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+        </details>
+
         <header className="flex flex-col gap-2">
           <h1 className="text-2xl font-medium tracking-tight">{demo.title}</h1>
           <p className="text-sm leading-relaxed text-site-muted">{demo.note}</p>

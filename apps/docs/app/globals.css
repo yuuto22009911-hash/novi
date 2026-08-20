@@ -58,6 +58,8 @@
   .site-container {
     margin-inline: auto;
     max-width: 72rem;
-    padding-inline: 1.5rem;
+    /* viewport-fit=cover でノッチの裏に本文が入らないよう safe-area を余白に足す */
+    padding-inline: calc(1.5rem + env(safe-area-inset-left))
+      calc(1.5rem + env(safe-area-inset-right));
   }
 }

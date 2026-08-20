@@ -27,7 +27,9 @@ export function HeroPreview() {
   const { Badge, Button, Card, CardBody, CardFooter, CardHeader, Input, Switch } = useNoviTheme()
 
   return (
-    <div className="grid gap-4 lg:grid-cols-2">
+    // grid の子は既定で内容の最小幅より縮めない。コード例の1行が長いと
+    // 列ごと広がって画面からはみ出すため、min-w-0 で明示的に縮められるようにする
+    <div className="grid gap-4 *:min-w-0 lg:grid-cols-2">
       <Preview className="items-stretch">
         <Card className="w-full">
           <CardHeader>アカウント設定</CardHeader>
