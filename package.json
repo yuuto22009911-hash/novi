@@ -16,6 +16,7 @@
     "lint": "biome check . && pnpm check:source && pnpm check:handwritten && turbo run check:design",
     "check:source": "node scripts/check-source-rules.mjs",
     "check:handwritten": "node scripts/check-handwritten-api.mjs",
+    "accuracy": "node accuracy/run.mjs",
     "check:dist": "node scripts/check-dist-rules.mjs && turbo run check:treeshaking && turbo run check:security",
     "format": "biome check --write .",
     "size": "turbo run size",

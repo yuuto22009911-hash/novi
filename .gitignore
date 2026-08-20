@@ -19,6 +19,10 @@ blob-report/
 .next/
 out/
 
+# 精度回帰テストの生成物と作業場所。毎回捨ててよい
+accuracy/generated/
+apps/docs/.accuracy/
+
 # MCP に同梱する IR。ビルド時に生成する（手で編集しない）
 packages/mcp/data/
 

@@ -20,8 +20,12 @@ export type TabsRequiredSlot = (typeof tabsRequiredSlots)[number]
  *
  * @example
  * <Tabs selectedKey={tab} onSelectionChange={setTab}>
- *   <Tab id="profile">プロフィール</Tab>
- *   <TabPanel id="profile">…</TabPanel>
+ *   <TabItems>
+ *     <TabItem id="profile">プロフィール</TabItem>
+ *     <TabItem id="settings">設定</TabItem>
+ *   </TabItems>
+ *   <TabContent id="profile">プロフィールの中身</TabContent>
+ *   <TabContent id="settings">設定の中身</TabContent>
  * </Tabs>
  */
 export interface TabsProps extends NoviBaseProps {

@@ -259,6 +259,30 @@ const index = {
   components,
 }
 
+/**
+ * 使用例が実在する export だけを使っているか検査する。
+ *
+ * 例は AI が最も忠実に真似る部分で、間違っていると全員が同じ間違いをする。
+ * 実際に Tabs の例が `<Tab>` / `<TabPanel>` を使っていた（実体は `TabItem` / `TabContent`）。
+ * 型検査は例をコンパイルしないため、この間違いはテストが全部通ったまま publish された。
+ */
+for (const component of components) {
+  const used = [
+    // JSX の要素名
+    ...(component.example?.matchAll(/<([A-Z][A-Za-z0-9]*)/g) ?? []),
+    // createToastQueue のような生成関数
+    ...(component.example?.matchAll(/\b(create[A-Z][A-Za-z0-9]*)\s*\(/g) ?? []),
+  ].map((match) => match[1])
+
+  for (const name of new Set(used)) {
+    if (rasterExports.has(name)) continue
+    throw new Error(
+      `${component.name} の @example が存在しない export \`${name}\` を使っています。\n` +
+        `  ${component.name} の契約ファイルの @example を実装に合わせてください。`,
+    )
+  }
+}
+
 // 欠損したまま配信すると、AI は「その情報は存在しない」ではなく「自分で埋める」を選ぶ。
 // 古い生成物を配信するくらいならビルドを落とす（FR-09）
 const errors = validateComponentIndex(index)

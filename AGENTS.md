@@ -103,3 +103,12 @@ IR 生成がビルド済みの core を読むため、依存順序が必要。
 `pnpm changeset` で変更を記録して push するだけ。
 Changesets が version PR を作り、マージで **OIDC 自動公開**される。
 OTP もトークンも要らない。`NODE_AUTH_TOKEN` を設定してはいけない（OIDC に切り替わらなくなる）。
+
+### version PR をマージする前に
+
+- [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm check:dist`
+- [ ] **精度回帰テストを手動で実行する**（`pnpm accuracy`）
+
+精度回帰テストは CI で回さない（ADR-A5。LLM 呼び出しが従量課金になるため）。
+**回し忘れがそのまま公開されるので、ここで担保する。** 手順は
+[accuracy/README.md](./accuracy/README.md)。`llms` の生成ロジックを変えたときも実行する。

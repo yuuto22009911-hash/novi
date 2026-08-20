@@ -37,7 +37,13 @@ export type ToastRequiredSlot = (typeof toastRequiredSlots)[number]
  * @a11y live region として読み上げられる。閉じるボタンには `aria-label` がある
  *
  * @example
- * toast.add({ title: '保存しました', color: 'success' })
+ * // キューはアプリで1つ作って使い回す
+ * const queue = createToastQueue()
+ *
+ * <Button onPress={() => queue.add({ title: '保存しました', color: 'success' }, { timeout: 4000 })}>
+ *   保存
+ * </Button>
+ * <NoviToastRegion queue={queue} />
  */
 export interface ToastProps extends NoviBaseProps {
   color?: NoviColor
