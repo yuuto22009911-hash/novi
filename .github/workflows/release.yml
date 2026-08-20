@@ -29,7 +29,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          # .node-version を唯一の情報源にする。
+          # Cloudflare Pages も同じファイルを読むため、環境差が生まれない
+          node-version-file: .node-version
           cache: pnpm
           # registry-url は指定しない。
           # 指定すると .npmrc に NODE_AUTH_TOKEN を参照する行が書かれ、
