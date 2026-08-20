@@ -17,6 +17,10 @@ export type TooltipRequiredSlot = (typeof tooltipRequiredSlots)[number]
  * ツールチップだけに情報を置かない。触れないと読めないため、
  * 操作に必須の情報は本文かラベルに書く。
  *
+ * @keywords ツールチップ 補足説明 tooltip
+ *
+ * @a11y ホバーとフォーカスの両方で開く。触れないと読めないため、操作に必須の情報は置かない
+ *
  * @example
  * <Tooltip content="コピーする">
  *   <Button>複製</Button>

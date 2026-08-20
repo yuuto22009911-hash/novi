@@ -21,6 +21,10 @@ export type SwitchRequiredSlot = (typeof switchRequiredSlots)[number]
  *
  * 状態が形状だけで伝わりにくいテーマもあるため、ラベルの併記を推奨する。
  *
+ * @keywords スイッチ トグル オンオフ switch toggle
+ *
+ * @a11y Space で切り替える。状態は `aria-checked` で伝わるが、色と形だけに依存せずラベルを併記する
+ *
  * @example
  * <Switch isSelected={enabled} onChange={setEnabled}>
  *   メール通知を受け取る

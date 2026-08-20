@@ -32,6 +32,11 @@ export type MenuRequiredSlot = (typeof menuRequiredSlots)[number]
  *
  * IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
  *
+ * @keywords メニュー ドロップダウンメニュー 操作一覧 コンテキストメニュー menu
+ *
+ * @a11y 矢印キーで移動、Enter で決定、Escape で閉じる。開いている間はメニュー外を読み上げ対象から外す。
+ * IME 変換中の Enter は抑制される
+ *
  * @example
  * <Menu onAction={(key) => run(key)}>
  *   <Button>操作</Button>

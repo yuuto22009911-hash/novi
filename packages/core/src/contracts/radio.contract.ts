@@ -14,6 +14,10 @@ export type RadioRequiredSlot = (typeof radioRequiredSlots)[number]
 /**
  * ラジオボタン。単体では使わず、必ず RadioGroup の中に置く。
  *
+ * @keywords ラジオボタン radio
+ *
+ * @a11y 単体では意味を持たない。必ず RadioGroup の中に置く
+ *
  * @example
  * <Radio value="express">速達</Radio>
  */
@@ -38,6 +42,10 @@ export type RadioGroupRequiredSlot = (typeof radioGroupRequiredSlots)[number]
 
 /**
  * ラジオボタンのグループ。矢印キーで項目間を移動できる。
+ *
+ * @keywords ラジオグループ 単一選択 1つだけ選ぶ radiogroup
+ *
+ * @a11y radiogroup として提示され、矢印キーで項目間を移動する。Tab はグループ単位で出入りする
  *
  * @example
  * <RadioGroup label="配送方法" value={method} onChange={setMethod}>

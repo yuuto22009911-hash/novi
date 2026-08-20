@@ -16,6 +16,10 @@ export type ProgressRequiredSlot = (typeof progressRequiredSlots)[number]
  *
  * `prefers-reduced-motion` が有効なときはアニメーションを停止する。
  *
+ * @keywords 進捗 プログレスバー 進行状況 progress progressbar
+ *
+ * @a11y progressbar として現在値・最小値・最大値を伝える。`label` を省略すると何の進捗か分からない
+ *
  * @example
  * <Progress label="アップロード中" value={62} />
  */
@@ -44,6 +48,10 @@ export type SpinnerRequiredSlot = (typeof spinnerRequiredSlots)[number]
  * 処理中であることを示す回転表示。
  *
  * `prefers-reduced-motion` が有効なときは回転を止める。
+ *
+ * @keywords スピナー 読み込み中 ローディング loading spinner
+ *
+ * @a11y `role="status"` で読み込み中を伝える。図形は `aria-hidden` で、`label` が読み上げ文になる
  *
  * @example
  * <Spinner label="読み込み中" />

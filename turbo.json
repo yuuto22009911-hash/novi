@@ -30,6 +30,9 @@
     "check:treeshaking": {
       "dependsOn": ["build"]
     },
+    "check:security": {
+      "dependsOn": ["build"]
+    },
     "generate": {
       "outputs": [".generated/**"]
     }

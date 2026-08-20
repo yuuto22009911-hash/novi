@@ -1,0 +1,55 @@
+---
+description: Novi UI モノレポの規約。コンポーネント追加・テーマ実装・生成物の扱い
+globs: ["packages/**", "apps/**"]
+alwaysApply: true
+---
+
+# Novi UI の規約
+
+詳細は リポジトリ直下の `AGENTS.md`。ここはその要約。
+
+```
+packages/core     挙動・a11y・型契約・トークン。スタイルを1行も持たない
+packages/raster   テーマ1: ミニマル / スイス系
+packages/mcp      AI 向け MCP サーバ。読み取り専用・オフライン
+apps/docs         ドキュメントサイト
+```
+
+## 絶対にやらないこと
+
+- `packages/core` に CSS を書く
+- `packages/core` のメインエントリで React を import する（RSC が壊れる）
+- テーマから `UNSTABLE_` / `@react-aria/*` / `@react-stately/*` を直接 import する（core 経由のみ）
+- `shadow-*` / `rounded-md` 以上 / `border-2` 以上 / `scale-*` / `rotate-*` を使う
+- リテラルの色値を書く（必ず `--novi-color-*` を経由する）
+- Provider を必要とする設計を入れる
+- API の情報（props 表・slot 一覧・語彙）を手で書く
+
+## API 情報は生成物
+
+props 表・`llms.txt`・MCP の応答は、契約の JSDoc から生成した
+`component-index.json` だけを読む。**手書きは必ず実装とズレる。**
+
+契約の JSDoc には 要約1行 / `@keywords` / `@a11y` / `@example` の4点が必須。
+欠けるとビルドが落ちる。
+
+## props の命名
+
+React Aria の慣習に従う。独自命名を作らない。
+
+- `disabled` ではなく `isDisabled`
+- `onClick` ではなく `onPress`
+- `checked` ではなく `isSelected`
+
+## スタイル拡張
+
+- slot 定義では `tv({ extend, base })` の `base` は効かない。`slots` を使う
+- slot 定義は `satisfies` で型付けする（型注釈だと任意 slot が呼べない）
+- `variant` は variants の**最後**に宣言する（先に書くと `size` に負ける）
+- 背景色を設定する面には必ず文字色も設定する
+
+## 確認
+
+```bash
+pnpm lint && pnpm typecheck && pnpm test && pnpm check:handwritten
+```

@@ -14,6 +14,11 @@ export type CardRequiredSlot = (typeof cardRequiredSlots)[number]
 /**
  * 情報のまとまりを囲む器。
  *
+ * @keywords カード パネル card panel
+ *
+ * @a11y `onPress` を渡したときだけ button になり、Enter / Space で発火してフォーカスリングが付く。
+ * 渡さなければ非対話の器のままで、タブ順に入らない
+ *
  * @example
  * <Card>
  *   <CardHeader>売上</CardHeader>

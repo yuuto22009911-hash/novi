@@ -14,6 +14,11 @@ export type AvatarRequiredSlot = (typeof avatarRequiredSlots)[number]
 /**
  * 人や組織を表す画像。読み込みに失敗したら fallback を表示する。
  *
+ * @keywords アバター プロフィール画像 顔写真 avatar
+ *
+ * @a11y 画像が読めないときの頭文字表示には `role="img"` と `aria-label`（`name`）を与える。
+ * `name` を省略すると誰を指すのか伝わらない
+ *
  * @example
  * <Avatar src="/me.jpg" name="小島 佑翔" />
  */

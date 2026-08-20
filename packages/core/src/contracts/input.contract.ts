@@ -30,6 +30,11 @@ export type InputRequiredSlot = (typeof inputRequiredSlots)[number]
  *
  * IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
  *
+ * @keywords 入力欄 テキスト入力 テキストフィールド 1行入力 input textfield
+ *
+ * @a11y `label` は必須。`description` と `errorMessage` は `aria-describedby` で関連付く。
+ * IME 変換中の Enter は抑制されるため、変換確定が送信に化けない
+ *
  * @example
  * <Input
  *   label="メールアドレス"

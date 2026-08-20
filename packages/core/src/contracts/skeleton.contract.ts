@@ -16,6 +16,10 @@ export type SkeletonRequiredSlot = (typeof skeletonRequiredSlots)[number]
  * 支援技術には読ませない（`aria-hidden`）。読み込み状態は Spinner か live region で伝える。
  * `prefers-reduced-motion` が有効なときはアニメーションを減衰させる。
  *
+ * @keywords スケルトン 場所取り プレースホルダ skeleton
+ *
+ * @a11y `aria-hidden` で支援技術には読ませない。読み込み中であることは Spinner か live region で別に伝える
+ *
  * @example
  * <Skeleton className="h-4 w-40" />
  */

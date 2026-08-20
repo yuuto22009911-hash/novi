@@ -19,6 +19,9 @@ blob-report/
 .next/
 out/
 
+# MCP に同梱する IR。ビルド時に生成する（手で編集しない）
+packages/mcp/data/
+
 # docs
 apps/docs/.generated/
 apps/docs/.playwright/

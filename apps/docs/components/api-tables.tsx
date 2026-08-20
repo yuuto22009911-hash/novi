@@ -9,12 +9,21 @@ interface PropRow {
 
 interface ComponentEntry {
   name: string
+  summary: string
+  notes: string | null
+  a11y: string | null
+  implementedBy: string[]
+  importName: string
   props: PropRow[]
   example: string | null
   slots: { all: string[]; required: string[] }
 }
 
 const COMPONENTS = index.components as ComponentEntry[]
+
+/** 型名だけでは取りうる値が分からない。IR が持つ展開を引く。 */
+const TOKEN_TYPES = index.tokenTypes as Record<string, string>
+const displayType = (type: string) => TOKEN_TYPES[type] ?? type
 
 export function getComponent(name: string): ComponentEntry {
   const found = COMPONENTS.find((c) => c.name === name)
@@ -56,7 +65,9 @@ export function PropsTable({ name }: { name: string }) {
               {prop.name}
               {prop.required && <span className="text-site-accent"> *</span>}
             </td>
-            <td className="py-2 pr-4 font-mono text-xs text-site-muted">{prop.type}</td>
+            <td className="py-2 pr-4 font-mono text-xs text-site-muted">
+              {displayType(prop.type)}
+            </td>
             <td className="py-2 text-site-muted">{prop.doc}</td>
           </tr>
         ))}

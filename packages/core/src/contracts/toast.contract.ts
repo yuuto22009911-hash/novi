@@ -32,6 +32,10 @@ export type ToastRequiredSlot = (typeof toastRequiredSlots)[number]
  * 操作に必須の情報を置かない。自動で消えるため、読み落とすと取り返しがつかない。
  * `prefers-reduced-motion` が有効なときは出入りのアニメーションを行わない。
  *
+ * @keywords トースト 通知 スナックバー toast snackbar
+ *
+ * @a11y live region として読み上げられる。閉じるボタンには `aria-label` がある
+ *
  * @example
  * toast.add({ title: '保存しました', color: 'success' })
  */

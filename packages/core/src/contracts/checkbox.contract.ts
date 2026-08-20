@@ -14,6 +14,10 @@ export type CheckboxRequiredSlot = (typeof checkboxRequiredSlots)[number]
 /**
  * チェックボックス。
  *
+ * @keywords チェックボックス チェック 同意 checkbox
+ *
+ * @a11y Space でトグルする。ラベルは入力と関連付けられ、ラベル文字の押下でも反応する
+ *
  * @example
  * <Checkbox isSelected={agreed} onChange={setAgreed}>
  *   利用規約に同意する
@@ -48,6 +52,11 @@ export type CheckboxGroupRequiredSlot = (typeof checkboxGroupRequiredSlots)[numb
 
 /**
  * チェックボックスのグループ。ラベル・エラーをまとめて扱う。
+ *
+ * @keywords チェックボックスグループ 複数選択 複数選べる checkboxgroup
+ *
+ * @a11y group として提示され、`label` がグループ名になる。エラーはグループに対して1つ出し、
+ * `aria-describedby` で各入力から参照される
  *
  * @example
  * <CheckboxGroup label="通知方法" value={ways} onChange={setWays}>

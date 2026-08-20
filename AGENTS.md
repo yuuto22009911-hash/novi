@@ -6,8 +6,25 @@ Novi UI のモノレポ。**このファイルはリポジトリを触る側の�
 ```
 packages/core     挙動・a11y・型契約・トークン規約。スタイルを1行も持たない
 packages/raster   テーマ1: ミニマル / スイス系
+packages/mcp      AI エージェント向け MCP サーバ。読み取り専用・オフライン
 apps/docs         ドキュメントサイト（静的エクスポート）
 ```
+
+## AI 向けの出力はすべて生成物
+
+props 表・`llms.txt`・MCP の応答は、**契約から生成した1つの中間表現（IR）だけ**を読む。
+
+```
+packages/core/src/contracts/*.contract.ts       props / JSDoc / @a11y / @keywords
+packages/raster/scripts/design-rules.data.mjs   禁止クラス（CI の検査と同一の定義）
+packages/raster/src/tokens/raster-tokens.ts     数値トークン
+        ↓  scripts/generate-component-index.mjs
+component-index.json  →  docs の props 表 / llms.txt / @novi-ui/mcp
+```
+
+**API の情報を手で書かない。** 手書きは必ず実装とズレ、ズレた情報は
+人間には軽い不便だが AI には致命的（誤った API を自信を持って生成する）。
+`pnpm check:handwritten` がこれを検査している。
 
 ## 絶対にやらないこと
 
@@ -28,6 +45,8 @@ apps/docs         ドキュメントサイト（静的エクスポート）
 ## 新しいコンポーネントを追加する手順
 
 1. `packages/core/src/contracts/<name>.contract.ts` に slot 語彙と props 型を追加
+   - Props インターフェースの JSDoc に **要約1行 / `@keywords` / `@a11y` / `@example` の4点が必須**。
+     欠けると IR の生成が失敗してビルドが落ちる
 2. `packages/core/src/contracts/registry.ts` に登録
 3. `packages/raster/src/<name>/<name>.styles.ts` — `tv()` を **`satisfies` で型付け**して named export
 4. `packages/raster/src/<name>/<name>.tsx` — RAC を組み立て、**全 slot に `data-slot` を出力**
@@ -36,6 +55,9 @@ apps/docs         ドキュメントサイト（静的エクスポート）
 7. `apps/docs/demos/` にテーマ非依存のデモを追加
 
 基準となる実装は `packages/raster/src/button/`。**迷ったらこれに戻る。**
+
+`@keywords` には一般語（「表示」「選ぶ」単独）を入れない。
+無関係な問い合わせに当たると、MCP が未実装のものを実装済みと答えることになる。
 
 ## 落とし穴（すべて実際に踏んだ）
 
@@ -61,14 +83,16 @@ apps/docs         ドキュメントサイト（静的エクスポート）
 ## コマンド
 
 ```bash
-pnpm lint          # Biome + 設計制約
+pnpm lint               # Biome + 設計制約
 pnpm typecheck
-pnpm test          # 617件
+pnpm test               # core + raster + mcp
 pnpm build
-pnpm check:dist    # exports実在 / RSC安全 / use client / tree-shaking
+pnpm check:dist         # exports実在 / RSC安全 / use client / tree-shaking
+pnpm check:handwritten  # 手書きの API 情報が混ざっていないか
 pnpm size
 
-pnpm --filter @novi-ui/docs test:browser   # axe + テーマ切替 + 視覚回帰（要ビルド）
+pnpm --filter @novi-ui/mcp check:security   # MCP が env / FS / network に触れないこと
+pnpm --filter @novi-ui/docs test:browser    # axe + テーマ切替 + 視覚回帰（要ビルド）
 ```
 
 docs のビルドは **turbo 経由**（`pnpm turbo run build --filter=@novi-ui/docs`）。

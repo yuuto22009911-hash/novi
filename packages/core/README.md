@@ -126,9 +126,12 @@ const myButton = tv({
 | 選択状態 | `isSelected` | ~~`checked`~~ |
 | 開閉 | `isOpen` / `onOpenChange` | ~~`open` / `onChange`~~ |
 
-`variant` は `solid | outline | soft | ghost | plain` の5つのみ。
-語彙は core が固定し、**全テーマが全値を実装する**。
+`variant` / `size` / `color` / `radius` の語彙は core が固定し、**全テーマが全値を実装する**。
 テーマごとに variant 名が違うと、単一ドキュメント + テーマ切替という構想が崩れるため。
+
+取りうる値は `NOVI_VARIANTS` などの定数と、そこから生成される
+[llms.txt](https://novi-42r.pages.dev/llms.txt) を見てほしい。
+ここに書き写すと、語彙が増えたときに片方だけ古くなる。
 
 ## ライセンス
 

@@ -79,6 +79,40 @@ const RULES = [
       return problems
     },
   },
+  {
+    // 命名が揺れると AI の推測が外れる。一貫していれば「たぶんこう」が当たる（AC-01-2 / ADR-05）
+    name: '契約の props 名が React Aria の慣習に従う（AC-01-2）',
+    run() {
+      /** 使ってはいけない名前 → 使うべき名前。 */
+      const RENAMED = {
+        disabled: 'isDisabled',
+        onClick: 'onPress',
+        checked: 'isSelected',
+        selected: 'isSelected',
+        open: 'isOpen',
+        required: 'isRequired',
+        invalid: 'isInvalid',
+        readOnly: 'isReadOnly',
+        indeterminate: 'isIndeterminate',
+      }
+
+      const problems = []
+      const dir = join(ROOT, 'packages', 'core', 'src', 'contracts')
+      for (const file of collect(dir, (n) => n.endsWith('.contract.ts'))) {
+        const rel = relative(ROOT, file)
+        readFileSync(file, 'utf8')
+          .split('\n')
+          .forEach((line, i) => {
+            const match = /^\s{2}([a-zA-Z]+)\??:/.exec(line)
+            if (match === null) return
+            const should = RENAMED[match[1]]
+            if (should === undefined) return
+            problems.push(`${rel}:${i + 1}  \`${match[1]}\` ではなく \`${should}\` を使う`)
+          })
+      }
+      return problems
+    },
+  },
 ]
 
 let failed = 0

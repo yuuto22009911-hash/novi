@@ -8,63 +8,13 @@
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
+import {
+  DESIGN_RULE_EXCEPTIONS as EXCEPTIONS,
+  DESIGN_RULES as RULES,
+} from './design-rules.data.mjs'
 
 const PKG_ROOT = new URL('..', import.meta.url).pathname
 const SRC = join(PKG_ROOT, 'src')
-
-/**
- * 例外。キーはファイル名、値は許可するルール ID と理由。
- * 追加するときは PR で必ず理由を確認する。
- */
-const EXCEPTIONS = {
-  'spinner.styles.ts': {
-    rules: ['rotate'],
-    reason: 'ローディング表現の代替（点滅・バー往復）は視認性か情報量で劣る（ADR-R2）',
-  },
-  'raster-tokens.ts': {
-    rules: ['literal-color', 'duration', 'radius', 'shadow'],
-    reason: 'トークンの値そのものを定義する唯一の場所。ここだけは「使用」ではなく「定義」',
-  },
-}
-
-/** @type {{id: string, pattern: RegExp, message: string}[]} */
-const RULES = [
-  {
-    id: 'shadow',
-    pattern: /(?<![\w-])shadow-(?!none\b)[\w[]/g,
-    message: '影は使わない。階層は境界線と背景色の差で表す',
-  },
-  {
-    id: 'radius',
-    pattern: /(?<![\w-])rounded-(?:md|lg|xl|2xl|3xl|\[(?!var\(--novi))/g,
-    message: '角丸はトークン経由。Raster では最大 2px',
-  },
-  {
-    id: 'border-width',
-    pattern: /(?<![\w-])border-(?:[2-9]|\d\d)(?![\w-])/g,
-    message: '境界線は 1px のみ。面の分割は線の太さでなく余白で行う',
-  },
-  {
-    id: 'scale',
-    pattern: /(?<![\w-])(?:scale|scale-x|scale-y)-\d/g,
-    message: '動きで飾らない。モーションは opacity と translate のみ',
-  },
-  {
-    id: 'rotate',
-    pattern: /(?<![\w-])(?:rotate|animate-spin)/g,
-    message: '同上。回転は Spinner のみ例外（ADR-R2）',
-  },
-  {
-    id: 'literal-color',
-    pattern: /#[0-9a-fA-F]{3,8}\b|(?<![\w-])(?:rgb|rgba|hsl|oklch)\(/g,
-    message: '色は必ず --novi-color-* を経由する。リテラル値を書かない',
-  },
-  {
-    id: 'duration',
-    pattern: /(?<![\w-])duration-(?!\[var\(--novi)/g,
-    message: 'モーションの時間はトークン経由にする',
-  },
-]
 
 /** @param {string} dir @returns {string[]} */
 function collect(dir) {

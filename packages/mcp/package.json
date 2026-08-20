@@ -1,0 +1,48 @@
+{
+  "name": "@novi-ui/mcp",
+  "version": "0.1.0",
+  "description": "Novi UI MCP server — read-only and offline. Serves component API, slot contracts and Raster design rules to AI agents.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": "^22.18.0 || >=24.11.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "novi-mcp": "./dist/bin.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "generate": "node ../../scripts/generate-component-index.mjs --out packages/mcp/data/component-index.json",
+    "build": "pnpm generate && tsdown",
+    "dev": "pnpm generate && tsdown --watch",
+    "typecheck": "pnpm generate && tsc --noEmit",
+    "test": "pnpm generate && vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "pnpm generate && vitest run --coverage",
+    "check:security": "node scripts/check-security.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@novi-ui/core": "workspace:*",
+    "@novi-ui/raster": "workspace:*",
+    "@types/node": "^26.2.0",
+    "@vitest/coverage-v8": "^4.1.11",
+    "tsdown": "0.22.14",
+    "typescript": "6.0.3",
+    "vitest": "4.1.11"
+  }
+}

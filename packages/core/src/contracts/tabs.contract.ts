@@ -14,6 +14,10 @@ export type TabsRequiredSlot = (typeof tabsRequiredSlots)[number]
 /**
  * 同じ階層の内容を切り替える。矢印キーでタブ間を移動できる。
  *
+ * @keywords タブ タブ切り替え tab tabs
+ *
+ * @a11y 矢印キーでタブ間を移動し、Tab キーはパネルへ移る。選択中のタブは `aria-selected`
+ *
  * @example
  * <Tabs selectedKey={tab} onSelectionChange={setTab}>
  *   <Tab id="profile">プロフィール</Tab>

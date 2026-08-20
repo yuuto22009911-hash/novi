@@ -28,6 +28,11 @@ export type ModalRequiredSlot = (typeof modalRequiredSlots)[number]
 /**
  * モーダルダイアログ。開いている間フォーカスは内側に閉じ込められ、Escape で閉じる。
  *
+ * @keywords モーダル ダイアログ ポップアップ 確認画面 modal dialog
+ *
+ * @a11y 開いている間フォーカスは内側に閉じ込められ、Escape で閉じる
+ * （`isKeyboardDismissDisabled` で無効化できる）。閉じるボタンには `aria-label` がある
+ *
  * @example
  * <Modal isOpen={isOpen} onOpenChange={setIsOpen} size="md">
  *   <ModalTitle>削除しますか</ModalTitle>

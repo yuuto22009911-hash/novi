@@ -21,6 +21,11 @@ export type TextareaRequiredSlot = (typeof textareaRequiredSlots)[number]
 /**
  * 複数行テキスト入力。
  *
+ * @keywords テキストエリア 複数行入力 長文入力 備考欄 textarea
+ *
+ * @a11y `label` は必須。`description` と `errorMessage` は `aria-describedby` で関連付く。
+ * 改行が入る入力のため Enter では送信しない
+ *
  * @example
  * <TextArea label="備考" rows={4} maxLength={500} />
  */

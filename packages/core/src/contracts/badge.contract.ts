@@ -14,6 +14,10 @@ export type BadgeRequiredSlot = (typeof badgeRequiredSlots)[number]
 /**
  * 短いラベルで状態や分類を示す。
  *
+ * @keywords バッジ 状態ラベル ステータス表示 badge chip
+ *
+ * @a11y `dot` は `aria-hidden`。色や点だけで状態を伝えず、必ずテキストでも読めるようにする
+ *
  * @example
  * <Badge color="success" variant="soft">公開中</Badge>
  */

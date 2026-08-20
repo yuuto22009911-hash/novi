@@ -17,6 +17,10 @@ export type NoviPlacement = 'top' | 'bottom' | 'start' | 'end' | 'left' | 'right
 /**
  * トリガーに紐づいて浮かぶ小さな面。Escape で閉じてトリガーへフォーカスが戻る。
  *
+ * @keywords ポップオーバー 吹き出し popover
+ *
+ * @a11y Escape で閉じ、フォーカスはトリガーへ戻る
+ *
  * @example
  * <Popover placement="bottom">
  *   <Button>詳細</Button>

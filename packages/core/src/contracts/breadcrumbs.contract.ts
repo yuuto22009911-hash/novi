@@ -19,6 +19,10 @@ export type BreadcrumbsRequiredSlot = (typeof breadcrumbsRequiredSlots)[number]
 /**
  * 階層の中で現在どこにいるかを示す。
  *
+ * @keywords パンくず 階層表示 現在地 breadcrumb breadcrumbs
+ *
+ * @a11y `nav[aria-label]` として提示され、現在地は `aria-current="page"`。区切り記号は `aria-hidden`
+ *
  * @example
  * <Breadcrumbs>
  *   <Breadcrumb href="/">ホーム</Breadcrumb>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PropsTable, SlotTable } from '../../../../components/api-tables'
+import { getComponent, PropsTable, SlotTable } from '../../../../components/api-tables'
 import { ComponentDemo } from '../../../../components/component-demo'
 import { DEMO_META, DEMO_SLUGS, findDemoMeta } from '../../../../demos/meta'
 
@@ -29,6 +29,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const { slug } = await params
   const demo = findDemoMeta(slug)
   if (demo === undefined) notFound()
+
+  const { a11y } = getComponent(demo.component)
 
   return (
     <div className="flex gap-10">
@@ -78,6 +80,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         <section className="flex flex-col gap-3">
           <h2 className="text-lg font-medium tracking-tight">アクセシビリティ</h2>
           <ul className="flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-site-muted">
+            {/* 契約の @a11y をそのまま出す。ページごとに書き直すとテーマや実装とズレる */}
+            {a11y !== null && <li>{a11y}</li>}
             <li>キーボードだけで操作できます。フォーカスリングはコントラスト比 3:1 以上です。</li>
             <li>本文のコントラスト比は light / dark とも 4.5:1 以上を検査で保証しています。</li>
             <li>

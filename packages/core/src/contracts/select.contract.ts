@@ -39,6 +39,11 @@ export type SelectRequiredSlot = (typeof selectRequiredSlots)[number]
  *
  * IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
  *
+ * @keywords セレクト プルダウン ドロップダウン 選択肢 一覧から選ぶ select
+ *
+ * @a11y 矢印キーで移動、Enter で決定、Escape で閉じてトリガーへフォーカスが戻る。
+ * IME 変換中の Enter は抑制されるため、変換確定で誤決定しない
+ *
  * @example
  * <Select label="都道府県" selectedKey={pref} onSelectionChange={setPref}>
  *   <SelectItem id="tokyo">東京都</SelectItem>

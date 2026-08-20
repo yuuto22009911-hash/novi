@@ -21,6 +21,13 @@ const SITE = 'https://novi-42r.pages.dev'
 const index = JSON.parse(readFileSync(IR, 'utf8'))
 const { components, vocabularies, themes } = index
 
+const { designRules } = themes.raster
+
+/** 禁止事項。CI が実際に落とす規則をそのまま出す（検査と説明を一致させる）。 */
+const PROHIBITED = designRules.prohibited
+  .map((rule) => `- \`${rule.pattern}\` — ${rule.reason}`)
+  .join('\n')
+
 /** 契約名 → docs のパス。Textarea だけ表記が揺れる。 */
 const slugOf = (name) => (name === 'Textarea' ? 'textarea' : name.toLowerCase())
 
@@ -41,7 +48,7 @@ const CONVENTIONS = `## 必ず守ること（他のライブラリと違う点�
 
 function buildShort() {
   const list = components
-    .map((c) => `- [${c.name}](${SITE}/docs/components/${slugOf(c.name)}/): ${firstLine(c)}`)
+    .map((c) => `- [${c.name}](${SITE}/docs/components/${slugOf(c.name)}/): ${c.summary}`)
     .join('\n')
 
   return `# Novi UI
@@ -72,9 +79,19 @@ ${Object.entries(themes)
 
 コンポーネントはテーマパッケージから import する。**テーマを替えても props は変わらない。**
 
+## Raster で書いてはいけないクラス
+
+CI が機械的に検査している。違反するとビルドが落ちる。
+
+${PROHIBITED}
+
+${designRules.colorRule}
+
 ## コンポーネント
 
 ${list}
+
+一覧にないものは**未実装**。近いもので代用せず、react-aria-components を直接使う。
 
 ## Optional
 
@@ -83,26 +100,27 @@ ${list}
 `
 }
 
-/** props の説明から1行の要約を作る。無ければコンポーネント名から補う。 */
-function firstLine(component) {
-  const doc = component.example?.split('\n')[0] ?? ''
-  return doc.startsWith('<') || doc.startsWith('toast') || doc.startsWith('const')
-    ? `${component.name} コンポーネント`
-    : doc || `${component.name} コンポーネント`
-}
-
 function buildFull() {
   const sections = components.map((c) => {
     const props = c.props
-      .map(
-        (p) =>
-          `| \`${p.name}\` | \`${p.type}\` | ${p.required ? '必須' : '任意'} | ${p.doc || '-'} |`,
-      )
+      .map((p) => {
+        // 型名のままでは取りうる値が分からないので語彙に展開する。
+        // `|` はそのまま書くと Markdown の表を壊すため退避する
+        const type = (index.tokenTypes[p.type] ?? p.type).replaceAll('|', '\\|')
+        return `| \`${p.name}\` | \`${type}\` | ${p.required ? '必須' : '任意'} | ${p.doc || '-'} |`
+      })
       .join('\n')
+
+    const availability =
+      c.implementedBy.length === 0
+        ? '**未実装**。契約はあるがテーマが実装していない。使えない\n\n'
+        : `**import**: \`import { ${c.importName} } from '${themes[c.implementedBy[0]].pkg}'\`\n\n`
 
     return `### ${c.name}
 
-**slot**: ${c.slots.all.map((s) => `\`${s}\``).join(' ')}
+${c.summary}
+
+${availability}${c.notes === null ? '' : `${c.notes}\n\n`}**slot**: ${c.slots.all.map((s) => `\`${s}\``).join(' ')}
 **必須 slot**: ${c.slots.required.map((s) => `\`${s}\``).join(' ')}
 
 | prop | 型 | | 説明 |
@@ -112,8 +130,14 @@ ${props}
 \`\`\`tsx
 ${c.example ?? ''}
 \`\`\`
+
+**アクセシビリティ**: ${c.a11y}
 `
   })
+
+  const numeric = Object.entries(designRules.numeric)
+    .map(([group, values]) => `- \`${group}\`: ${JSON.stringify(values)}`)
+    .join('\n')
 
   return `# Novi UI — 全 API
 
@@ -121,6 +145,18 @@ ${c.example ?? ''}
 > このファイルは実装から自動生成されている。手書きの記述は含まれない。
 
 ${CONVENTIONS}
+
+## Raster のデザイン規則
+
+数値は定義そのもの。目分量で近い値を書かない。
+
+${numeric}
+
+### 書いてはいけないクラス
+
+${PROHIBITED}
+
+${designRules.colorRule}
 
 ## コンポーネント
 
