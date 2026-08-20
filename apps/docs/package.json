@@ -8,7 +8,7 @@
     "dev": "pnpm generate && next dev",
     "build": "pnpm generate && next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "pnpm generate && tsc --noEmit",
     "test:browser": "playwright test",
     "test:browser:update": "playwright test --update-snapshots"
   },
