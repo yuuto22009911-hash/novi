@@ -5,8 +5,15 @@
  * 「無いものを無いと言うこと」にある（ADR-A4）。後者は文面でしか検査できない。
  */
 import { describe, expect, it } from 'vitest'
+import type { ComponentIndex } from './index-data.js'
 import { index } from './index-data.js'
-import { getComponent, getDesignRules, listComponents, searchComponents } from './tools.js'
+import {
+  createTools,
+  getComponent,
+  getDesignRules,
+  listComponents,
+  searchComponents,
+} from './tools.js'
 
 describe('list_components（AC-04-1）', () => {
   const output = listComponents()
@@ -140,5 +147,110 @@ describe('search_components（AC-04-4 / FR-06 / ADR-A4）', () => {
 
   it('一致した語を示して、なぜその候補なのかを説明する', () => {
     expect(searchComponents('プルダウン')).toContain('一致した語')
+  })
+
+  it('複数当たったときは具体的な語で当たったものを先に出す', () => {
+    // 「ラジオボタン」は「ボタン」を含むため Button にも当たる。
+    // より長い語で当たった Radio を先に出す
+    const output = searchComponents('ラジオボタンを出したい')
+    expect(output).toContain('**Button**')
+    expect(output.indexOf('**Radio**')).toBeLessThan(output.indexOf('**Button**'))
+  })
+})
+
+/**
+ * 同梱データでは再現できない状態を、IR を差し替えて検査する。
+ *
+ * 「契約はあるがどのテーマも実装していない」「例外が1つも無いテーマ」は
+ * 今は起きないが、テーマを増やしたときに必ず通る道。
+ * 通らない道として書かれたコードは、通ったときに初めて壊れていると分かる。
+ */
+describe('テーマがまだ実装していない状態', () => {
+  const fixture: ComponentIndex = {
+    ...index,
+    themes: {
+      minimal: {
+        pkg: '@novi-ui/minimal',
+        label: 'Minimal',
+        description: 'テスト用',
+        designRules: {
+          numeric: { controlHeights: { sm: 32 } },
+          prohibited: [{ id: 'shadow', pattern: 'shadow-*', reason: '影は使わない' }],
+          exceptions: [],
+          colorRule: '色は --novi-color-* を経由する',
+        },
+      },
+    },
+    components: [
+      {
+        name: 'Button',
+        summary: 'ボタン。',
+        notes: null,
+        a11y: 'Enter / Space で発火する',
+        keywords: ['ボタン'],
+        implementedBy: ['minimal'],
+        importName: 'Button',
+        props: [{ name: 'variant', required: false, type: 'NoviVariant', doc: '' }],
+        example: '<Button>保存</Button>',
+        slots: { all: ['root', 'label'], required: ['root', 'label'] },
+      },
+      {
+        name: 'DatePicker',
+        summary: '日付を選ぶ。',
+        notes: null,
+        a11y: '矢印キーで日を移動する',
+        keywords: ['日付', 'datepicker'],
+        implementedBy: [],
+        importName: 'DatePicker',
+        props: [{ name: 'value', required: false, type: 'string', doc: '' }],
+        example: '<DatePicker />',
+        slots: { all: ['root'], required: ['root'] },
+      },
+    ],
+  }
+
+  const tools = createTools(fixture)
+
+  it('一覧では未実装と明示する', () => {
+    const output = tools.listComponents()
+    expect(output).toContain('DatePicker')
+    expect(output).toContain('**未実装**')
+  })
+
+  it('詳細を求められても使えないと答え、代替を提案しない', () => {
+    const output = tools.getComponent('DatePicker')
+    expect(output).toContain('どのテーマも実装していません')
+    expect(output).toContain('代用しないでください')
+  })
+
+  it('検索の候補に出さない', () => {
+    const output = tools.searchComponents('日付を選ばせたい')
+    expect(output).not.toContain('一致したコンポーネント')
+  })
+
+  it('例外が1つも無いテーマでは「なし」と答える', () => {
+    const output = tools.getDesignRules('minimal')
+    expect(output).toContain('## 例外')
+    expect(output).toContain('なし')
+  })
+})
+
+describe('IR が壊れている場合', () => {
+  // スキーマ検証を通れば起きないが、通らなかったときに黙って嘘をつかせない
+  const broken = createTools({
+    ...index,
+    components: index.components.map((c) =>
+      c.name === 'Button' ? { ...c, implementedBy: ['ghost-theme'] } : c,
+    ),
+  })
+
+  it('存在しないテーマを指しているとき、import 先を作らずに不明と答える', () => {
+    const output = broken.getComponent('Button')
+    expect(output).toContain('不明なテーマ')
+    expect(output).not.toContain("from '@novi-ui/ghost-theme'")
+  })
+
+  it('一覧でも不明なテーマとして出す', () => {
+    expect(broken.listComponents()).toContain('不明なテーマ')
   })
 })
