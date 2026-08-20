@@ -58,10 +58,11 @@ jobs:
       - name: バンドルサイズ
         run: pnpm size
 
-      # npm 11.5.1 以降が Trusted Publishing に必要。
-      # pnpm publish は内部で npm を使うため、ランナーの npm を上げておく
-      - name: npm を更新（Trusted Publishing の要件）
-        run: npm install -g npm@latest
+      # npm を更新してはいけない。
+      # `npm install -g npm@latest` は npm 自身を上書きする途中で壊れ、
+      # `Cannot find module 'promise-retry'` で落ちる（2026-08-20 に実際に発生）。
+      # そもそも pnpm 11.1.3 は OIDC / Trusted Publishing にネイティブ対応しており、
+      # publish に npm を経由しないため更新自体が不要。
 
       # changeset があれば version PR を作り、無ければ publish する。
       # NODE_AUTH_TOKEN は**設定しない**。空文字でも値として扱われ OIDC に落ちない
