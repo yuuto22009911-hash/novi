@@ -88,7 +88,7 @@ function firstLine(component) {
   const doc = component.example?.split('\n')[0] ?? ''
   return doc.startsWith('<') || doc.startsWith('toast') || doc.startsWith('const')
     ? `${component.name} コンポーネント`
-    : (doc || `${component.name} コンポーネント`)
+    : doc || `${component.name} コンポーネント`
 }
 
 function buildFull() {
