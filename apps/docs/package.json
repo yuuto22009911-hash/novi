@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "node scripts/generate-component-index.mjs",
+    "generate": "node scripts/generate-component-index.mjs && node scripts/generate-llms-txt.mjs",
     "dev": "pnpm generate && next dev",
     "build": "pnpm generate && next build",
     "start": "next start",

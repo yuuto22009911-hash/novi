@@ -22,3 +22,5 @@ out/
 # docs
 apps/docs/.generated/
 apps/docs/.playwright/
+apps/docs/public/llms.txt
+apps/docs/public/llms-full.txt
