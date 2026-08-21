@@ -34,7 +34,7 @@ component-index.json  →  docs の props 表 / llms.txt / @novi-ui/mcp
 - `packages/core` のメインエントリで React を import する（RSC が壊れる）
 - テーマから `UNSTABLE_` 接頭辞の API を直接 import する（`core/src/unstable/` 経由のみ）
 - テーマから `@react-aria/*` / `@react-stately/*` を直接 import する（core 経由のみ）
-- `shadow-*` / `rounded-md` 以上 / `border-2` 以上 / `scale-*` / `rotate-*` を使う
+- 影・角丸をトークンを通さず書く（`shadow-[var(--novi-shadow-*)]` / `rounded-[var(--novi-radius-*)]` のみ可）。`border-2` 以上 / `scale-*` / `rotate-*` を使う
 - リテラルの色値（`#fff` / `rgb()`）を書く。必ず `--novi-color-*` を経由する
 - Provider を必要とする設計を入れる
 - CSS リセットで `color` や `font` を触る（`@layer` 順序が詳細度に優先し、利用者のユーティリティに勝ってしまう）

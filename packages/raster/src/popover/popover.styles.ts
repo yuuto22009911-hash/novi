@@ -15,7 +15,7 @@ const slots = {
     'outline-none',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',
-    'shadow-none',
+    'shadow-[var(--novi-shadow-md)]',
     'data-[entering]:motion-safe:animate-[novi-fade-in_120ms_ease-out]',
   ].join(' '),
   // Raster では arrow を描画しない。任意 slot を省略する実例
@@ -40,7 +40,7 @@ const radius: VariantMap<NoviRadius, { root: string }> = {
 export const popoverStyles = tv({
   slots,
   variants: { radius },
-  defaultVariants: { radius: 'none' },
+  defaultVariants: { radius: 'lg' },
 })
 
 /**
@@ -55,8 +55,8 @@ export const tooltipStyles = tv({
       'outline-none max-w-xs',
       'bg-[var(--novi-color-fg)] text-[var(--novi-color-bg)]',
       'border border-transparent',
-      'rounded-[var(--novi-radius-none)]',
-      'shadow-none',
+      'rounded-[var(--novi-radius-sm)]',
+      'shadow-[var(--novi-shadow-md)]',
       'data-[entering]:motion-safe:animate-[novi-fade-in_120ms_ease-out]',
     ].join(' '),
     arrow: 'hidden',

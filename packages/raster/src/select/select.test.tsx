@@ -133,9 +133,8 @@ describe('Select: variant / size', () => {
 })
 
 describe('Select: Raster のデザイン規律', () => {
-  it('ポップオーバーに影を使わない（境界線と背景の差で浮かせる）', () => {
-    expect(selectStyles().popover()).toContain('shadow-none')
-    expect(selectStyles().popover()).not.toMatch(/shadow-(?!none)/)
+  it('ポップオーバーは浮く層としてトークンの影を持つ（ADR-R8）', () => {
+    expect(selectStyles().popover()).toContain('shadow-[var(--novi-shadow-md)]')
   })
 
   it('ポップオーバーがトリガーと同じ幅になる', () => {

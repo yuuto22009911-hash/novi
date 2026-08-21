@@ -52,8 +52,8 @@ describe('Badge: variant / size / color', () => {
 })
 
 describe('Badge: Raster のデザイン規律', () => {
-  it('ドットも角丸を持たない', () => {
-    expect(badgeStyles().dot()).toContain('rounded-[var(--novi-radius-none)]')
+  it('ドットは円にする（ADR-R8）', () => {
+    expect(badgeStyles().dot()).toContain('rounded-[var(--novi-radius-full)]')
   })
 })
 

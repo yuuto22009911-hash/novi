@@ -89,8 +89,8 @@ describe('Popover: Raster のデザイン規律', () => {
     expect(result.missing).toEqual([])
   })
 
-  it('影を使わない', () => {
-    expect(popoverStyles().root()).toContain('shadow-none')
+  it('浮く層としてトークンの影を持つ（ADR-R8）', () => {
+    expect(popoverStyles().root()).toContain('shadow-[var(--novi-shadow-md)]')
   })
 })
 

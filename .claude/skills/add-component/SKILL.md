@@ -63,7 +63,7 @@ export const <name>Styles = tv({
 
 - **`satisfies` を使う**。型注釈にすると任意 slot が呼べなくなる
 - **`variant` を最後に宣言する**。先に書くと `size` のクラスに負けて2つの variant が同じ見た目になる
-- `shadow-*` / `rounded-md` 以上 / `border-2` 以上 / `scale-*` / `rotate-*` / リテラル色値は使えない
+- 影・角丸はトークン経由のみ（`shadow-[var(--novi-shadow-*)]` / `rounded-[var(--novi-radius-*)]`）。`border-2` 以上 / `scale-*` / `rotate-*` / リテラル色値は使えない
 - 背景色を設定する面には**必ず文字色も設定する**。ダークで不可視になる
 
 ## 4. 実装（`packages/raster/src/<name>/<name>.tsx`）

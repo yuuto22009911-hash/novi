@@ -79,7 +79,7 @@ const radius: VariantMap<NoviRadius, { inputWrapper: string }> = {
 export const textareaStyles = tv({
   slots,
   variants: { variant, size, radius },
-  defaultVariants: { variant: 'outline', size: 'md', radius: 'none' },
+  defaultVariants: { variant: 'outline', size: 'md', radius: 'md' },
 })
 
 export type TextareaStyleProps = Parameters<typeof textareaStyles>[0]

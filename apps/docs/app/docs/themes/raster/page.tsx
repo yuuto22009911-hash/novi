@@ -18,8 +18,9 @@ export default function RasterPage() {
       <header className="flex flex-col gap-2">
         <h1 className="text-2xl font-medium tracking-tight">{raster.label}</h1>
         <p className="text-sm leading-relaxed text-site-muted">
-          {raster.description}。角を立て、影を使わず、余白と 1px の線だけで階層を作ります。
-          ごまかしが効かないぶん、余白と整列の精度がそのまま出ます。
+          {raster.description}。面は平らに保ち、余白と 1px の線と明度差で階層を作ります。
+          角丸は控えめな3段だけ、影は浮いている層だけ。
+          ごまかしの道具を最小限に絞ってあるぶん、余白と整列の精度がそのまま出ます。
         </p>
       </header>
 
@@ -32,32 +33,25 @@ export default function RasterPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium tracking-tight">
-          <code className="font-mono text-base">radius</code> は潰れます
-        </h2>
+        <h2 className="text-lg font-medium tracking-tight">角丸は3段だけ</h2>
         <p className="text-sm leading-relaxed text-site-muted">
-          {raster.label} は <code className="font-mono text-xs">radius</code> の語彙を
-          <strong className="font-medium text-site-fg">受け付けますが、見た目は変わりません</strong>
-          。 <code className="font-mono text-xs">none</code> 以外はすべて 2px です（
-          <code className="font-mono text-xs">full</code> だけは Avatar と Radio
-          の円のために残しています）。
+          小さな部品は <code className="font-mono text-xs">sm</code>、ボタンや入力は{' '}
+          <code className="font-mono text-xs">md</code>、メニューやダイアログなど浮く面は{' '}
+          <code className="font-mono text-xs">lg</code> が既定です。
+          これ以上丸くすると「丸い」が主張になり、ミニマルの範囲を出ます（ADR-R8）。
         </p>
         <TokenTable theme="raster" group="radius" />
-        <p className="text-sm leading-relaxed text-site-muted">
-          <strong className="font-medium text-site-fg">
-            これは仕様であって不具合ではありません。
-          </strong>{' '}
-          語彙は core が固定し、解釈はテーマの自由にする、という設計の帰結です。
-          そうしておくと、テーマを切り替えてもコードを1行も直さずに済みます。
-          角丸を活かしたい場合は、{raster.label} ではなく別のテーマを選んでください。
-        </p>
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium tracking-tight">影は使いません</h2>
+        <h2 className="text-lg font-medium tracking-tight">影は浮いている層だけ</h2>
         <p className="text-sm leading-relaxed text-site-muted">
-          浮かせる代わりに、境界線と背景色の差で階層を作ります。
-          オーバーレイも影ではなく、背景の暗転と 1px の枠で「上にある」ことを示します。
+          カードや入力といった<strong className="font-medium text-site-fg">面は平ら</strong>
+          なままで、境界線と背景色の差で階層を作ります。 影を持つのはメニュー・ポップオーバー・
+          ダイアログ・トーストといった
+          <strong className="font-medium text-site-fg">浮いている層</strong>
+          だけです。低い不透明度の柔らかい影が「浮いている」という事実だけを伝え、
+          装飾としては働きません。
         </p>
         <TokenTable theme="raster" group="shadow" />
       </section>

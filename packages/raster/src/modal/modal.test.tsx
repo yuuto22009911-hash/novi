@@ -117,9 +117,8 @@ describe('Modal: 操作（AC-04-2 / AC-04-3）', () => {
 })
 
 describe('Modal: Raster のデザイン規律', () => {
-  it('影を使わない（背景の暗転と 1px 境界線で階層を作る）', () => {
-    expect(modalStyles().panel()).toContain('shadow-none')
-    expect(modalStyles().panel()).not.toMatch(/shadow-(?!none)/)
+  it('浮く層としてトークンの影を持ち、背景は暗転する（ADR-R8）', () => {
+    expect(modalStyles().panel()).toContain('shadow-[var(--novi-shadow-lg)]')
     expect(modalStyles().backdrop()).toContain('var(--novi-color-overlay)')
   })
 

@@ -67,7 +67,7 @@ export const cardStyles = tv({
       false: {},
     },
   },
-  defaultVariants: { variant: 'outline', radius: 'none', isPressable: false },
+  defaultVariants: { variant: 'outline', radius: 'lg', isPressable: false },
 })
 
 export type CardStyleProps = Parameters<typeof cardStyles>[0]

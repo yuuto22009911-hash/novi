@@ -139,7 +139,7 @@ const radius: VariantMap<NoviRadius, { root: string }> = {
 export const buttonStyles = tv({
   slots,
   variants: { color, variant, size, radius },
-  defaultVariants: { color: 'default', variant: 'solid', size: 'md', radius: 'none' },
+  defaultVariants: { color: 'default', variant: 'solid', size: 'md', radius: 'md' },
 })
 
 export type ButtonStyleProps = Parameters<typeof buttonStyles>[0]

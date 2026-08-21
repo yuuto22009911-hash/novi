@@ -89,8 +89,8 @@ describe('Menu: Raster のデザイン規律', () => {
     expect(menuStyles().itemShortcut()).toContain('tabular-nums')
   })
 
-  it('影を使わない', () => {
-    expect(menuStyles().popover()).toContain('shadow-none')
+  it('浮く層としてトークンの影を持つ（ADR-R8）', () => {
+    expect(menuStyles().popover()).toContain('shadow-[var(--novi-shadow-md)]')
   })
 })
 

@@ -17,7 +17,7 @@ const slots = {
     'flex items-start gap-3 px-4 py-3 outline-none',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',
-    'shadow-none',
+    'shadow-[var(--novi-shadow-lg)]',
     'data-[entering]:motion-safe:animate-[novi-fade-in_120ms_ease-out]',
   ].join(' '),
   icon: 'shrink-0 mt-0.5 text-[var(--c)]',
@@ -60,7 +60,7 @@ const radius: VariantMap<NoviRadius, { root: string }> = {
 export const toastStyles = tv({
   slots,
   variants: { color, radius },
-  defaultVariants: { color: 'default', radius: 'none' },
+  defaultVariants: { color: 'default', radius: 'lg' },
 })
 
 export type ToastStyleProps = Parameters<typeof toastStyles>[0]

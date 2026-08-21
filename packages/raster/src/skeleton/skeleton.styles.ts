@@ -30,7 +30,7 @@ const radius: VariantMap<NoviRadius, { root: string }> = {
 export const skeletonStyles = tv({
   slots,
   variants: { radius },
-  defaultVariants: { radius: 'none' },
+  defaultVariants: { radius: 'sm' },
 })
 
 export type SkeletonStyleProps = Parameters<typeof skeletonStyles>[0]

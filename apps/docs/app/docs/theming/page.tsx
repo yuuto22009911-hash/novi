@@ -97,11 +97,12 @@ export default function ThemingPage() {
       </section>
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium tracking-tight">変えても効かないもの</h2>
+        <h2 className="text-lg font-medium tracking-tight">テーマには解釈の自由があります</h2>
         <p className="text-sm leading-relaxed text-site-muted">
-          テーマは語彙を解釈する自由を持っています。{raster.label} は角を立てる思想のため、
-          <code className="font-mono text-xs">radius=&quot;lg&quot;</code>{' '}
-          を渡しても見た目が変わりません。 これは仕様であって不具合ではありません。詳しくは{' '}
+          語彙は core が固定しますが、値の解釈はテーマが決めます。 たとえば {raster.label} の{' '}
+          <code className="font-mono text-xs">radius</code> は sm=6px / md=8px / lg=12px
+          の控えめな3段で、 これより丸くする語彙はありません。影も浮いている層にしか付きません。
+          その範囲を超えた見た目が必要なときは、トークンの上書きではなくテーマを替えます。 詳しくは{' '}
           <Link href="/docs/themes/raster/" className="underline">
             {raster.label} のデザイン言語
           </Link>

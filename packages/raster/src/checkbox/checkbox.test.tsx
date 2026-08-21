@@ -80,8 +80,9 @@ describe('Checkbox: 描画と操作', () => {
     expect(onChange).not.toHaveBeenCalled()
   })
 
-  it('角丸を持たない（Radio の丸と形で区別する）', () => {
-    expect(checkboxStyles().control()).toContain('rounded-[var(--novi-radius-none)]')
+  it('小さな角丸に留める（Radio の完全な円と形で区別する・ADR-R8）', () => {
+    expect(checkboxStyles().control()).toContain('rounded-[var(--novi-radius-sm)]')
+    expect(checkboxStyles().control()).not.toContain('rounded-[var(--novi-radius-full)]')
   })
 })
 

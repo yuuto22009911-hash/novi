@@ -25,7 +25,7 @@ const slots = {
     'w-full outline-none',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',
-    'shadow-none',
+    'shadow-[var(--novi-shadow-lg)]',
     'max-h-[calc(100dvh-2rem)] overflow-auto',
   ].join(' '),
   // 見出しと閉じるを同じ行に置く。情報の階層を横方向で作る
@@ -71,7 +71,7 @@ const radius: VariantMap<NoviRadius, { panel: string }> = {
 export const modalStyles = tv({
   slots,
   variants: { size, radius },
-  defaultVariants: { size: 'md', radius: 'none' },
+  defaultVariants: { size: 'md', radius: 'lg' },
 })
 
 export type ModalStyleProps = Parameters<typeof modalStyles>[0]

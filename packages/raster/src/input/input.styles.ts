@@ -94,7 +94,7 @@ const radius: VariantMap<NoviRadius, { inputWrapper: string }> = {
 export const inputStyles = tv({
   slots,
   variants: { variant, size, radius },
-  defaultVariants: { variant: 'outline', size: 'md', radius: 'none' },
+  defaultVariants: { variant: 'outline', size: 'md', radius: 'md' },
 })
 
 export type InputStyleProps = Parameters<typeof inputStyles>[0]

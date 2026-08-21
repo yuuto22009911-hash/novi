@@ -32,9 +32,9 @@ export default function HomePage() {
       <section className="flex flex-col gap-4">
         <h2 className="text-xl font-medium tracking-tight">組み上げるとこうなります</h2>
         <p className="max-w-2xl text-sm leading-relaxed text-site-muted">
-          Raster だけで作った管理画面です。影も角丸も使わず、余白と 1px
-          の線と明度差だけで階層を作ります。 情報密度の高い実務画面が Raster
-          の得意分野です。右上でテーマを切り替えると、この画面ごと別の見た目になります。
+          Raster だけで作った管理画面です。面は平らなまま、余白と 1px
+          の線と明度差で階層を作り、浮いている層だけが薄い影を持ちます。 情報密度の高い実務画面が
+          Raster の得意分野です。右上でテーマを切り替えると、この画面ごと別の見た目になります。
         </p>
         <DashboardShowcase />
         <p className="max-w-2xl text-sm leading-relaxed text-site-muted">

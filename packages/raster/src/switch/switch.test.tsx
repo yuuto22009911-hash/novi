@@ -61,14 +61,13 @@ describe('Switch: 描画と操作', () => {
   })
 })
 
-describe('Switch: Raster は矩形（ADR-R3）', () => {
-  it('トラックが角丸を持たない', () => {
-    expect(switchStyles().track()).toContain('rounded-[var(--novi-radius-none)]')
-    expect(switchStyles().track()).not.toContain('rounded-full')
+describe('Switch: 形状（ADR-R8 で錠剤形に改定）', () => {
+  it('トラックは錠剤形にする（ADR-R8）', () => {
+    expect(switchStyles().track()).toContain('rounded-[var(--novi-radius-full)]')
   })
 
-  it('サムも角丸を持たない', () => {
-    expect(switchStyles().thumb()).toContain('rounded-[var(--novi-radius-none)]')
+  it('サムは円にする（ADR-R8）', () => {
+    expect(switchStyles().thumb()).toContain('rounded-[var(--novi-radius-full)]')
   })
 
   it('移動は translate で行う（scale や rotate を使わない）', () => {

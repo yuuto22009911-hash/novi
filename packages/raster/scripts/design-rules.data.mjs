@@ -18,15 +18,15 @@
 export const DESIGN_RULES = [
   {
     id: 'shadow',
-    prohibited: 'shadow-*（shadow-none は可）',
-    pattern: /(?<![\w-])shadow-(?!none\b)[\w[]/g,
-    message: '影は使わない。階層は境界線と背景色の差で表す',
+    prohibited: 'shadow-*（shadow-none とトークン shadow-[var(--novi-shadow-*)] は可）',
+    pattern: /(?<![\w-])shadow-(?!none\b)(?!\[var\(--novi-shadow)[\w[]/g,
+    message: '影はトークン経由で、浮いている層だけに使う。面は境界線と背景色の差で表す',
   },
   {
     id: 'radius',
     prohibited: 'rounded-md / lg / xl / 2xl / 3xl と任意値の角丸',
     pattern: /(?<![\w-])rounded-(?:md|lg|xl|2xl|3xl|\[(?!var\(--novi))/g,
-    message: '角丸はトークン経由。Raster では最大 2px',
+    message: '角丸はトークン経由。Raster は sm=6 / md=8 / lg=12px の3段',
   },
   {
     id: 'border-width',

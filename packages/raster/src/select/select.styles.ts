@@ -36,8 +36,8 @@ const slots = {
     'bg-[var(--novi-color-bg)]',
     'text-[var(--novi-color-fg)]',
     'border border-[var(--novi-color-border)]',
-    'rounded-[var(--novi-radius-none)]',
-    'shadow-none',
+    'rounded-[var(--novi-radius-lg)]',
+    'shadow-[var(--novi-shadow-md)]',
     // トリガーと同じ幅に揃える
     'w-[var(--trigger-width)]',
     'overflow-auto max-h-64',
@@ -47,7 +47,7 @@ const slots = {
     'flex items-center justify-between gap-2',
     'px-2 py-1.5 cursor-pointer outline-none',
     'text-[var(--novi-color-fg)]',
-    'rounded-[var(--novi-radius-none)]',
+    'rounded-[var(--novi-radius-sm)]',
     // 選択中は面ではなく文字の強さで示す。面を増やさない
     'data-[focused]:bg-[var(--novi-color-subtle)]',
     'data-[selected]:font-medium',
@@ -103,7 +103,7 @@ const radius: VariantMap<NoviRadius, { trigger: string }> = {
 export const selectStyles = tv({
   slots,
   variants: { variant, size, radius },
-  defaultVariants: { variant: 'outline', size: 'md', radius: 'none' },
+  defaultVariants: { variant: 'outline', size: 'md', radius: 'md' },
 })
 
 export type SelectStyleProps = Parameters<typeof selectStyles>[0]

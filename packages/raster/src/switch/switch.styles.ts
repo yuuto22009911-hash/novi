@@ -21,7 +21,7 @@ const slots = {
   root: ['inline-flex items-center gap-2', 'cursor-pointer', disabledState].join(' '),
   track: [
     'shrink-0 inline-flex items-center',
-    'rounded-[var(--novi-radius-none)]',
+    'rounded-[var(--novi-radius-full)]',
     'border border-[var(--novi-color-border-strong)]',
     'bg-[var(--novi-color-subtle)]',
     'transition-[background-color,border-color]',
@@ -31,7 +31,7 @@ const slots = {
   ].join(' '),
   // サムも矩形。translate で滑らせる（scale や rotate は使わない）
   thumb: [
-    'rounded-[var(--novi-radius-none)]',
+    'rounded-[var(--novi-radius-full)]',
     'bg-[var(--novi-color-bg)]',
     'transition-transform',
     'duration-[var(--novi-duration-fast)] ease-[var(--novi-ease-standard)]',

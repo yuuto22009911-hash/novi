@@ -17,7 +17,7 @@ const slots = {
   control: [
     'shrink-0 inline-grid place-items-center',
     'border border-[var(--novi-color-border-strong)]',
-    'rounded-[var(--novi-radius-none)]',
+    'rounded-[var(--novi-radius-sm)]',
     'bg-[var(--novi-color-bg)]',
     'transition-[background-color,border-color]',
     'duration-[var(--novi-duration-fast)] ease-[var(--novi-ease-standard)]',

@@ -62,8 +62,8 @@ describe('Toast: 表示', () => {
 })
 
 describe('Toast: Raster のデザイン規律', () => {
-  it('影を使わない', () => {
-    expect(toastStyles().root()).toContain('shadow-none')
+  it('浮く層としてトークンの影を持つ（ADR-R8）', () => {
+    expect(toastStyles().root()).toContain('shadow-[var(--novi-shadow-lg)]')
   })
 
   it('右下に固定する', () => {

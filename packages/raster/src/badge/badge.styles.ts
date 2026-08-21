@@ -17,7 +17,7 @@ const slots = {
     'border border-transparent',
   ].join(' '),
   // 円ではなく正方形。Raster では点も角を立てる
-  dot: 'shrink-0 rounded-[var(--novi-radius-none)] bg-current',
+  dot: 'shrink-0 rounded-[var(--novi-radius-full)] bg-current',
   label: 'truncate',
 } satisfies SlotMap<typeof badgeSlots, (typeof badgeRequiredSlots)[number]>
 
@@ -105,7 +105,7 @@ export const badgeStyles = tv({
   // variant を最後に宣言する。tv は宣言順に適用するため、
   // 先に書くと `plain` の px-0 が size の px-2 に負けて ghost と同じ見た目になる。
   variants: { color, size, radius, variant },
-  defaultVariants: { color: 'default', variant: 'soft', size: 'md', radius: 'none' },
+  defaultVariants: { color: 'default', variant: 'soft', size: 'md', radius: 'sm' },
 })
 
 export type BadgeStyleProps = Parameters<typeof badgeStyles>[0]

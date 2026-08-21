@@ -98,19 +98,31 @@ describe('彩度の規律（AC-01-3 / AC-01-4）', () => {
 })
 
 describe('Raster デザイン言語（数値定義）', () => {
-  it('角丸は最大でも 2px（ADR-R1）', () => {
-    const oversized = Object.entries(RASTER_RADII)
-      .filter(([name]) => name !== 'full')
-      .filter(([, value]) => Number.parseFloat(value) > 2)
-    expect(oversized).toEqual([])
+  it('角丸は none=0 で、sm→md→lg が控えめな範囲で単調増加する（ADR-R8）', () => {
+    expect(RASTER_RADII.none).toBe('0px')
+    const steps = ['sm', 'md', 'lg'].map((k) => Number.parseFloat(RASTER_RADII[k] as string))
+    for (let i = 0; i < steps.length; i++) {
+      // 16px を超えると「丸い」が主張になり、ミニマルの範囲を出る
+      expect(steps[i]).toBeGreaterThanOrEqual(4)
+      expect(steps[i]).toBeLessThanOrEqual(16)
+      if (i > 0) expect(steps[i]).toBeGreaterThan(steps[i - 1] as number)
+    }
   })
 
   it('radius が NOVI_RADII を網羅している', () => {
     expect(NOVI_RADII.filter((r) => !(r in RASTER_RADII))).toEqual([])
   })
 
-  it('影は一切使わない', () => {
-    expect(Object.values(RASTER_SHADOWS).every((v) => v === 'none')).toBe(true)
+  it('影は浮く層（md / lg）だけが持ち、none は本当に無い（ADR-R8）', () => {
+    expect(RASTER_SHADOWS.none).toBe('none')
+    for (const key of ['md', 'lg']) {
+      const value = RASTER_SHADOWS[key] as string
+      expect(value).not.toBe('none')
+      // 影は「浮いている事実」を伝えるだけ。濃い影は別の美学になる
+      for (const alpha of [...value.matchAll(/\/ (0\.\d+)\)/g)].map((m) => Number(m[1]))) {
+        expect(alpha).toBeLessThanOrEqual(0.2)
+      }
+    }
   })
 
   it('コンポーネント高さが 32 / 40 / 48px（AC-01-2）', () => {

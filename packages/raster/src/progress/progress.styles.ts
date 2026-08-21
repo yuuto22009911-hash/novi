@@ -15,7 +15,7 @@ const slots = {
   track: [
     'w-full overflow-hidden',
     'bg-[var(--novi-color-subtle)]',
-    'rounded-[var(--novi-radius-none)]',
+    'rounded-[var(--novi-radius-full)]',
   ].join(' '),
   indicator: [
     'h-full bg-[var(--c)]',

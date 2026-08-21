@@ -35,14 +35,15 @@ export const TOKEN_GROUPS = [
     id: 'radius',
     prefix: 'radius-',
     label: '角丸',
-    description: 'Raster では full 以外すべて 2px 以下。角を立てるのが思想（ADR-R1）',
+    description: '3段の階調。小さな部品 sm / 操作類 md / 浮く面 lg が既定（ADR-R8）',
     values: RASTER_RADII,
   },
   {
     id: 'shadow',
     prefix: 'shadow-',
     label: '影',
-    description: 'Raster ではすべて none。階層は境界線と背景色の差で表す',
+    description:
+      '浮いている層（メニュー・ダイアログ）だけが持つ。面は平らで、境界線と背景色の差で階層を作る',
     values: RASTER_SHADOWS,
   },
   {
