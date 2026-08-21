@@ -102,3 +102,21 @@ test('theming ページの色見本はプレビュー内でだけ解決される
   expect(await swatch.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe(swatchBefore)
   expect(await header.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(headerBefore)
 })
+
+test('ダッシュボードがテーマのトークンで描かれている（T-28）', async ({ page }) => {
+  await page.goto('/')
+  await page.waitForLoadState('networkidle')
+
+  const bar = page.locator('[role="img"][aria-label*="売上推移"] > div').first()
+  await expect(bar).toBeVisible()
+
+  const before = await bar.evaluate((el) => getComputedStyle(el).backgroundColor)
+  // 変数が解決されていなければ透明になる。ショーケースとして成立しない
+  expect(before).not.toBe('rgba(0, 0, 0, 0)')
+
+  await page.getByRole('button', { name: 'ダーク' }).click()
+  await page.waitForTimeout(150)
+
+  // スキームに追従する = サイトの CSS ではなくテーマのトークンで描かれている証拠
+  expect(await bar.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe(before)
+})

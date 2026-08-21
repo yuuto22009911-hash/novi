@@ -6,8 +6,8 @@ import Link from 'next/link'
 const HeroPreview = dynamic(() =>
   import('../components/hero-preview').then((m) => ({ default: m.HeroPreview })),
 )
-const SiteInNovi = dynamic(() =>
-  import('../components/site-in-novi').then((m) => ({ default: m.SiteInNovi })),
+const DashboardShowcase = dynamic(() =>
+  import('../components/dashboard-showcase').then((m) => ({ default: m.DashboardShowcase })),
 )
 
 export default function HomePage() {
@@ -27,6 +27,20 @@ export default function HomePage() {
         </p>
 
         <HeroPreview />
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-xl font-medium tracking-tight">組み上げるとこうなります</h2>
+        <p className="max-w-2xl text-sm leading-relaxed text-site-muted">
+          Raster だけで作った管理画面です。影も角丸も使わず、余白と 1px
+          の線と明度差だけで階層を作ります。 情報密度の高い実務画面が Raster
+          の得意分野です。右上でテーマを切り替えると、この画面ごと別の見た目になります。
+        </p>
+        <DashboardShowcase />
+        <p className="max-w-2xl text-sm leading-relaxed text-site-muted">
+          このページの外枠がテーマに染まらないのは、比較対象をはっきりさせるための設計です。
+          実際のアプリは、上のように Novi だけで組めます。
+        </p>
       </section>
 
       <section className="flex flex-col gap-4">
@@ -52,16 +66,6 @@ export default function HomePage() {
             </div>
           ))}
         </dl>
-      </section>
-
-      <section className="flex flex-col gap-4">
-        <h2 className="text-xl font-medium tracking-tight">サイトそのものも作れます</h2>
-        <p className="max-w-2xl text-sm leading-relaxed text-site-muted">
-          このページの外枠がテーマに染まらないのは、比較対象をはっきりさせるための設計です。
-          下はこのサイト自身の UI を Novi だけで組み直したものです。
-          右上でテーマを切り替えると、この「サイト」ごと別の見た目になります。
-        </p>
-        <SiteInNovi />
       </section>
 
       <section className="flex flex-col gap-4">

@@ -96,3 +96,18 @@ test('モバイルの axe: violations 0', async ({ page }) => {
   const summary = results.violations.map((v) => `${v.id}: ${v.description}`)
   expect(summary, summary.join('\n')).toEqual([])
 })
+
+test('ダッシュボードの指標が欠けずに読める', async ({ page }) => {
+  await page.goto('/')
+  await page.waitForLoadState('networkidle')
+
+  // 375px で2列にすると内容幅が 105px を切り、金額が必ず途中で切れていた。
+  // 数値は折り返せないので、欠けた時点で「読めない」= 見せる意味が無くなる
+  const clipped = await page.evaluate(() =>
+    [...document.querySelectorAll('span')]
+      .filter((s) => /^[¥0-9]/.test(s.textContent ?? '') && s.scrollWidth > 0)
+      .filter((s) => s.scrollWidth > s.clientWidth + 1)
+      .map((s) => s.textContent),
+  )
+  expect(clipped, `欠けている数値: ${clipped.join(', ')}`).toEqual([])
+})
