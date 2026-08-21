@@ -97,17 +97,48 @@ test('モバイルの axe: violations 0', async ({ page }) => {
   expect(summary, summary.join('\n')).toEqual([])
 })
 
-test('ダッシュボードの指標が欠けずに読める', async ({ page }) => {
+/**
+ * ダッシュボードは3つのタブすべてを見る。
+ *
+ * 既定タブしか見ないと、他のタブが壊れたまま気づけない。
+ * 実際 375px では「売上」タブの平均単価が、320px では顧客タブの数値が欠けていた。
+ */
+for (const tab of ['概要', '売上', '顧客']) {
+  test(`ダッシュボード（${tab}）の値が欠けずに読める`, async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+    await page.getByRole('tab', { name: tab }).click()
+
+    const clipped = await page.evaluate(() =>
+      [...document.querySelectorAll('span, dd, td')]
+        // sr-only は幅 1px に潰す実装なので、はみ出すのが正しい
+        .filter((e) => !e.classList.contains('sr-only') && e.closest('.sr-only') === null)
+        .filter((e) => e.children.length === 0 && (e.textContent ?? '').trim() !== '')
+        .filter((e) => e.scrollWidth > e.clientWidth + 1)
+        .map((e) => e.textContent?.trim()),
+    )
+    expect(clipped, `欠けている値: ${clipped.join(', ')}`).toEqual([])
+  })
+}
+
+test('ダッシュボードの一覧が横スクロールなしで読める', async ({ page }) => {
   await page.goto('/')
   await page.waitForLoadState('networkidle')
 
-  // 375px で2列にすると内容幅が 105px を切り、金額が必ず途中で切れていた。
-  // 数値は折り返せないので、欠けた時点で「読めない」= 見せる意味が無くなる
-  const clipped = await page.evaluate(() =>
-    [...document.querySelectorAll('span')]
-      .filter((s) => /^[¥0-9]/.test(s.textContent ?? '') && s.scrollWidth > 0)
-      .filter((s) => s.scrollWidth > s.clientWidth + 1)
-      .map((s) => s.textContent),
+  // 表のままだと 412px の中身が 211px の枠に押し込まれ、状態バッジが切れていた。
+  // 狭い画面では1件1ブロックに組み替わり、表は出ない
+  await expect(page.locator('table')).toBeHidden()
+
+  const list = page.locator('ul[aria-label="最近の注文"]')
+  await expect(list).toBeVisible()
+  await expect(list.locator('li')).toHaveCount(5)
+
+  // 各項目のラベルと値がすべて画面内に収まっている
+  const overflowing = await list.evaluate(
+    (ul) =>
+      [...ul.querySelectorAll('dd, dt')].filter(
+        (e) => e.getBoundingClientRect().right > window.innerWidth,
+      ).length,
   )
-  expect(clipped, `欠けている数値: ${clipped.join(', ')}`).toEqual([])
+  expect(overflowing).toBe(0)
 })
