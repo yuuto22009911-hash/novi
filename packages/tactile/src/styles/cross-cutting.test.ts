@@ -38,7 +38,12 @@ describe('公開 API', () => {
   it('公開しているコンポーネント名が契約の語彙に含まれる', () => {
     const contracts = new Set(Object.keys(NOVI_CONTRACTS))
     const components = Object.keys(tactile).filter(
-      (name) => /^[A-Z]/.test(name) && !name.endsWith('Styles'),
+      (name) =>
+        /^[A-Z]/.test(name) &&
+        !name.endsWith('Styles') &&
+        // COLOR_OPTIONS のような定数はコンポーネントではない。
+        // 大文字始まりだけで判定すると、公開する定数を1つ増やすたびにここが落ちる
+        !/^[A-Z0-9_]+$/.test(name),
     )
     // 照合を緩める点が2つある:
     // - 契約1つに複数の公開名が対応する（Tabs → TabItem / TabContent）ので接頭辞で見る。

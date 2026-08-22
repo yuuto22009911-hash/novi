@@ -46,6 +46,7 @@ function tokenBlock(selector, indent) {
   return [
     `${indent}${selector} {`,
     ...TOKEN_GROUPS.map((group) => decls(group.values, group.prefix, inner)),
+    swatchDecls('light', inner),
     `${indent}}`,
   ].join('\n')
 }
@@ -57,8 +58,29 @@ function darkBlock(selector, indent) {
     ...TOKEN_GROUPS.filter((group) => group.dark !== undefined).map((group) =>
       decls(group.dark ?? {}, group.prefix, `${indent}  `),
     ),
+    swatchDecls('dark', `${indent}  `),
     `${indent}}`,
   ].join('\n')
+}
+
+/**
+ * 色見本用の変数。**ColorPicker のスウォッチが参照する。**
+ *
+ * スウォッチに `data-novi-color` を置く形は採れない。docs は FOUC 対策で
+ * `<html>` にもテーマを宣言するため、色の上書きセレクタが「テーマルートの子孫」に
+ * 効くようにすると、ページ全体が最後に選んだ色で塗られてしまう。
+ * 色ごとの値を独立した変数として**テーマルートで一度に宣言**すれば、
+ * スウォッチは自分の色だけを参照でき、ライト / ダークの選択も親のものが効く。
+ *
+ * @param {'light'|'dark'} scheme @param {string} indent
+ */
+function swatchDecls(scheme, indent) {
+  return COLOR_SET.map((entry) =>
+    [
+      `${indent}--novi-swatch-${entry.id}: ${entry[scheme].primary};`,
+      `${indent}--novi-swatch-${entry.id}-fg: ${entry[scheme].primaryFg};`,
+    ].join('\n'),
+  ).join('\n')
 }
 
 /** @param {string} id */
