@@ -120,3 +120,32 @@ test('ダッシュボードがテーマのトークンで描かれている（T-
   // スキームに追従する = サイトの CSS ではなくテーマのトークンで描かれている証拠
   expect(await bar.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe(before)
 })
+
+test('ヘッダーのナビが現在地を示す', async ({ page }) => {
+  const banner = () => page.getByRole('banner')
+
+  // コンポーネント配下では、リンク先（button）以外のページでも「コンポーネント」が現在地
+  await page.goto('/docs/components/select/')
+  const components = banner().getByRole('link', { name: 'コンポーネント' })
+  await expect(components).toHaveAttribute('aria-current', 'page')
+
+  // 現在地とそれ以外で文字色が実際に変わっている（クラスではなく計算結果を見る）
+  const currentColor = await components.evaluate((el) => getComputedStyle(el).color)
+  const otherColor = await banner()
+    .getByRole('link', { name: 'はじめに' })
+    .evaluate((el) => getComputedStyle(el).color)
+  expect(currentColor).not.toBe(otherColor)
+
+  // デザイン言語のページは「テーマの調整」の節
+  await page.goto('/docs/themes/raster/')
+  await expect(banner().getByRole('link', { name: 'テーマの調整' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  )
+
+  // トップではどれも現在地ではない
+  await page.goto('/')
+  for (const name of ['はじめに', 'コンポーネント', 'テーマの調整']) {
+    await expect(banner().getByRole('link', { name })).not.toHaveAttribute('aria-current', 'page')
+  }
+})

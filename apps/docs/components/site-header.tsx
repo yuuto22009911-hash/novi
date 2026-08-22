@@ -1,8 +1,22 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { THEME_NAMES, themeRegistry } from '../lib/theme-registry'
 import { useThemeState } from '../lib/use-novi-theme'
+
+/**
+ * ナビの項目。`match` の接頭辞に一致するページで現在地として光る。
+ *
+ * リンク先そのものより広く取る:「コンポーネント」は Button ページへ飛ぶが、
+ * どのコンポーネントのページにいても現在地はコンポーネントの節にいる。
+ * /docs/themes/*（デザイン言語）も「テーマの調整」の節として扱う。
+ */
+const NAV_LINKS = [
+  { href: '/docs/getting-started/', label: 'はじめに', match: ['/docs/getting-started'] },
+  { href: '/docs/components/button/', label: 'コンポーネント', match: ['/docs/components'] },
+  { href: '/docs/theming/', label: 'テーマの調整', match: ['/docs/theming', '/docs/themes'] },
+] as const
 
 /**
  * サイトの外枠。**テーマの影響を受けない**（ADR-D1）。
@@ -17,6 +31,11 @@ import { useThemeState } from '../lib/use-novi-theme'
  */
 export function SiteHeader() {
   const { theme, scheme, setTheme, setScheme } = useThemeState()
+  const pathname = usePathname()
+
+  /** 現在地か。末尾スラッシュの揺れを吸収するため接頭辞で見る。 */
+  const isCurrent = (prefixes: readonly string[]) =>
+    prefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`))
 
   return (
     <header className="border-b border-site-border">
@@ -26,21 +45,25 @@ export function SiteHeader() {
         </Link>
 
         <nav className="order-last flex w-full items-center gap-x-5 text-sm sm:order-none sm:w-auto sm:gap-4">
-          {(
-            [
-              ['/docs/getting-started/', 'はじめに'],
-              ['/docs/components/button/', 'コンポーネント'],
-              ['/docs/theming/', 'テーマの調整'],
-            ] as const
-          ).map(([href, label]) => (
-            <Link
-              key={href}
-              href={href}
-              className="flex h-12 items-center whitespace-nowrap text-site-muted hover:text-site-fg sm:h-auto"
-            >
-              {label}
-            </Link>
-          ))}
+          {NAV_LINKS.map(({ href, label, match }) => {
+            const current = isCurrent(match)
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={current ? 'page' : undefined}
+                className={[
+                  'flex h-12 items-center whitespace-nowrap sm:h-auto',
+                  // 現在地は fg（ダークでは白、ライトでは黒）。色弱でも追えるよう下線も足す
+                  current
+                    ? 'text-site-fg underline decoration-1 underline-offset-[6px]'
+                    : 'text-site-muted hover:text-site-fg',
+                ].join(' ')}
+              >
+                {label}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
