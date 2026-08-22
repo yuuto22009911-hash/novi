@@ -1,0 +1,44 @@
+name: 視覚回帰の基準を更新
+
+# 基準画像は**検証するのと同じ環境**で作らないと意味がない。
+# 手元（macOS）で撮った基準を CI（Linux）で判定すると、環境差のぶんだけ
+# 許容差を緩めることになり、緩めた検査は本物の変化も見逃す（STATUS.md #29）。
+# 更新はこのワークフローに集約し、開発者に Docker を要求しない。
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - name: Playwright を用意
+        run: pnpm --filter @novi-ui/docs exec playwright install chromium --with-deps
+
+      - name: 基準を撮り直す
+        run: pnpm --filter @novi-ui/docs exec playwright test e2e/visual-regression.spec.ts --update-snapshots=all
+
+      - name: 差分があれば push する
+        run: |
+          if git diff --quiet -- apps/docs/e2e/__screenshots__; then
+            echo "基準に差分なし"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add apps/docs/e2e/__screenshots__
+          git commit -m 'test(docs): update visual regression baselines on linux'
+          git push
