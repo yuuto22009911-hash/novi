@@ -16,7 +16,9 @@ import { disabledState, focusRing } from '../styles/focus-ring'
  * トグルは「掴んで動かす」ものなので、沈むより伸びる方が動作の予告になる。
  */
 const slots = {
-  root: ['inline-flex items-center gap-2', 'cursor-pointer', disabledState].join(' '),
+  // 行全体が押せる。トラック（31px）だけでは指のタップ下限を割るため、
+  // ラベルを含む行に 44px の下限を持たせる（e2e の実測で判明）
+  root: ['inline-flex items-center gap-3 min-h-11', 'cursor-pointer', disabledState].join(' '),
   track: [
     'shrink-0 inline-flex items-center',
     'rounded-[var(--novi-radius-full)]',

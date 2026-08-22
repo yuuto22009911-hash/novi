@@ -28,6 +28,8 @@ const SKIP_DIRS = new Set([
   'data',
   'test-results',
   'playwright-report',
+  // 失敗時に Playwright が書き出すレポート。生成物であってソースではない
+  '.playwright',
 ])
 
 /**
