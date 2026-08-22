@@ -5,7 +5,11 @@
  * 余白・階層・整列の精度がそのまま出る。**すべて数値で固定する。**
  *
  * 値は目分量で決めない。`raster-tokens.test.ts` のコントラスト検査を先に通すこと。
+ * ブランド色（primary / secondary）はカラーセット `color-set.ts` が持つ。
  */
+// .ts 拡張子は必須。このファイルは生成器（Node の型ストリップ実行）からも import され、
+// Node の ESM は拡張子の推測をしない
+import { colorById, DEFAULT_COLOR_ID } from './color-set.ts'
 
 /**
  * 角丸は3段の階調を持つ（ADR-R8 で改定。旧: 全て 2px）。
@@ -96,17 +100,25 @@ const NEUTRAL_DARK = {
   'default-fg': 'oklch(95% 0 0)',
 }
 
+const DEFAULT_COLOR = colorById(DEFAULT_COLOR_ID)
+const DEFAULT_PAIR = colorById(DEFAULT_COLOR.pair)
+
 /**
  * 意味を持つ色。**ここだけが有彩**（AC-01-4）。
  * 装飾には使わない。状態や結果を伝えるためだけに使う。
+ *
+ * primary / secondary はカラーセット「Print Inks」の既定色（Ink）とその相方（Brick）。
+ * 値の出どころは color-set.ts、仕様は specs/06-tones-and-colors（ADR-C01 / C03）。
+ * `data-novi-color` 属性でセットの別の色に切り替えられる。
+ *
+ * success / warning / danger は色を切り替えても変わらない（FR-08 —
+ * 意味色の認知は既定色より優先する）。
  */
 const SEMANTIC_LIGHT = {
-  // 青紫寄りの indigo。古典的な「リンクの青」（hue 250）は 2010 年代の既定色として
-  // 記憶されすぎている。hue 265 は同じ信頼感を保ったまま現代の道具の色になる
-  primary: 'oklch(50% 0.19 265)',
-  'primary-fg': 'oklch(99% 0 0)',
-  secondary: 'oklch(48% 0.15 300)',
-  'secondary-fg': 'oklch(99% 0 0)',
+  primary: DEFAULT_COLOR.light.primary,
+  'primary-fg': DEFAULT_COLOR.light.primaryFg,
+  secondary: DEFAULT_PAIR.light.primary,
+  'secondary-fg': DEFAULT_PAIR.light.primaryFg,
   success: 'oklch(47% 0.13 155)',
   'success-fg': 'oklch(99% 0 0)',
   // hue 70 は olive に寄って濁る。60 で琥珀に寄せる
@@ -117,10 +129,10 @@ const SEMANTIC_LIGHT = {
 }
 
 const SEMANTIC_DARK = {
-  primary: 'oklch(76% 0.13 265)',
-  'primary-fg': 'oklch(16% 0 0)',
-  secondary: 'oklch(76% 0.12 300)',
-  'secondary-fg': 'oklch(16% 0 0)',
+  primary: DEFAULT_COLOR.dark.primary,
+  'primary-fg': DEFAULT_COLOR.dark.primaryFg,
+  secondary: DEFAULT_PAIR.dark.primary,
+  'secondary-fg': DEFAULT_PAIR.dark.primaryFg,
   success: 'oklch(77% 0.13 155)',
   'success-fg': 'oklch(16% 0 0)',
   warning: 'oklch(81% 0.13 65)',

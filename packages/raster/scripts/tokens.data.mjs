@@ -2,7 +2,7 @@
  * CSS 変数の組。**変数名の作り方をここ1箇所に置く。**
  *
  * 2箇所から読まれる:
- * - `generate-theme-css.mjs`  `raster.css` を出力する
+ * - `theme-css.mjs`（→ `generate-theme-css.mjs`）  `raster.css` を出力する
  * - docs の IR 生成             theming ページの一覧と AI 向け出力に載せる
  *
  * 利用者が上書きするのは変数名なので、ドキュメントに載る名前と
@@ -11,6 +11,13 @@
  *
  * 並び順は `raster.css` の出力順そのもの。変えると生成物の差分になる。
  */
+
+import {
+  colorById,
+  DEFAULT_COLOR_ID,
+  RASTER_COLOR_SET,
+  RASTER_TONE,
+} from '../src/tokens/color-set.ts'
 import {
   RASTER_DARK_COLORS,
   RASTER_LIGHT_COLORS,
@@ -61,10 +68,19 @@ export const TOKEN_GROUPS = [
     values: RASTER_MOTION,
   },
   {
+    id: 'hue',
+    prefix: '',
+    label: '色相',
+    description:
+      '選択中のカラー（data-novi-color）の hue。既定は Ink。利用者が派生色を作るときの参照点',
+    values: { hue: String(colorById(DEFAULT_COLOR_ID).hue) },
+  },
+  {
     id: 'color',
     prefix: 'color-',
     label: '色',
-    description: 'ブランド色を変えるならここ。中立色の chroma は 0 に固定している',
+    description:
+      'primary / secondary はカラーセット Print Inks の既定色（Ink × Brick）。data-novi-color で切替。中立色の chroma は 0 に固定している',
     values: RASTER_LIGHT_COLORS,
     dark: RASTER_DARK_COLORS,
   },
@@ -72,3 +88,10 @@ export const TOKEN_GROUPS = [
 
 /** @param {string} prefix @param {string} name */
 export const cssVariableName = (prefix, name) => `--novi-${prefix}${name}`
+
+/**
+ * カラーセット「Print Inks」。生成器と IR（Phase C）が読む。
+ * 値の唯一の真実は specs/06-tones-and-colors、実装は src/tokens/color-set.ts。
+ */
+export const COLOR_SET = RASTER_COLOR_SET
+export { DEFAULT_COLOR_ID, RASTER_TONE }

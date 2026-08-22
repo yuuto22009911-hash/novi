@@ -75,6 +75,11 @@ export const DESIGN_RULE_EXCEPTIONS = {
     rules: ['literal-color', 'duration', 'radius', 'shadow'],
     reason: 'トークンの値そのものを定義する唯一の場所。ここだけは「使用」ではなく「定義」',
   },
+  'color-set.ts': {
+    rules: ['literal-color'],
+    reason:
+      'カラーセット Print Inks の値を定義する場所（specs/06-tones-and-colors）。raster-tokens.ts と同じ「定義」側',
+  },
 }
 
 /** 色の扱い。禁止パターンでは表せない方針を文章で持つ。 */
