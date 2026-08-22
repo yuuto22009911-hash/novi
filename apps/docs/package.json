@@ -11,7 +11,7 @@
     "typecheck": "pnpm generate && tsc --noEmit",
     "test:browser": "playwright test",
     "test:browser:update": "playwright test --update-snapshots",
-    "perf": "npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json"
+    "perf": "node -e \"require('node:fs').rmSync('.lighthouseci',{recursive:true,force:true})\" && npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json"
   },
   "dependencies": {
     "@novi-ui/core": "workspace:*",
