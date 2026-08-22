@@ -1,7 +1,7 @@
 'use client'
 
 import type { NoviColor } from '@novi-ui/core'
-import { Fragment, type ReactNode } from 'react'
+import { Fragment, type ReactNode, useState } from 'react'
 import { useNoviTheme } from '../lib/theme-components'
 import { Preview } from './preview'
 
@@ -235,6 +235,8 @@ export function DashboardShowcase() {
     Card,
     CardBody,
     CardHeader,
+    ColorPicker,
+    COLOR_OPTIONS,
     Input,
     Menu,
     MenuItem,
@@ -248,6 +250,14 @@ export function DashboardShowcase() {
     Tabs,
   } = useNoviTheme()
 
+  /**
+   * 画面の配色。**テーマを切り替えると選択肢ごと入れ替わる**ので、
+   * 前のテーマの色 id（Raster の `ink` など）が残らないよう既定へ戻す。
+   */
+  const [color, setColor] = useState(COLOR_OPTIONS[0]?.id)
+  const known = COLOR_OPTIONS.some((option) => option.id === color)
+  const activeColor = known ? color : COLOR_OPTIONS[0]?.id
+
   const detail = (
     <Button variant="plain" size="sm">
       詳細
@@ -255,7 +265,7 @@ export function DashboardShowcase() {
   )
 
   return (
-    <Preview className="items-stretch p-0 sm:p-0">
+    <Preview className="items-stretch p-0 sm:p-0" color={activeColor}>
       <div className="flex w-full min-w-0">
         {/* サイドバー。狭い画面では畳み、代わりに本文側の1行でアプリ名を出す */}
         <aside className="hidden w-44 shrink-0 flex-col justify-between border-r border-[var(--novi-color-border)] p-4 md:flex">
@@ -288,9 +298,9 @@ export function DashboardShowcase() {
           </div>
 
           <div className="flex items-center gap-2 border-t border-[var(--novi-color-border)] pt-4">
-            <Avatar size="sm" name="小島 佑翔" />
+            <Avatar size="sm" name="山本 太郎" />
             <span className="text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]">
-              小島 佑翔
+              山本 太郎
             </span>
           </div>
         </aside>
@@ -301,7 +311,7 @@ export function DashboardShowcase() {
             <span className="text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]">
               Novi Commerce
             </span>
-            <Avatar size="sm" name="小島 佑翔" />
+            <Avatar size="sm" name="山本 太郎" />
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
@@ -329,6 +339,23 @@ export function DashboardShowcase() {
                 </Button>
               </div>
             </div>
+          </div>
+
+          {/*
+            画面の配色を選ばせる。**色名を1つも書いていない**のに、
+            Raster では Print Inks、Tactile では Textile Dyes が並ぶ。
+            選択は Preview の `data-novi-color` に渡るので、この画面全体が染まる。
+          */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-[var(--novi-color-border)] pb-3">
+            <ColorPicker
+              size="sm"
+              aria-label="画面の配色"
+              value={activeColor}
+              onChange={setColor}
+            />
+            <span className="text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]">
+              配色はこの画面だけに効く
+            </span>
           </div>
 
           <Tabs size="sm" defaultSelectedKey="overview">

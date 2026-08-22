@@ -11,7 +11,22 @@ import { useThemeState } from '../lib/use-novi-theme'
  * `[data-novi-theme='<name>']` の配下でのみトークンが定義される。
  * これがないとサイト UI までテーマ色に染まる。
  */
-export function Preview({ children, className }: { children: ReactNode; className?: string }) {
+export function Preview({
+  children,
+  className,
+  color,
+}: {
+  children: ReactNode
+  className?: string
+  /**
+   * カラーセットの色 id（`ink` / `indigo` など）。
+   *
+   * **テーマ宣言と同じ要素に置く必要がある**（06 Phase A の申し送り）。
+   * `data-novi-theme` が入れ子になっていると内側が既定色を宣言し直し、
+   * 外側の色指定はそこで止まる。
+   */
+  color?: string
+}) {
   const { theme, scheme } = useThemeState()
 
   return (
@@ -19,6 +34,7 @@ export function Preview({ children, className }: { children: ReactNode; classNam
       data-testid="preview"
       {...{ [THEME_ATTR]: theme }}
       {...(scheme === null ? {} : { [SCHEME_ATTR]: scheme })}
+      {...(color === undefined ? {} : { 'data-novi-color': color })}
       className={[
         'rounded-none border border-site-border bg-[var(--novi-color-bg)] p-6',
         'flex flex-wrap items-start gap-4',
