@@ -35,19 +35,56 @@ const { NOVI_CONTRACTS, NOVI_COLORS, NOVI_RADII, NOVI_SIZES, NOVI_VARIANTS } = a
   CORE_DIST
 )
 
-// テーマの実装有無は dist の export で判定する。契約があるだけで使えると誤解させない（FR-06）。
-const RASTER_DIST = join(REPO_ROOT, 'packages', 'raster', 'dist', 'index.mjs')
-const rasterExports = new Set(Object.keys(await import(RASTER_DIST)))
+/**
+ * テーマの一覧。**3本目を足すときはここに1件書くだけ。**
+ *
+ * 実装有無は dist の export で判定する（契約があるだけで使えると誤解させない・FR-06）。
+ * デザイン規則と数値トークンは定義元から読む。IR 側で書き写すと必ずズレる。
+ */
+const THEME_SOURCES = [
+  {
+    id: 'raster',
+    label: 'Raster',
+    description: 'ミニマル / スイス系',
+    tokensModule: 'raster-tokens.ts',
+    prefix: 'RASTER',
+  },
+  {
+    id: 'tactile',
+    label: 'Tactile',
+    description: 'タッチファースト',
+    tokensModule: 'tactile-tokens.ts',
+    prefix: 'TACTILE',
+  },
+]
 
-// デザイン規則と数値トークンは定義元から読む。IR 側で書き写すと必ずズレる。
-const RASTER_SCRIPTS = join(REPO_ROOT, 'packages', 'raster', 'scripts')
-const { COLOR_RULE, DESIGN_RULES, DESIGN_RULE_EXCEPTIONS } = await import(
-  join(RASTER_SCRIPTS, 'design-rules.data.mjs')
-)
-const { RASTER_CONTROL_HEIGHTS, RASTER_MOTION, RASTER_RADII, RASTER_TEXT } = await import(
-  join(REPO_ROOT, 'packages', 'raster', 'src', 'tokens', 'raster-tokens.ts')
-)
-const { TOKEN_GROUPS, cssVariableName } = await import(join(RASTER_SCRIPTS, 'tokens.data.mjs'))
+/** @param {(typeof THEME_SOURCES)[number]} source */
+async function loadTheme(source) {
+  const root = join(REPO_ROOT, 'packages', source.id)
+  const exports = new Set(Object.keys(await import(join(root, 'dist', 'index.mjs'))))
+  const scripts = join(root, 'scripts')
+  const rules = await import(join(scripts, 'design-rules.data.mjs'))
+  const tokens = await import(join(root, 'src', 'tokens', source.tokensModule))
+  const data = await import(join(scripts, 'tokens.data.mjs'))
+  return {
+    ...source,
+    exports,
+    rules,
+    numeric: {
+      controlHeights: tokens[`${source.prefix}_CONTROL_HEIGHTS`],
+      radii: tokens[`${source.prefix}_RADII`],
+      text: tokens[`${source.prefix}_TEXT`],
+      motion: tokens[`${source.prefix}_MOTION`],
+    },
+    tokenGroups: data.TOKEN_GROUPS,
+    cssVariableName: data.cssVariableName,
+  }
+}
+
+const themes = await Promise.all(THEME_SOURCES.map(loadTheme))
+/** 既定テーマ。使用例の検査と props 抽出はこれを基準にする。 */
+const primary = themes[0]
+const rasterExports = primary.exports
 
 /**
  * 上書きできる CSS 変数の一覧。**CSS を出力しているのと同じ定義から作る。**
@@ -55,13 +92,13 @@ const { TOKEN_GROUPS, cssVariableName } = await import(join(RASTER_SCRIPTS, 'tok
  * ドキュメントに載る変数名と実際に出力される名前がズレると、
  * 利用者の上書きが黙って効かなくなる。原因も分からない。
  */
-const cssVariablesOf = () =>
-  TOKEN_GROUPS.map((group) => ({
+const cssVariablesOf = (groups, nameOf) =>
+  groups.map((group) => ({
     id: group.id,
     label: group.label,
     description: group.description,
     variables: Object.entries(group.values).map(([name, value]) => ({
-      name: cssVariableName(group.prefix, name),
+      name: nameOf(group.prefix, name),
       value,
       dark: group.dark?.[name] ?? null,
     })),
@@ -215,7 +252,7 @@ const components = Object.entries(NOVI_CONTRACTS)
       a11y: doc.a11y,
       keywords: doc.keywords,
       // 契約があってもテーマが実装していなければ使えない。空配列は「未実装」を意味する
-      implementedBy: rasterExports.has(exportName) ? ['raster'] : [],
+      implementedBy: themes.filter((t) => t.exports.has(exportName)).map((t) => t.id),
       importName: exportName,
       props: extractProps(source, interfaceName),
       example: doc.example,
@@ -248,34 +285,30 @@ const index = {
     NoviColor: unionOf(NOVI_COLORS),
     NoviRadius: unionOf(NOVI_RADII),
   },
-  themes: {
-    raster: {
-      pkg: '@novi-ui/raster',
-      label: 'Raster',
-      description: 'ミニマル / スイス系',
-      cssVariables: cssVariablesOf(),
-      // 検査スクリプトと同じ定義から作る。AI に説明した規則と CI が落とす規則を一致させる
-      designRules: {
-        numeric: {
-          controlHeights: RASTER_CONTROL_HEIGHTS,
-          radii: RASTER_RADII,
-          text: RASTER_TEXT,
-          motion: RASTER_MOTION,
+  themes: Object.fromEntries(
+    themes.map((theme) => [
+      theme.id,
+      {
+        pkg: `@novi-ui/${theme.id}`,
+        label: theme.label,
+        description: theme.description,
+        cssVariables: cssVariablesOf(theme.tokenGroups, theme.cssVariableName),
+        // 検査スクリプトと同じ定義から作る。AI に説明した規則と CI が落とす規則を一致させる
+        designRules: {
+          numeric: theme.numeric,
+          prohibited: theme.rules.DESIGN_RULES.map((rule) => ({
+            id: rule.id,
+            pattern: rule.prohibited,
+            reason: rule.message,
+          })),
+          exceptions: Object.entries(theme.rules.DESIGN_RULE_EXCEPTIONS).map(
+            ([file, { rules, reason }]) => ({ file, rules, reason }),
+          ),
+          colorRule: theme.rules.COLOR_RULE,
         },
-        prohibited: DESIGN_RULES.map((rule) => ({
-          id: rule.id,
-          pattern: rule.prohibited,
-          reason: rule.message,
-        })),
-        exceptions: Object.entries(DESIGN_RULE_EXCEPTIONS).map(([file, { rules, reason }]) => ({
-          file,
-          rules,
-          reason,
-        })),
-        colorRule: COLOR_RULE,
       },
-    },
-  },
+    ]),
+  ),
   components,
 }
 

@@ -21,12 +21,26 @@ const SITE = 'https://novi-42r.pages.dev'
 const index = JSON.parse(readFileSync(IR, 'utf8'))
 const { components, vocabularies, themes } = index
 
-const { designRules } = themes.raster
+/**
+ * 禁止事項。CI が実際に落とす規則をそのまま出す（検査と説明を一致させる）。
+ *
+ * **テーマごとに規則が違う。** Raster は影と scale を禁じ、Tactile は影を許して
+ * scale を押下に限る。1つのテーマの規則だけを出すと、AI は別のテーマで
+ * CI が落とすコードを自信を持って書く。
+ */
+const prohibitedOf = (theme) =>
+  theme.designRules.prohibited.map((rule) => `- \`${rule.pattern}\` — ${rule.reason}`).join('\n')
 
-/** 禁止事項。CI が実際に落とす規則をそのまま出す（検査と説明を一致させる）。 */
-const PROHIBITED = designRules.prohibited
-  .map((rule) => `- \`${rule.pattern}\` — ${rule.reason}`)
-  .join('\n')
+/** テーマごとの規則節。 */
+const RULES_BY_THEME = Object.entries(themes)
+  .map(
+    ([, theme]) => `### ${theme.label}（\`${theme.pkg}\`）
+
+${prohibitedOf(theme)}
+
+${theme.designRules.colorRule}`,
+  )
+  .join('\n\n')
 
 /** 契約名 → docs のパス。Textarea だけ表記が揺れる。 */
 const slugOf = (name) => (name === 'Textarea' ? 'textarea' : name.toLowerCase())
@@ -79,13 +93,12 @@ ${Object.entries(themes)
 
 コンポーネントはテーマパッケージから import する。**テーマを替えても props は変わらない。**
 
-## Raster で書いてはいけないクラス
+## 書いてはいけないクラス
 
 CI が機械的に検査している。違反するとビルドが落ちる。
+**規則はテーマごとに違う。** 使っているテーマの節を読むこと。
 
-${PROHIBITED}
-
-${designRules.colorRule}
+${RULES_BY_THEME}
 
 ## コンポーネント
 
@@ -135,9 +148,15 @@ ${c.example ?? ''}
 `
   })
 
-  const numeric = Object.entries(designRules.numeric)
-    .map(([group, values]) => `- \`${group}\`: ${JSON.stringify(values)}`)
-    .join('\n')
+  const numericByTheme = Object.entries(themes)
+    .map(
+      ([, theme]) => `### ${theme.label}
+
+${Object.entries(theme.designRules.numeric)
+  .map(([group, values]) => `- \`${group}\`: ${JSON.stringify(values)}`)
+  .join('\n')}`,
+    )
+    .join('\n\n')
 
   return `# Novi UI — 全 API
 
@@ -146,17 +165,16 @@ ${c.example ?? ''}
 
 ${CONVENTIONS}
 
-## Raster のデザイン規則
+## デザイン規則
 
 数値は定義そのもの。目分量で近い値を書かない。
+**テーマごとに違う値を持つ。** 同じ \`size="md"\` でも高さが違う。
 
-${numeric}
+${numericByTheme}
 
-### 書いてはいけないクラス
+## 書いてはいけないクラス
 
-${PROHIBITED}
-
-${designRules.colorRule}
+${RULES_BY_THEME}
 
 ## コンポーネント
 
