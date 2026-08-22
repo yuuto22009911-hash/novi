@@ -102,12 +102,31 @@ export default function ThemingPage() {
           語彙は core が固定しますが、値の解釈はテーマが決めます。 たとえば {raster.label} の{' '}
           <code className="font-mono text-xs">radius</code> は sm=6px / md=8px / lg=12px
           の控えめな3段で、 これより丸くする語彙はありません。影も浮いている層にしか付きません。
-          その範囲を超えた見た目が必要なときは、トークンの上書きではなくテーマを替えます。 詳しくは{' '}
-          <Link href="/docs/themes/raster/" className="underline">
-            {raster.label} のデザイン言語
-          </Link>
-          を読んでください。
+          その範囲を超えた見た目が必要なときは、トークンの上書きではなくテーマを替えます。
         </p>
+        <p className="text-sm leading-relaxed text-site-muted">
+          解釈の差は値だけに留まりません。Tactile では{' '}
+          <code className="font-mono text-xs">size</code> が Modal の
+          <strong className="font-medium text-site-fg">最大高</strong>を意味し、 Modal
+          自体が下から出るシートになります。
+          <strong className="font-medium text-site-fg">
+            同じコードのまま DOM の組み立て方が変わります。
+          </strong>
+        </p>
+        <ul className="flex flex-col gap-2 text-sm leading-relaxed text-site-muted">
+          <li>
+            <Link href="/docs/themes/raster/" className="underline">
+              Raster のデザイン言語
+            </Link>{' '}
+            — ミニマル / スイス系。線で切る
+          </li>
+          <li>
+            <Link href="/docs/themes/tactile/" className="underline">
+              Tactile のデザイン言語
+            </Link>{' '}
+            — タッチファースト。面を持ち上げる
+          </li>
+        </ul>
       </section>
     </article>
   )

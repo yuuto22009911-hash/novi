@@ -28,7 +28,17 @@ import {
   writeFileSync,
 } from 'node:fs'
 import { basename, join } from 'node:path'
-import { DESIGN_RULES } from '../packages/raster/scripts/design-rules.data.mjs'
+import { DESIGN_RULES as RASTER_RULES } from '../packages/raster/scripts/design-rules.data.mjs'
+import { DESIGN_RULES as TACTILE_RULES } from '../packages/tactile/scripts/design-rules.data.mjs'
+
+/**
+ * テーマごとの禁止規則。**生成コードが import しているテーマの規則で検査する。**
+ *
+ * Raster の規則で Tactile のコードを見ると、押下の scale や面の影を
+ * 違反として報告してしまう。逆も同じで、Raster のコードを Tactile の規則で
+ * 見ると角丸 6px が違反になる。規則はテーマの美学そのもので、共通ではない。
+ */
+const RULES_BY_THEME = { raster: RASTER_RULES, tactile: TACTILE_RULES }
 
 const ROOT = new URL('..', import.meta.url).pathname
 const HERE = join(ROOT, 'accuracy')
@@ -138,8 +148,12 @@ try {
 const classErrors = new Map([...found.keys()].map((id) => [id, []]))
 
 for (const [id, path] of found) {
-  const lines = readFileSync(path, 'utf8').split('\n')
-  for (const rule of DESIGN_RULES) {
+  const source = readFileSync(path, 'utf8')
+  const lines = source.split('\n')
+  // どのテーマを使ったコードかは import 文が決める。既定は raster
+  const theme = /@novi-ui\/(\w+)/.exec(source)?.[1] ?? 'raster'
+  const rules = RULES_BY_THEME[theme] ?? RASTER_RULES
+  for (const rule of rules) {
     lines.forEach((line, i) => {
       rule.pattern.lastIndex = 0
       const match = rule.pattern.exec(line)

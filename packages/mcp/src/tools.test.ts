@@ -80,27 +80,44 @@ describe('get_component（AC-04-2）', () => {
 })
 
 describe('get_design_rules（AC-04-3 / FR-12）', () => {
-  const output = getDesignRules('raster')
+  // テーマを列挙して回す。3本目を足しても検査対象に自動で入る。
+  // 特定のテーマを名指しすると、追加したテーマが素通りする
+  const themeNames = Object.keys(index.themes)
 
-  it('数値定義を返す', () => {
-    expect(output).toContain('sm=32')
-    expect(output).toContain('md=40')
-    expect(output).toContain('lg=48')
+  it('2本以上のテーマを持つ（規則がテーマごとに違うことの前提）', () => {
+    expect(themeNames.length).toBeGreaterThanOrEqual(2)
   })
 
-  it('禁止クラスを CI と同じ定義で返す', () => {
-    for (const rule of index.themes.raster?.designRules.prohibited ?? []) {
+  it.each(themeNames)('%s: 数値定義を返す', (theme) => {
+    const output = getDesignRules(theme)
+    const heights = index.themes[theme]?.designRules.numeric.controlHeights ?? {}
+    for (const [size, px] of Object.entries(heights)) {
+      expect(output, `${theme}/${size}`).toContain(`${size}=${px}`)
+    }
+  })
+
+  it.each(themeNames)('%s: 禁止クラスを CI と同じ定義で返す', (theme) => {
+    const output = getDesignRules(theme)
+    for (const rule of index.themes[theme]?.designRules.prohibited ?? []) {
       expect(output).toContain(rule.pattern)
     }
   })
 
-  it('色の扱いを返す', () => {
-    expect(output).toContain('--novi-color-')
+  it.each(themeNames)('%s: 色の扱いを返す', (theme) => {
+    expect(getDesignRules(theme)).toContain('--novi-color-')
   })
 
-  it('例外は理由付きで返す', () => {
-    expect(output).toContain('spinner.styles.ts')
-    expect(output).toContain('ADR-R2')
+  it.each(themeNames)('%s: 例外は理由付きで返す', (theme) => {
+    const output = getDesignRules(theme)
+    for (const exception of index.themes[theme]?.designRules.exceptions ?? []) {
+      expect(output).toContain(exception.file)
+      expect(output).toContain(exception.reason.slice(0, 12))
+    }
+  })
+
+  it('テーマごとに違う規則を返す（1つの規則を使い回していない）', () => {
+    const outputs = themeNames.map((t) => getDesignRules(t))
+    expect(new Set(outputs).size).toBe(themeNames.length)
   })
 
   it('未知のテーマには利用できるテーマを挙げる', () => {

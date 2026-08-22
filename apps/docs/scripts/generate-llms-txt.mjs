@@ -19,14 +19,44 @@ const OUT_DIR = join(DOCS_ROOT, 'public')
 const SITE = 'https://novi-42r.pages.dev'
 
 const index = JSON.parse(readFileSync(IR, 'utf8'))
+
+/**
+ * カラーセットの色名。**テーマの定義そのものから読む。**
+ * ここに書き写すと、色を足したとき AI への説明だけが古くなる。
+ */
+const COLOR_NAMES = Object.fromEntries(
+  await Promise.all(
+    ['raster', 'tactile'].map(async (id) => {
+      const mod = await import(
+        new URL(`../../../packages/${id}/src/tokens/color-set.ts`, import.meta.url).pathname
+      )
+      const set = mod.RASTER_COLOR_SET ?? mod.TACTILE_COLOR_SET
+      return [id, set.map((c) => c.id)]
+    }),
+  ),
+)
 const { components, vocabularies, themes } = index
 
-const { designRules } = themes.raster
+/**
+ * 禁止事項。CI が実際に落とす規則をそのまま出す（検査と説明を一致させる）。
+ *
+ * **テーマごとに規則が違う。** Raster は影と scale を禁じ、Tactile は影を許して
+ * scale を押下に限る。1つのテーマの規則だけを出すと、AI は別のテーマで
+ * CI が落とすコードを自信を持って書く。
+ */
+const prohibitedOf = (theme) =>
+  theme.designRules.prohibited.map((rule) => `- \`${rule.pattern}\` — ${rule.reason}`).join('\n')
 
-/** 禁止事項。CI が実際に落とす規則をそのまま出す（検査と説明を一致させる）。 */
-const PROHIBITED = designRules.prohibited
-  .map((rule) => `- \`${rule.pattern}\` — ${rule.reason}`)
-  .join('\n')
+/** テーマごとの規則節。 */
+const RULES_BY_THEME = Object.entries(themes)
+  .map(
+    ([, theme]) => `### ${theme.label}（\`${theme.pkg}\`）
+
+${prohibitedOf(theme)}
+
+${theme.designRules.colorRule}`,
+  )
+  .join('\n\n')
 
 /** 契約名 → docs のパス。Textarea だけ表記が揺れる。 */
 const slugOf = (name) => (name === 'Textarea' ? 'textarea' : name.toLowerCase())
@@ -78,14 +108,32 @@ ${Object.entries(themes)
   .join('\n')}
 
 コンポーネントはテーマパッケージから import する。**テーマを替えても props は変わらない。**
+テーマは見た目だけでなく DOM の組み立て方も替える（Tactile の Modal は下から出るシートになる）。
 
-## Raster で書いてはいけないクラス
+## 色を選ぶ
+
+各テーマは8色のカラーセットを持ち、\`data-novi-color\` 属性で切り替える。
+**色名はテーマごとに違う。** 知らない名前を書いても壊れず、そのテーマの既定色になる。
+
+\`\`\`html
+<html data-novi-theme="tactile" data-novi-color="madder">
+\`\`\`
+
+${Object.entries(themes)
+  .map(([id, t]) => {
+    const names = (COLOR_NAMES[id] ?? []).join(' / ')
+    return `- **${t.label}**: ${names}`
+  })
+  .join('\n')}
+
+\`success\` / \`warning\` / \`danger\` は色選択の影響を受けない。
+
+## 書いてはいけないクラス
 
 CI が機械的に検査している。違反するとビルドが落ちる。
+**規則はテーマごとに違う。** 使っているテーマの節を読むこと。
 
-${PROHIBITED}
-
-${designRules.colorRule}
+${RULES_BY_THEME}
 
 ## コンポーネント
 
@@ -111,10 +159,14 @@ function buildFull() {
       })
       .join('\n')
 
+    // 実装しているテーマをすべて挙げる。1つだけ出すと、AI はそのテーマしか
+    // 使えないと解釈して、指示されたテーマを無視したコードを書く
     const availability =
       c.implementedBy.length === 0
         ? '**未実装**。契約はあるがテーマが実装していない。使えない\n\n'
-        : `**import**: \`import { ${c.importName} } from '${themes[c.implementedBy[0]].pkg}'\`\n\n`
+        : `**import**: ${c.implementedBy
+            .map((t) => `\`import { ${c.importName} } from '${themes[t].pkg}'\``)
+            .join(' / ')}\n\n`
 
     return `### ${c.name}
 
@@ -135,9 +187,15 @@ ${c.example ?? ''}
 `
   })
 
-  const numeric = Object.entries(designRules.numeric)
-    .map(([group, values]) => `- \`${group}\`: ${JSON.stringify(values)}`)
-    .join('\n')
+  const numericByTheme = Object.entries(themes)
+    .map(
+      ([, theme]) => `### ${theme.label}
+
+${Object.entries(theme.designRules.numeric)
+  .map(([group, values]) => `- \`${group}\`: ${JSON.stringify(values)}`)
+  .join('\n')}`,
+    )
+    .join('\n\n')
 
   return `# Novi UI — 全 API
 
@@ -146,17 +204,16 @@ ${c.example ?? ''}
 
 ${CONVENTIONS}
 
-## Raster のデザイン規則
+## デザイン規則
 
 数値は定義そのもの。目分量で近い値を書かない。
+**テーマごとに違う値を持つ。** 同じ \`size="md"\` でも高さが違う。
 
-${numeric}
+${numericByTheme}
 
-### 書いてはいけないクラス
+## 書いてはいけないクラス
 
-${PROHIBITED}
-
-${designRules.colorRule}
+${RULES_BY_THEME}
 
 ## コンポーネント
 

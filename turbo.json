@@ -34,7 +34,8 @@
       "dependsOn": ["build"]
     },
     "generate": {
-      "outputs": [".generated/**"]
+      "dependsOn": ["^build"],
+      "outputs": [".generated/**", "data/**"]
     }
   }
 }

@@ -46,6 +46,7 @@
   "devDependencies": {
     "@novi-ui/core": "workspace:*",
     "@novi-ui/raster": "workspace:*",
+    "@novi-ui/tactile": "workspace:*",
     "@types/node": "^26.2.0",
     "@vitest/coverage-v8": "^4.1.11",
     "tsdown": "0.22.14",
