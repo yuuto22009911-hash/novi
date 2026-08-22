@@ -212,12 +212,12 @@ export const DEMO_META: DemoMeta[] = [
     component: 'ColorPicker',
     title: 'ColorPicker',
     note: '色の一覧はモデルが持つ。同じコードでも Raster では Print Inks、Tactile では Textile Dyes が並ぶ。',
-    imports: ['COLOR_OPTIONS', 'ColorPicker'],
-    code: `// 色の一覧はモデルが持つ。既定色はセットの先頭
-const [color, setColor] = useState(COLOR_OPTIONS[0].id)
+    imports: ['ColorPicker'],
+    code: `// 色 id を書かない。未指定ならモデルの既定色から始まる
+const [color, setColor] = useState<string>()
 
 <div data-novi-color={color}>
-  <ColorPicker label="配色" value={color} onChange={setColor} showLabels />
+  <ColorPicker label="配色" onChange={setColor} showLabels />
 </div>`,
   },
   {

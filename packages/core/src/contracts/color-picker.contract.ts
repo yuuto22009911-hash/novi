@@ -52,10 +52,11 @@ export interface NoviColorOption {
  * `indicator` でも示す。各色には名前が読み上げられる
  *
  * @example
- * const [color, setColor] = useState('ink')
+ * // 色 id を書かない。未指定ならテーマの既定色から始まる
+ * const [color, setColor] = useState<string>()
  * return (
  *   <div data-novi-color={color}>
- *     <ColorPicker label="配色" value={color} onChange={setColor} />
+ *     <ColorPicker label="配色" onChange={setColor} />
  *   </div>
  * )
  */

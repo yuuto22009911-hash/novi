@@ -34,10 +34,11 @@ function CheckMark() {
  * テーマのカラーセットから1色を選ぶ。選んだ値を `data-novi-color` に渡すと配色が変わる。
  *
  * @example
- * const [color, setColor] = useState('indigo')
+ * // 色 id を書かない。未指定ならテーマの既定色から始まる
+ * const [color, setColor] = useState<string>()
  * return (
  *   <div data-novi-color={color}>
- *     <ColorPicker label="配色" value={color} onChange={setColor} />
+ *     <ColorPicker label="配色" onChange={setColor} />
  *   </div>
  * )
  */
