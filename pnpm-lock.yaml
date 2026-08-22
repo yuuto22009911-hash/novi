@@ -136,6 +136,9 @@ importers:
       '@novi-ui/raster':
         specifier: workspace:*
         version: link:../raster
+      '@novi-ui/tactile':
+        specifier: workspace:*
+        version: link:../tactile
       '@types/node':
         specifier: ^26.2.0
         version: 26.2.0

@@ -73,6 +73,7 @@ component-index.json  →  docs の props 表 / llms.txt / @novi-ui/mcp
 | 1コンポーネント import が重い | 1ファイルにバンドルすると tree-shaking が効かない。`unbundle: true` |
 | ビルドが Node で落ちる | `.node-version`（22.22.2）に合わせる。tsdown が `^22.18.0 \|\| >=24.11.0` を要求 |
 | 視覚回帰の基準を手元で撮った | **撮ってはいけない。** 判定は CI（Linux）で行うため環境が違う。Actions の「視覚回帰の基準を更新」を対象ブランチで実行する |
+| 手元で通るのに CI だけ落ちる | 生成物を読むタスクは turbo に依存を宣言する。手元は既にビルド済みなので気づけない（IR 生成が全テーマの dist を読む） |
 
 ## 検証の原則
 
