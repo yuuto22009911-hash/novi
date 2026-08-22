@@ -8,11 +8,13 @@
  * ライブラリ全体を読み込む。ここを import してよいのはデモを描画する画面だけ。
  */
 import * as raster from '@novi-ui/raster'
+import * as tactile from '@novi-ui/tactile'
 import type { ThemeName } from './theme-registry'
 import { useThemeState } from './use-novi-theme'
 
 const themeComponents = {
   raster,
+  tactile,
 } as const satisfies Record<ThemeName, unknown>
 
 /**
