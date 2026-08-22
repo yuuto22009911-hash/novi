@@ -1,8 +1,8 @@
-# @novi-ui/raster
+# @novi-ui/mcp
 
-## 0.2.0
+## 0.1.1
 
-### Minor Changes
+### Patch Changes
 
 - 8a8e4e1: Raster をモダン化した（ADR-R8）。
   
@@ -18,11 +18,3 @@
   コンポーネントの API は一切変わらない。
   
   mcp は同梱の design rules（禁止クラスの文言・数値）が更新されるため patch。
-
-## 0.1.1
-
-### Patch Changes
-
-- Updated dependencies [30e59a9]
-- Updated dependencies [ac225c2]
-  - @novi-ui/core@0.1.1
