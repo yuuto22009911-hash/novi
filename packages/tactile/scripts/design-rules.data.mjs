@@ -9,7 +9,11 @@
  * 同じ定義から両方を作る（ADR-A6 と同じ理由）。
  *
  * **Raster とは規律の中身が違う。** Tactile は影を面にも許し、scale を押下に限って許す。
- * 逆に「小さい寸法」と「16px 未満の入力文字」を禁じる。規律そのものがモデルの性格。
+ *
+ * 寸法（タップ 44px / 入力 16px）はここでは検査しない。正規表現では
+ * 「その `h-6` がボタンの高さなのか Badge の高さなのか」を区別できず、
+ * 例外を積むと規則そのものが形骸化する。tv() の構造を見る `cross-cutting.test.ts` と、
+ * 実測する e2e（T-44）が担当する。
  */
 
 /**
@@ -63,21 +67,6 @@ export const DESIGN_RULES = [
     pattern: /(?<![\w-])duration-(?!\[var\(--novi)/g,
     message: 'モーションの時間はトークン経由にする',
   },
-  {
-    id: 'small-height',
-    prohibited: 'h-1〜h-10 の固定高（40px 未満）を対話要素に使うこと',
-    // Tailwind の h-<n> は n*4px。h-1〜h-9 が 4〜36px で、いずれもタップ下限を割る
-    pattern: /(?<![\w-])h-[1-9](?![\w-])/g,
-    message:
-      '対話要素の高さは 40px 以上（sm=h-10 / md=h-12 / lg=h-14）。視覚寸法が小さい部品は tapTarget で当たり判定を広げる',
-  },
-  {
-    id: 'small-text',
-    prohibited: '入力欄に 16px 未満の文字サイズ（text-xs / text-sm 相当）',
-    pattern: /(?<![\w-])text-\[length:var\(--novi-text-xs\)\]/g,
-    message:
-      'iOS Safari は 16px 未満の入力欄でフォーカス時に自動ズームする。入力は base(17px) 以上',
-  },
 ]
 
 /**
@@ -104,15 +93,6 @@ export const DESIGN_RULE_EXCEPTIONS = {
     rules: ['rotate'],
     reason:
       'シェブロンの回転は開閉方向そのものを示す。+/− への置き換えは向きの情報を失う（ADR-T4）',
-  },
-  'tap-target.ts': {
-    rules: ['small-height'],
-    reason: '当たり判定を広げる共通断片。ここでの寸法指定は視覚寸法ではない',
-  },
-  'modal.styles.ts': {
-    rules: ['small-height'],
-    reason:
-      'シート上端の掴み手（grabber）は aria-hidden の装飾線で、対話要素ではない。細さそのものが「掴めそうに見せすぎない」という判断（NG6）',
   },
 }
 

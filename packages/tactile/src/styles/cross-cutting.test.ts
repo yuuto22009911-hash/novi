@@ -40,12 +40,20 @@ describe('公開 API', () => {
     const components = Object.keys(tactile).filter(
       (name) => /^[A-Z]/.test(name) && !name.endsWith('Styles'),
     )
-    // Tabs の TabItem など、契約1つに複数の公開名が対応するものは接頭辞で照合する。
-    // 契約が複数形（Tabs）で公開名が単数（TabItem）になる場合があるので末尾の s も落とす
-    const prefixes = [...contracts].flatMap((c) => [c, c.replace(/s$/, '')])
-    const unknown = components.filter(
-      (name) => !contracts.has(name) && !prefixes.some((p) => name.startsWith(p)),
-    )
+    // 照合を緩める点が2つある:
+    // - 契約1つに複数の公開名が対応する（Tabs → TabItem / TabContent）ので接頭辞で見る。
+    //   契約が複数形で公開名が単数のことがあるため末尾の s も落とす
+    // - 公開名の大小は RAC / HeroUI の慣習に寄せてあり、契約と揺れる（Textarea → TextArea）。
+    //   ADR-05 が「独自命名を作らない」を優先しているので、ここは小文字化して比べる
+    const prefixes = [...contracts]
+      .flatMap((c) => [c, c.replace(/s$/, '')])
+      .map((c) => c.toLowerCase())
+    // Toast の region は `NoviToastRegion` として公開される（Raster と同じ）。
+    // ライブラリ名の接頭辞は契約名に含まれないので落としてから照合する
+    const unknown = components.filter((name) => {
+      const bare = name.replace(/^Novi/, '').toLowerCase()
+      return !prefixes.some((p) => bare.startsWith(p))
+    })
     expect(unknown).toEqual([])
   })
 })
@@ -129,6 +137,70 @@ describe('デザイン規律（全コンポーネント）', () => {
 
   it('モーションの時間がトークン経由でのみ指定されている', () => {
     expect(offenders('duration', /^duration-\[var\(--novi-duration-[a-z]+\)\]$/)).toEqual([])
+  })
+})
+
+describe('タッチの寸法（FR-07 / FR-08）', () => {
+  // 正規表現では「その h-6 がボタンなのか Badge なのか」を区別できないため、
+  // ここで tv() の構造を見る。**実効領域の実測は e2e（T-44）が担当する** —
+  // 擬似要素で広げた当たり判定は計算済みスタイルでしか測れない。
+
+  /** 高さクラス（h-10 等）を px に直す。Tailwind の h-<n> は n*4px。 */
+  function heightPx(classes: string): number | null {
+    const arbitrary = /(?<![\w-])h-\[(\d+)px\]/.exec(classes)
+    if (arbitrary !== null) return Number(arbitrary[1])
+    const scale = [...classes.matchAll(/(?<![\w-])(?:min-)?h-(\d+)(?![\w-])/g)]
+      .map((m) => Number(m[1]) * 4)
+      .sort((a, b) => b - a)
+    return scale[0] ?? null
+  }
+
+  /** 対話要素の主たる面と、その高さを持つ slot。 */
+  const CONTROLS: [name: string, fn: StyleFn, slot: string][] = [
+    ['button', tactile.buttonStyles as StyleFn, 'root'],
+    ['input', tactile.inputStyles as StyleFn, 'inputWrapper'],
+    ['select', tactile.selectStyles as StyleFn, 'trigger'],
+    ['tabs', tactile.tabsStyles as StyleFn, 'tab'],
+    ['accordion', tactile.accordionStyles as StyleFn, 'trigger'],
+  ]
+
+  it.each(CONTROLS)('%s: どの size でも高さが 40px 以上（FR-07）', (name, fn, slot) => {
+    for (const size of NOVI_SIZES) {
+      const px = heightPx(fn({ size })[slot]?.() ?? '')
+      expect(px, `${name}/${size} の高さが読めない`).not.toBeNull()
+      expect(px, `${name}/${size}`).toBeGreaterThanOrEqual(40)
+    }
+  })
+
+  it.each([
+    ['select', tactile.selectStyles as StyleFn, 'option'],
+    ['menu', tactile.menuStyles as StyleFn, 'item'],
+  ])('%s: 一覧の行が 48px 以上（誤タップは一覧で最も起きる）', (name, fn, slot) => {
+    for (const size of NOVI_SIZES) {
+      const px = heightPx(fn({ size })[slot]?.() ?? '')
+      expect(px, `${name}/${size} の行高が読めない`).not.toBeNull()
+      expect(px, `${name}/${size}`).toBeGreaterThanOrEqual(48)
+    }
+  })
+
+  it.each([
+    ['input', tactile.inputStyles as StyleFn, 'input'],
+    ['textarea', tactile.textareaStyles as StyleFn, 'textarea'],
+  ])('%s: 入力の文字が 16px 未満にならない（AC-01-3）', (name, fn, slot) => {
+    // iOS Safari は 16px 未満の入力欄でフォーカス時にページごと拡大し、レイアウトが飛ぶ
+    for (const size of NOVI_SIZES) {
+      const classes = fn({ size })[slot]?.() ?? ''
+      expect(classes, `${name}/${size}`).not.toMatch(/text-\[length:var\(--novi-text-(xs|sm)\)\]/)
+    }
+  })
+
+  it('Checkbox / Radio は視覚寸法が小さくても当たり判定を広げている（AC-01-5）', () => {
+    for (const [name, fn] of [
+      ['checkbox', tactile.checkboxStyles as StyleFn],
+      ['radio', tactile.radioStyles as StyleFn],
+    ] as const) {
+      expect(fn({}).root?.(), name).toContain('before:size-[max(100%,44px)]')
+    }
   })
 })
 
