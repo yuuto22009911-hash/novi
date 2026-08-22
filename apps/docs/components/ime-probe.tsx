@@ -27,8 +27,14 @@ export function ImeProbe() {
             if (event.key === 'Enter') setInputEnters((n) => n + 1)
           }}
         />
-        <p data-testid="input-enters" className="text-[var(--novi-color-fg)]">
-          {inputEnters}
+        <p className="text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)]">
+          ハンドラに届いた Enter:{' '}
+          <span
+            data-testid="input-enters"
+            className="text-[length:var(--novi-text-lg)] font-medium tabular-nums text-[var(--novi-color-fg)]"
+          >
+            {inputEnters}
+          </span>
         </p>
       </div>
 
@@ -40,8 +46,14 @@ export function ImeProbe() {
             if (event.key === 'Enter') setTextareaEnters((n) => n + 1)
           }}
         />
-        <p data-testid="textarea-enters" className="text-[var(--novi-color-fg)]">
-          {textareaEnters}
+        <p className="text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)]">
+          ハンドラに届いた Enter:{' '}
+          <span
+            data-testid="textarea-enters"
+            className="text-[length:var(--novi-text-lg)] font-medium tabular-nums text-[var(--novi-color-fg)]"
+          >
+            {textareaEnters}
+          </span>
         </p>
       </div>
     </Preview>
