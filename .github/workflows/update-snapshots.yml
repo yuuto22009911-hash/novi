@@ -33,12 +33,14 @@ jobs:
 
       - name: 差分があれば push する
         run: |
-          if git diff --quiet -- apps/docs/e2e/__screenshots__; then
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          # 先に add する。git diff は未追跡ファイルを見ないため、
+          # テーマを追加して基準が丸ごと新規になったとき「差分なし」と誤判定する
+          git add apps/docs/e2e/__screenshots__
+          if git diff --cached --quiet -- apps/docs/e2e/__screenshots__; then
             echo "基準に差分なし"
             exit 0
           fi
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add apps/docs/e2e/__screenshots__
           git commit -m 'test(docs): update visual regression baselines on linux'
           git push
