@@ -72,6 +72,7 @@ component-index.json  →  docs の props 表 / llms.txt / @novi-ui/mcp
 | 契約テストで必須 slot が全部欠落 | オーバーレイは portal に描画される。`baseElement` を見る |
 | 1コンポーネント import が重い | 1ファイルにバンドルすると tree-shaking が効かない。`unbundle: true` |
 | ビルドが Node で落ちる | `.node-version`（22.22.2）に合わせる。tsdown が `^22.18.0 \|\| >=24.11.0` を要求 |
+| 視覚回帰の基準を手元で撮った | **撮ってはいけない。** 判定は CI（Linux）で行うため環境が違う。Actions の「視覚回帰の基準を更新」を対象ブランチで実行する |
 
 ## 検証の原則
 
@@ -94,6 +95,11 @@ pnpm size
 pnpm --filter @novi-ui/mcp check:security   # MCP が env / FS / network に触れないこと
 pnpm --filter @novi-ui/docs test:browser    # axe + テーマ切替 + 視覚回帰（要ビルド）
 ```
+
+視覚回帰の基準を更新するときは、手元で `--update-snapshots` を実行せず
+**Actions の「視覚回帰の基準を更新」ワークフロー**を対象ブランチで実行する。
+判定するのと同じ Linux で撮らないと、環境差のぶん許容差を緩めることになり、
+緩めた検査は本物の変化も見逃す（一度そうなっていた）。
 
 docs のビルドは **turbo 経由**（`pnpm turbo run build --filter=@novi-ui/docs`）。
 IR 生成がビルド済みの core を読むため、依存順序が必要。
