@@ -9,16 +9,16 @@ import { avatarStyles } from './avatar.styles'
 testSlotContract({
   name: 'Avatar',
   contract: NOVI_CONTRACTS.Avatar,
-  render: () => <Avatar src="/me.jpg" name="小島 佑翔" badge={<span>●</span>} />,
+  render: () => <Avatar src="/me.jpg" name="山本 太郎" badge={<span>●</span>} />,
 })
 
 describe('initialsOf: 日本語の氏名を壊さない', () => {
   it('空白区切りの氏名は各語の先頭を取る', () => {
-    expect(initialsOf('小島 佑翔')).toBe('小佑')
+    expect(initialsOf('山本 太郎')).toBe('山太')
   })
 
   it('空白のない日本語名は先頭1文字を取る', () => {
-    expect(initialsOf('小島佑翔')).toBe('小')
+    expect(initialsOf('山本太郎')).toBe('山')
   })
 
   it('英語名も同様に扱える', () => {
@@ -43,23 +43,23 @@ describe('initialsOf: 日本語の氏名を壊さない', () => {
 
 describe('Avatar: 描画', () => {
   it('src があれば画像を描画する', () => {
-    const { container } = render(<Avatar src="/me.jpg" name="小島 佑翔" />)
+    const { container } = render(<Avatar src="/me.jpg" name="山本 太郎" />)
     expect(container.querySelector('[data-slot="image"]')).not.toBeNull()
     expect(container.querySelector('[data-slot="fallback"]')).toBeNull()
   })
 
   it('src がなければイニシャルを表示する', () => {
-    render(<Avatar name="小島 佑翔" />)
-    expect(screen.getByText('小佑')).toBeDefined()
+    render(<Avatar name="山本 太郎" />)
+    expect(screen.getByText('山太')).toBeDefined()
   })
 
   it('fallback は読み上げに氏名を伝える（イニシャルだけにしない）', () => {
-    render(<Avatar name="小島 佑翔" />)
-    expect(screen.getByRole('img', { name: '小島 佑翔' })).toBeDefined()
+    render(<Avatar name="山本 太郎" />)
+    expect(screen.getByRole('img', { name: '山本 太郎' })).toBeDefined()
   })
 
   it('画像の読み込みに失敗したら fallback に切り替わる', () => {
-    const { container } = render(<Avatar src="/broken.jpg" name="小島 佑翔" />)
+    const { container } = render(<Avatar src="/broken.jpg" name="山本 太郎" />)
 
     const img = container.querySelector('[data-slot="image"]')
     expect(img).not.toBeNull()
@@ -70,12 +70,12 @@ describe('Avatar: 描画', () => {
   })
 
   it('fallback を明示的に渡せる', () => {
-    render(<Avatar name="小島 佑翔" fallback={<span>？</span>} />)
+    render(<Avatar name="山本 太郎" fallback={<span>？</span>} />)
     expect(screen.getByText('？')).toBeDefined()
   })
 
   it('badge を渡さなければその slot は出ない', () => {
-    const { container } = render(<Avatar name="小島 佑翔" />)
+    const { container } = render(<Avatar name="山本 太郎" />)
     expect(container.querySelector('[data-slot="badge"]')).toBeNull()
   })
 })

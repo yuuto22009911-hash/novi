@@ -20,7 +20,7 @@ export type AvatarRequiredSlot = (typeof avatarRequiredSlots)[number]
  * `name` を省略すると誰を指すのか伝わらない
  *
  * @example
- * <Avatar src="/me.jpg" name="小島 佑翔" />
+ * <Avatar src="/me.jpg" name="山本 太郎" />
  */
 export interface AvatarProps extends NoviBaseProps {
   size?: NoviSize
