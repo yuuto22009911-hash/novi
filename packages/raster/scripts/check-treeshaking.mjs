@@ -27,11 +27,11 @@ try {
   writeFileSync(probe, `import { Button } from ${JSON.stringify(ENTRY)}\nexport const x = Button\n`)
 
   const meta = join(work, 'meta.json')
+  // `npx --yes esbuild@…` は都度ダウンロードを試み、複数パッケージが同時に走ると
+  // npx のキャッシュ書き込みが競合して落ちる。devDependency の実体を直接叩く
   execFileSync(
-    'npx',
+    join(PKG_ROOT, 'node_modules', '.bin', 'esbuild'),
     [
-      '--yes',
-      'esbuild@0.25',
       probe,
       '--bundle',
       '--minify',
