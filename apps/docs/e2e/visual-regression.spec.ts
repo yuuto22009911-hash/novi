@@ -30,6 +30,11 @@ for (const scheme of SCHEMES) {
         await expect(preview).toHaveScreenshot(`${slug}-${scheme}.png`, {
           animations: 'disabled',
           maxDiffPixelRatio: 0.01,
+          // 既定の 0.2 では primary を別の色に差し替えても「差分 0 ピクセル」と判定される。
+          // ADR-R8（角丸 0→12px・hue 転回・影の追加）が基準を1枚も更新せずに通っていたのは
+          // この緩さが原因で、色の改定を検出できない視覚回帰は目的を果たしていない。
+          // 0.05 は文字のアンチエイリアスのゆらぎは吸収しつつ、面の色の変化は捉える
+          threshold: 0.05,
         })
       })
     }
