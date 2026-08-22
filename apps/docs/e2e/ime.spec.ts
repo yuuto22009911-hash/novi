@@ -18,6 +18,20 @@ import { expect, type Page, test } from '@playwright/test'
  * それぞれ挙動が違う。ただし**回帰の検出**はこれで自動化できる。
  */
 
+/**
+ * 抑制は core の `useImeSafeKeys` が担い、各テーマはそれを import しているだけ。
+ * それでも**テーマごとに回す**のは、import し忘れても単体テストが緑のままだから
+ * （契約テストは slot と props しか見ない）。
+ */
+const THEMES = ['raster', 'tactile'] as const
+
+/** ime-probe / デモは既定が raster。テーマを明示して開く。 */
+async function open(page: Page, path: string, theme: (typeof THEMES)[number]) {
+  await page.goto(path)
+  await page.getByLabel('テーマ').selectOption(theme)
+  await expect(page.locator(`[data-testid="preview"][data-novi-theme="${theme}"]`)).toBeVisible()
+}
+
 /** 変換中に Enter を送る。IME と同じ経路を通す。 */
 async function pressEnterWhileComposing(page: Page, text: string) {
   const cdp = await page.context().newCDPSession(page)
@@ -38,50 +52,52 @@ async function pressEnterWhileComposing(page: Page, text: string) {
   await page.waitForTimeout(200)
 }
 
-test('Input: 変換確定の Enter がキーハンドラに届かない', async ({ page }) => {
-  await page.goto('/ime-probe/')
+for (const theme of THEMES) {
+  test(`${theme} Input: 変換確定の Enter がキーハンドラに届かない`, async ({ page }) => {
+    await open(page, '/ime-probe/', theme)
 
-  const input = page.locator('[data-testid="preview"] input').first()
-  await input.click()
-  await pressEnterWhileComposing(page, 'にほんご')
+    const input = page.locator(`[data-novi-theme="${theme}"] input`).first()
+    await input.click()
+    await pressEnterWhileComposing(page, 'にほんご')
 
-  // 届いていたら、利用側の「Enter で送信」がそのまま暴発する
-  await expect(page.getByTestId('input-enters')).toHaveText('0')
-  // 抑制が入力そのものを殺していないことも確かめる
-  await expect(input).toHaveValue('にほんご')
-})
+    // 届いていたら、利用側の「Enter で送信」がそのまま暴発する
+    await expect(page.getByTestId('input-enters')).toHaveText('0')
+    // 抑制が入力そのものを殺していないことも確かめる
+    await expect(input).toHaveValue('にほんご')
+  })
 
-test('Input: 変換していないときの Enter は通す', async ({ page }) => {
-  await page.goto('/ime-probe/')
+  test(`${theme} Input: 変換していないときの Enter は通す`, async ({ page }) => {
+    await open(page, '/ime-probe/', theme)
 
-  const input = page.locator('[data-testid="preview"] input').first()
-  await input.click()
-  await input.press('Enter')
+    const input = page.locator(`[data-novi-theme="${theme}"] input`).first()
+    await input.click()
+    await input.press('Enter')
 
-  // 抑制しすぎて普通の Enter まで殺していたら、それはそれで壊れている
-  await expect(page.getByTestId('input-enters')).toHaveText('1')
-})
+    // 抑制しすぎて普通の Enter まで殺していたら、それはそれで壊れている
+    await expect(page.getByTestId('input-enters')).toHaveText('1')
+  })
 
-test('TextArea: 変換確定の Enter がキーハンドラに届かない', async ({ page }) => {
-  await page.goto('/ime-probe/')
+  test(`${theme} TextArea: 変換確定の Enter がキーハンドラに届かない`, async ({ page }) => {
+    await open(page, '/ime-probe/', theme)
 
-  await page.locator('[data-testid="preview"] textarea').first().click()
-  await pressEnterWhileComposing(page, 'かいぎょう')
+    await page.locator(`[data-novi-theme="${theme}"] textarea`).first().click()
+    await pressEnterWhileComposing(page, 'かいぎょう')
 
-  await expect(page.getByTestId('textarea-enters')).toHaveText('0')
-})
+    await expect(page.getByTestId('textarea-enters')).toHaveText('0')
+  })
 
-test('Select: 変換確定の Enter で候補が誤決定されない', async ({ page }) => {
-  await page.goto('/docs/components/select/')
+  test(`${theme} Select: 変換確定の Enter で候補が誤決定されない`, async ({ page }) => {
+    await open(page, '/docs/components/select/', theme)
 
-  const trigger = page.locator('[data-testid="preview"] [data-slot="trigger"]').first()
-  const before = await trigger.textContent()
+    const trigger = page.locator(`[data-novi-theme="${theme}"] [data-slot="trigger"]`).first()
+    const before = await trigger.textContent()
 
-  await trigger.click()
-  await expect(page.locator('[data-slot="listbox"]')).toBeVisible()
+    await trigger.click()
+    await expect(page.locator('[data-slot="listbox"]')).toBeVisible()
 
-  await pressEnterWhileComposing(page, 'とうきょう')
+    await pressEnterWhileComposing(page, 'とうきょう')
 
-  // 変換確定で選択が変わっていない
-  expect(await trigger.textContent()).toBe(before)
-})
+    // 変換確定で選択が変わっていない
+    expect(await trigger.textContent()).toBe(before)
+  })
+}

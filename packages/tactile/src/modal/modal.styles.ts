@@ -34,6 +34,8 @@ const slots = {
     // 下端の余白はホームインジケータぶんを足す。env() の第2引数で
     // safe-area の無い環境（デスクトップ）では 0 に落ちる（AC-10-3 / FR-13）
     'pb-[env(safe-area-inset-bottom,0px)]',
+    // 横向きではノッチが左右に来る。面は画面幅いっぱいのまま、中身だけを内側へ寄せる
+    'pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]',
     // 下から せり上がる。260ms は移動距離に見合う時間（120ms では瞬間移動に見える）
     'data-[entering]:motion-safe:animate-[novi-slide-up_260ms_var(--novi-ease-emphasized)]',
   ].join(' '),

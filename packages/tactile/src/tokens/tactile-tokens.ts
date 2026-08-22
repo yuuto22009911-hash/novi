@@ -31,7 +31,10 @@ export const TACTILE_RADII: Record<string, string> = {
  * 不透明度は α ≤ 0.24 を検査が縛る。
  */
 export const TACTILE_SHADOWS: Record<string, string> = {
-  none: 'none',
+  // `none` ではなく透明な影。ring も box-shadow に合成されるため、
+  // `none` を混ぜると `box-shadow: <ring>, none` という不正値になり宣言ごと破棄され、
+  // ring まで消える（実機で outline variant の境界線が消えていた）
+  none: '0 0 #0000',
   // カード・行など「置かれている」面
   sm: '0 1px 3px oklch(20% 0.01 255 / 0.10), 0 1px 2px oklch(20% 0.01 255 / 0.06)',
   // メニュー・ポップオーバー
