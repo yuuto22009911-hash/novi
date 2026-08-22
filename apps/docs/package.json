@@ -16,6 +16,7 @@
   "dependencies": {
     "@novi-ui/core": "workspace:*",
     "@novi-ui/raster": "workspace:*",
+    "@novi-ui/tactile": "workspace:*",
     "next": "16.3.1",
     "react": "^19.0.0",
     "react-aria-components": "^1.20.0",

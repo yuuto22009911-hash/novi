@@ -15,6 +15,11 @@ export const themeRegistry = {
     // コード例の import 文に差し込む。切り替えで変わるのはこの1行だけ
     pkg: '@novi-ui/raster',
   },
+  tactile: {
+    label: 'Tactile',
+    description: 'タッチファースト',
+    pkg: '@novi-ui/tactile',
+  },
 } as const
 
 export type ThemeName = keyof typeof themeRegistry
