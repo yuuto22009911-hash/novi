@@ -49,7 +49,11 @@ const variant: VariantMap<NoviVariant, { inputWrapper: string }> = {
   },
   soft: { inputWrapper: 'bg-[var(--novi-color-subtle)] shadow-[var(--novi-shadow-none)]' },
   ghost: { inputWrapper: 'bg-transparent shadow-[var(--novi-shadow-none)]' },
-  plain: { inputWrapper: 'bg-transparent shadow-[var(--novi-shadow-none)] px-0' },
+  // 下線だけ残す。ghost（完全に地へ溶ける）と見分けがつかなくならないようにする
+  plain: {
+    inputWrapper:
+      'bg-transparent shadow-[var(--novi-shadow-none)] rounded-[var(--novi-radius-none)] border-b border-[var(--novi-color-border-strong)]',
+  },
 }
 
 /** 1行入力と違い高さは固定しない。余白と文字サイズだけを段階で変える。 */

@@ -63,7 +63,11 @@ const variant: VariantMap<NoviVariant, { inputWrapper: string }> = {
   // 地に溶ける。表を詰めて並べるときに面を増やさない
   ghost: { inputWrapper: 'bg-transparent shadow-[var(--novi-shadow-none)]' },
   // 完全に無装飾。インライン編集などで使う
-  plain: { inputWrapper: 'bg-transparent shadow-[var(--novi-shadow-none)] px-0' },
+  // 下線だけ残す。ghost（完全に地へ溶ける）と見分けがつかなくならないようにする
+  plain: {
+    inputWrapper:
+      'bg-transparent shadow-[var(--novi-shadow-none)] rounded-[var(--novi-radius-none)] border-b border-[var(--novi-color-border-strong)]',
+  },
 }
 
 /**
