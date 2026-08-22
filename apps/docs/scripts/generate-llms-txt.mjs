@@ -19,6 +19,22 @@ const OUT_DIR = join(DOCS_ROOT, 'public')
 const SITE = 'https://novi-42r.pages.dev'
 
 const index = JSON.parse(readFileSync(IR, 'utf8'))
+
+/**
+ * カラーセットの色名。**テーマの定義そのものから読む。**
+ * ここに書き写すと、色を足したとき AI への説明だけが古くなる。
+ */
+const COLOR_NAMES = Object.fromEntries(
+  await Promise.all(
+    ['raster', 'tactile'].map(async (id) => {
+      const mod = await import(
+        new URL(`../../../packages/${id}/src/tokens/color-set.ts`, import.meta.url).pathname
+      )
+      const set = mod.RASTER_COLOR_SET ?? mod.TACTILE_COLOR_SET
+      return [id, set.map((c) => c.id)]
+    }),
+  ),
+)
 const { components, vocabularies, themes } = index
 
 /**
@@ -92,6 +108,25 @@ ${Object.entries(themes)
   .join('\n')}
 
 コンポーネントはテーマパッケージから import する。**テーマを替えても props は変わらない。**
+テーマは見た目だけでなく DOM の組み立て方も替える（Tactile の Modal は下から出るシートになる）。
+
+## 色を選ぶ
+
+各テーマは8色のカラーセットを持ち、\`data-novi-color\` 属性で切り替える。
+**色名はテーマごとに違う。** 知らない名前を書いても壊れず、そのテーマの既定色になる。
+
+\`\`\`html
+<html data-novi-theme="tactile" data-novi-color="madder">
+\`\`\`
+
+${Object.entries(themes)
+  .map(([id, t]) => {
+    const names = (COLOR_NAMES[id] ?? []).join(' / ')
+    return `- **${t.label}**: ${names}`
+  })
+  .join('\n')}
+
+\`success\` / \`warning\` / \`danger\` は色選択の影響を受けない。
 
 ## 書いてはいけないクラス
 
@@ -124,10 +159,14 @@ function buildFull() {
       })
       .join('\n')
 
+    // 実装しているテーマをすべて挙げる。1つだけ出すと、AI はそのテーマしか
+    // 使えないと解釈して、指示されたテーマを無視したコードを書く
     const availability =
       c.implementedBy.length === 0
         ? '**未実装**。契約はあるがテーマが実装していない。使えない\n\n'
-        : `**import**: \`import { ${c.importName} } from '${themes[c.implementedBy[0]].pkg}'\`\n\n`
+        : `**import**: ${c.implementedBy
+            .map((t) => `\`import { ${c.importName} } from '${themes[t].pkg}'\``)
+            .join(' / ')}\n\n`
 
     return `### ${c.name}
 
