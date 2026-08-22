@@ -143,6 +143,17 @@ describe.each(VARIANTS.map((v) => [v.name, v] as const))('生成 CSS: %s', (_nam
     }
   })
 
+  it('参照している animation 名がすべて @keyframes で定義されている', () => {
+    // Raster は `animate-[novi-fade-in_…]` を参照しながら定義を持たず、
+    // 開閉アニメーションが無音で効いていなかった。参照だけでは何も起きず、
+    // テストも視覚回帰も「静止画として正しい」ので気づけない
+    const defined = new Set([...v.css.matchAll(/@keyframes\s+([\w-]+)/g)].map((m) => m[1]))
+    expect(defined.size).toBeGreaterThan(0)
+    for (const name of ['novi-fade-in', 'novi-slide-up']) {
+      expect(defined.has(name), `@keyframes ${name} が無い`).toBe(true)
+    }
+  })
+
   it('Raster の色名のセレクタが存在しない = 他モデルの色は既定色に落ちる（FR-05）', () => {
     for (const rasterOnly of ['ink', 'brick', 'ochre', 'prussian']) {
       expect(v.css).not.toContain(`data-novi-color='${rasterOnly}'`)

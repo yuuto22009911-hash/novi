@@ -20,8 +20,10 @@
 export const DESIGN_RULES = [
   {
     id: 'radius',
-    prohibited: 'rounded-none / rounded-sm 相当の小さい角丸と、トークン外の任意値',
-    pattern: /(?<![\w-])rounded-(?:none|sm|\[(?!var\(--novi))/g,
+    prohibited: 'トークンを経由しない角丸（rounded-sm / rounded-full / rounded-t-xl など）',
+    // 「方向つきトークン」でも「トークン」でもないものだけを違反にする。
+    // 省略可能なグループにすると、後戻りして正しい指定にも当たってしまう
+    pattern: /(?<![\w-])rounded-(?![trblse]{1,2}-\[var\(--novi-radius)(?!\[var\(--novi-radius)/g,
     message: '角丸はトークン経由。Tactile は sm=8 / md=14 / lg=20px で、none 以外は 8px 以上',
   },
   {
@@ -106,6 +108,11 @@ export const DESIGN_RULE_EXCEPTIONS = {
   'tap-target.ts': {
     rules: ['small-height'],
     reason: '当たり判定を広げる共通断片。ここでの寸法指定は視覚寸法ではない',
+  },
+  'modal.styles.ts': {
+    rules: ['small-height'],
+    reason:
+      'シート上端の掴み手（grabber）は aria-hidden の装飾線で、対話要素ではない。細さそのものが「掴めそうに見せすぎない」という判断（NG6）',
   },
 }
 

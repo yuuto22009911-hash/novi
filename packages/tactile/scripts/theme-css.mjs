@@ -13,6 +13,27 @@ import { COLOR_SET, cssVariableName, TOKEN_GROUPS } from './tokens.data.mjs'
 const HEADER =
   '/* 自動生成。編集しないこと。src/tokens/tactile-tokens.ts と color-set.ts を変更して再生成する。 */\n'
 
+/**
+ * 開閉のキーフレーム。**テーマの CSS が持つ。**
+ *
+ * モーションはテーマの美学に属するので core には置かない（core は CSS を持たない原則）。
+ * Raster は `animate-[novi-fade-in_…]` を参照しながら定義を持っておらず、
+ * 開閉アニメーションが無音で効いていなかった。参照する側と定義する側を同じ生成物に置く。
+ *
+ * `novi-slide-up` は Tactile の核。下端から来る面が距離を移動して減速して止まる。
+ * `prefers-reduced-motion` の尊重は利用側の `motion-safe:` 修飾子が担う（AC-09-1）。
+ */
+const KEYFRAMES = `  @keyframes novi-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes novi-slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+`
+
 /** @param {Record<string,string>} tokens @param {string} prefix @param {string} indent */
 const decls = (tokens, prefix, indent) =>
   Object.entries(tokens)
@@ -108,6 +129,7 @@ function colorSection(sel) {
 export function buildGlobalCss() {
   return `${HEADER}
 @layer novi.base {
+${KEYFRAMES}
 ${tokenBlock(':root', '  ')}
 
 ${darkBlock("[data-novi-scheme='dark']", '  ')}
@@ -129,6 +151,7 @@ ${colorSection({
 export function buildScopedCss() {
   return `${HEADER}
 @layer novi.base {
+${KEYFRAMES}
 ${tokenBlock("[data-novi-theme='tactile']", '  ')}
 
 ${darkBlock("[data-novi-theme='tactile'][data-novi-scheme='dark']", '  ')}

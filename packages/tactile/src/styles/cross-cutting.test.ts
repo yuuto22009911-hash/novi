@@ -40,9 +40,11 @@ describe('公開 API', () => {
     const components = Object.keys(tactile).filter(
       (name) => /^[A-Z]/.test(name) && !name.endsWith('Styles'),
     )
-    // Tabs の TabItem など、契約1つに複数の公開名が対応するものは接頭辞で照合する
+    // Tabs の TabItem など、契約1つに複数の公開名が対応するものは接頭辞で照合する。
+    // 契約が複数形（Tabs）で公開名が単数（TabItem）になる場合があるので末尾の s も落とす
+    const prefixes = [...contracts].flatMap((c) => [c, c.replace(/s$/, '')])
     const unknown = components.filter(
-      (name) => !contracts.has(name) && ![...contracts].some((c) => name.startsWith(c)),
+      (name) => !contracts.has(name) && !prefixes.some((p) => name.startsWith(p)),
     )
     expect(unknown).toEqual([])
   })
@@ -103,16 +105,30 @@ describe('デザイン規律（全コンポーネント）', () => {
     )
   })
 
+  /**
+   * `rounded-t-[...]` のような方向つきの指定を誤検出しないよう、
+   * 塊への正規表現ではなくクラス単位で見る。
+   */
+  function offenders(prefix: string, allowed: RegExp): string[] {
+    return allClasses()
+      .split(/\s+/)
+      .map((cls) => cls.replace(/^(?:!|[\w-]+:)+/, '')) // ! と修飾子（hover: 等）を落とす
+      .filter((cls) => cls.startsWith(`${prefix}-`))
+      .filter((cls) => !allowed.test(cls))
+  }
+
   it('影がトークン経由でのみ指定されている', () => {
-    expect(allClasses()).not.toMatch(/(?<![\w-])shadow-(?!none\b)(?!\[var\(--novi-shadow)/)
+    expect(offenders('shadow', /^shadow-(?:none|\[var\(--novi-shadow-[a-z]+\)\])$/)).toEqual([])
   })
 
-  it('角丸がトークン経由でのみ指定されている', () => {
-    expect(allClasses()).not.toMatch(/(?<![\w-])rounded-(?!\[var\(--novi-radius)/)
+  it('角丸がトークン経由でのみ指定されている（方向つきも可）', () => {
+    expect(
+      offenders('rounded', /^rounded-(?:[trblse]{1,2}-)?\[var\(--novi-radius-[a-z]+\)\]$/),
+    ).toEqual([])
   })
 
   it('モーションの時間がトークン経由でのみ指定されている', () => {
-    expect(allClasses()).not.toMatch(/(?<![\w-])duration-(?!\[var\(--novi-duration)/)
+    expect(offenders('duration', /^duration-\[var\(--novi-duration-[a-z]+\)\]$/)).toEqual([])
   })
 })
 
