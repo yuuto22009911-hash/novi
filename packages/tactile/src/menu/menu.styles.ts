@@ -13,6 +13,8 @@ const slots = {
     'rounded-t-[var(--novi-radius-lg)]',
     'shadow-[var(--novi-shadow-lg)]',
     'pb-[env(safe-area-inset-bottom,0px)]',
+    // 横向きのノッチは左右に来る。面は全幅のまま、中身だけを内側へ寄せる（FR-13）
+    'pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]',
     'data-[entering]:motion-safe:animate-[novi-fade-in_120ms_ease-out]',
   ].join(' '),
   list: 'outline-none p-2 flex flex-col',

@@ -101,6 +101,17 @@ describe('浮く面の階層（AC-06-3）', () => {
     }
   })
 
+  // 実機（iOS Safari）で outline の Input / TextArea の境界線が消えていた。
+  // ring は box-shadow に合成されるため、影のトークンに `none` が混ざると
+  // `box-shadow: <ring>, none` という不正値になり、宣言ごと破棄されて ring まで消える。
+  // 影を持たせない意図は「透明な影」で表す（Tailwind の shadow-none と同じ形）。
+  it('影のトークンは box-shadow に合成できる値（none を混ぜない）', () => {
+    const invalid = Object.entries(TACTILE_SHADOWS)
+      .filter(([, value]) => value.trim() === 'none')
+      .map(([key]) => key)
+    expect(invalid, 'none はリングと合成できない。0 0 #0000 を使う').toEqual([])
+  })
+
   it('dark: bg < subtle < surface の順（持ち上がるほど明るい）', () => {
     for (const entry of TACTILE_COLOR_SET) {
       const n = neutralsFor(entry.hue, 'dark')
@@ -264,7 +275,8 @@ describe('Tactile デザイン言語（数値定義）', () => {
   })
 
   it('影は none 以外がすべて実体を持ち、lg だけが上向き（下から来るシート用）', () => {
-    expect(TACTILE_SHADOWS.none).toBe('none')
+    // `none` そのものではなく透明な影。理由は下の「box-shadow に合成できる値」を参照
+    expect(TACTILE_SHADOWS.none).toBe('0 0 #0000')
     for (const key of ['sm', 'md']) {
       expect(TACTILE_SHADOWS[key]).not.toBe('none')
       expect(TACTILE_SHADOWS[key]).not.toMatch(/\s-\d+px/)
