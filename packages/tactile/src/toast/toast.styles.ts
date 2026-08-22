@@ -16,6 +16,9 @@ const slots = {
   region: [
     'fixed top-0 inset-x-0 z-50 flex flex-col gap-2 outline-none',
     'p-3 pt-[calc(env(safe-area-inset-top,0px)+0.75rem)]',
+    // 横向きではノッチが左右に来る。上端だけ避けても通知はノッチに隠れる（FR-13）
+    'pl-[calc(env(safe-area-inset-left,0px)+0.75rem)]',
+    'pr-[calc(env(safe-area-inset-right,0px)+0.75rem)]',
   ].join(' '),
   root: [
     'text-[var(--novi-color-fg)]',
