@@ -39,6 +39,8 @@ describe('メインエントリ', () => {
         "checkboxGroupSlots",
         "checkboxRequiredSlots",
         "checkboxSlots",
+        "colorPickerRequiredSlots",
+        "colorPickerSlots",
         "inputRequiredSlots",
         "inputSlots",
         "menuRequiredSlots",

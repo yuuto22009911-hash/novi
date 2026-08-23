@@ -103,7 +103,7 @@ export const DEMO_META: DemoMeta[] = [
     title: 'Avatar',
     note: 'name を必ず渡す。画像が無いときのイニシャルと、読み上げ時の氏名の両方に使われる。',
     imports: ['Avatar'],
-    code: `<Avatar name="小島 佑翔" />
+    code: `<Avatar name="山本 太郎" />
 <Avatar name="Ada Lovelace" size="lg" />`,
   },
   {
@@ -207,6 +207,18 @@ export const DEMO_META: DemoMeta[] = [
   <Breadcrumb href="/docs">ドキュメント</Breadcrumb>
   <Breadcrumb>Button</Breadcrumb>
 </Breadcrumbs>`,
+  },
+  {
+    component: 'ColorPicker',
+    title: 'ColorPicker',
+    note: '色の一覧はモデルが持つ。同じコードでも Raster では Print Inks、Tactile では Textile Dyes が並ぶ。',
+    imports: ['ColorPicker'],
+    code: `// 色 id を書かない。未指定ならモデルの既定色から始まる
+const [color, setColor] = useState<string>()
+
+<div data-novi-color={color}>
+  <ColorPicker label="配色" onChange={setColor} showLabels />
+</div>`,
   },
   {
     component: 'Toast',

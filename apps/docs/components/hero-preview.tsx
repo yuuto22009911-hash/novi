@@ -7,7 +7,7 @@ import { Preview } from './preview'
 const CODE = `<Card>
   <CardHeader>アカウント設定</CardHeader>
   <CardBody>
-    <Input label="表示名" defaultValue="小島 佑翔" />
+    <Input label="表示名" defaultValue="山本 太郎" />
     <Switch defaultSelected>メール通知を受け取る</Switch>
     <Badge color="success" withDot>有効</Badge>
   </CardBody>
@@ -35,7 +35,7 @@ export function HeroPreview() {
           <CardHeader>アカウント設定</CardHeader>
           <CardBody>
             <div className="flex flex-col gap-4">
-              <Input label="表示名" defaultValue="小島 佑翔" />
+              <Input label="表示名" defaultValue="山本 太郎" />
               <Switch defaultSelected>メール通知を受け取る</Switch>
               <div>
                 <Badge color="success" withDot>

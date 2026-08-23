@@ -107,6 +107,11 @@
       "instruction": "本文が読み込まれるまでの場所取りを2行分出してください。"
     },
     {
+      "id": "colorpicker",
+      "components": ["ColorPicker"],
+      "instruction": "画面の配色を利用者に選ばせたい。用意されている色を並べて、選んだ色が画面に反映されるようにしてください。"
+    },
+    {
       "id": "toast",
       "components": ["Toast"],
       "instruction": "保存が終わったときに「保存しました」と一時的に知らせてください。"

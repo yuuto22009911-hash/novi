@@ -13,9 +13,19 @@ const contracts = Object.entries(NOVI_CONTRACTS) as [string, NoviContract][]
 /** 契約をまたいで対になっており、1コンポーネントとして数えるもの。 */
 const PAIRED_CONTRACTS = ['CheckboxGroup', 'RadioGroup', 'Spinner']
 
+/**
+ * MVP を締めたあとに足した契約。
+ *
+ * **MVP の数（20）は歴史的な値として動かさない。** ここに列挙する形にしておくと、
+ * 契約が増えたことに気づかず通る、という抜け方をしない。
+ */
+const POST_MVP_CONTRACTS = ['ColorPicker']
+
 describe('slot 契約レジストリ', () => {
-  it('MVP 20 コンポーネント分の契約がある', () => {
-    expect(contracts.length - PAIRED_CONTRACTS.length).toBe(NOVI_MVP_COMPONENT_COUNT)
+  it('MVP 20 コンポーネント + 追加分の契約がある', () => {
+    expect(contracts.length - PAIRED_CONTRACTS.length - POST_MVP_CONTRACTS.length).toBe(
+      NOVI_MVP_COMPONENT_COUNT,
+    )
   })
 
   it.each(contracts)('%s: 必須 slot は語彙の部分集合である', (_name, contract) => {
@@ -95,6 +105,17 @@ describe('architecture.md §6 との一致', () => {
     Accordion: ['root', 'item', 'heading', 'trigger', 'indicator', 'panel'],
     Breadcrumbs: ['root', 'list', 'item', 'link', 'separator', 'current'],
     Toast: ['region', 'root', 'icon', 'content', 'title', 'description', 'closeButton', 'action'],
+    ColorPicker: [
+      'root',
+      'label',
+      'description',
+      'errorMessage',
+      'list',
+      'item',
+      'swatch',
+      'indicator',
+      'itemLabel',
+    ],
   }
 
   it('設計書に載っている全コンポーネントが実装されている', () => {

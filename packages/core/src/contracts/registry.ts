@@ -10,6 +10,7 @@ import {
   checkboxRequiredSlots,
   checkboxSlots,
 } from './checkbox.contract'
+import { colorPickerRequiredSlots, colorPickerSlots } from './color-picker.contract'
 import { inputRequiredSlots, inputSlots } from './input.contract'
 import { menuRequiredSlots, menuSlots } from './menu.contract'
 import { modalRequiredSlots, modalSlots } from './modal.contract'
@@ -58,6 +59,7 @@ export const NOVI_CONTRACTS = {
   Card: { slots: cardSlots, required: cardRequiredSlots },
   Checkbox: { slots: checkboxSlots, required: checkboxRequiredSlots },
   CheckboxGroup: { slots: checkboxGroupSlots, required: checkboxGroupRequiredSlots },
+  ColorPicker: { slots: colorPickerSlots, required: colorPickerRequiredSlots },
   Input: { slots: inputSlots, required: inputRequiredSlots },
   Menu: { slots: menuSlots, required: menuRequiredSlots },
   Modal: { slots: modalSlots, required: modalRequiredSlots },

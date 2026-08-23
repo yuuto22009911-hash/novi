@@ -117,7 +117,7 @@ function AvatarDemo() {
   const { Avatar } = useNoviTheme()
   return (
     <>
-      <Avatar name="小島 佑翔" />
+      <Avatar name="山本 太郎" />
       <Avatar name="Ada Lovelace" size="lg" />
       <Avatar name="設定" radius="none" />
     </>
@@ -246,6 +246,32 @@ function BreadcrumbsDemo() {
   )
 }
 
+/**
+ * 選んだ色をそのまま反映して見せる。
+ *
+ * **選択肢はテーマが持っている。** ここでは色名を1つも書いていないのに、
+ * Raster では Print Inks、Tactile では Textile Dyes が並ぶ。
+ */
+function ColorPickerDemo() {
+  const { ColorPicker, Button, Badge, COLOR_OPTIONS } = useNoviTheme()
+  const [color, setColor] = useState(COLOR_OPTIONS[0]?.id)
+
+  // テーマを切り替えると選択肢ごと入れ替わる。前のモデルの色 id が残ると
+  // どれも選択されていない状態になるので、既定へ戻す
+  const known = COLOR_OPTIONS.some((option) => option.id === color)
+  const activeColor = known ? color : COLOR_OPTIONS[0]?.id
+
+  return (
+    <div data-novi-color={activeColor} className="flex w-full flex-col gap-4">
+      <ColorPicker label="配色" value={activeColor} onChange={setColor} showLabels />
+      <div className="flex flex-wrap items-center gap-3">
+        <Button color="primary">この色で保存</Button>
+        <Badge color="primary">選択中</Badge>
+      </div>
+    </div>
+  )
+}
+
 function ToastDemo() {
   const { Button, NoviToastRegion, createToastQueue } = useNoviTheme()
   const [queue] = useState(() => createToastQueue())
@@ -288,5 +314,6 @@ export const DEMO_RENDERERS: Record<string, () => React.ReactNode> = {
   tabs: () => <TabsDemo />,
   accordion: () => <AccordionDemo />,
   breadcrumbs: () => <BreadcrumbsDemo />,
+  colorpicker: () => <ColorPickerDemo />,
   toast: () => <ToastDemo />,
 }

@@ -75,6 +75,10 @@ for (const slug of DEMO_SLUGS) {
         'button:visible',
         'a[href]:visible',
         'label[data-slot="root"]:visible',
+        // ColorPicker の item はここに足しても何も守らない。色名を伴うと
+        // ラベルの文字幅だけで 44px を超えるため、玉を 32px に縮めても通ってしまう
+        // （実際に変異させて確認した）。スウォッチの当たり判定は
+        // color-picker.test.tsx が tapTarget の有無で担保する
         '[role="tab"]:visible',
       ].join(', '),
     )

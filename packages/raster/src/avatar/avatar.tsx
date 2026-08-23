@@ -24,7 +24,7 @@ export function initialsOf(name: string): string {
  * 人や組織を表す画像。読み込みに失敗したら fallback を表示する。
  *
  * @example
- * <Avatar src="/me.jpg" name="小島 佑翔" />
+ * <Avatar src="/me.jpg" name="山本 太郎" />
  */
 export function Avatar({
   size,
@@ -53,7 +53,7 @@ export function Avatar({
         />
       ) : (
         // 画像の代わりなので role="img" を与える。
-        // これがないと aria-label が効かず、読み上げが「小佑」のような
+        // これがないと aria-label が効かず、読み上げが「山太」のような
         // イニシャルだけになって氏名が伝わらない
         <span
           data-slot="fallback"
