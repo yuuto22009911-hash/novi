@@ -10,10 +10,11 @@
   Tactile では Textile Dyes が並ぶ。利用側は色名を1つも書かない。
   
   ```tsx
-  const [color, setColor] = useState(COLOR_OPTIONS[0].id)
+  // 色 id を書かない。未指定ならモデルの既定色から始まる
+  const [color, setColor] = useState<string>()
   
   <div data-novi-color={color}>
-    <ColorPicker label="配色" value={color} onChange={setColor} showLabels />
+    <ColorPicker label="配色" onChange={setColor} showLabels />
   </div>
   ```
   
