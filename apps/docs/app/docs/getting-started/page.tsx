@@ -25,58 +25,59 @@ export function SignInForm() {
 
 export default function GettingStartedPage() {
   return (
-    <article className="flex max-w-3xl flex-col gap-10">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-medium tracking-tight">はじめに</h1>
-        <p className="text-sm leading-relaxed text-site-muted">
+    <article className="flex max-w-3xl flex-col gap-[clamp(2rem,5vw,3rem)]">
+      <header className="mb-[clamp(1rem,4vw,3rem)] flex flex-col gap-2">
+        <h1 className="text-3xl font-medium tracking-tight">はじめに</h1>
+        <p className="max-w-[40rem] text-base leading-[1.6] text-site-muted">
           Provider は要りません。CSS を2行 import すれば動きます。
         </p>
       </header>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium tracking-tight">インストール</h2>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-xl font-medium tracking-tight">インストール</h2>
         <Code>{INSTALL}</Code>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium tracking-tight">CSS の読み込み</h2>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-xl font-medium tracking-tight">CSS の読み込み</h2>
         <Code>{SETUP}</Code>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium tracking-tight">使う</h2>
+      <section className="flex flex-col gap-4">
+        <h2 className="text-xl font-medium tracking-tight">使う</h2>
         <Code>{USAGE}</Code>
-        <p className="text-sm leading-relaxed text-site-muted">
+        <p className="max-w-[40rem] text-base leading-[1.9] text-site-muted">
           ラップするものはありません。React Server Components からも 型や slot 契約をそのまま import
           できます。
         </p>
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium tracking-tight">知っておくと良いこと</h2>
-        <dl className="flex flex-col gap-4 text-sm leading-relaxed">
+      <section className="flex flex-col gap-4">
+        <h2 className="text-xl font-medium tracking-tight">知っておくと良いこと</h2>
+        <dl className="flex max-w-[40rem] flex-col gap-6 text-base leading-[1.9]">
           <div>
             <dt className="font-medium">props 名は React Aria の慣習に従います</dt>
             <dd className="text-site-muted">
-              <code className="font-mono text-xs">disabled</code> ではなく{' '}
-              <code className="font-mono text-xs">isDisabled</code>、
-              <code className="font-mono text-xs">onClick</code> ではなく{' '}
-              <code className="font-mono text-xs">onPress</code> です。 基盤の props
+              <code className="font-mono text-[0.875em]">disabled</code> ではなく{' '}
+              <code className="font-mono text-[0.875em]">isDisabled</code>、
+              <code className="font-mono text-[0.875em]">onClick</code> ではなく{' '}
+              <code className="font-mono text-[0.875em]">onPress</code> です。 基盤の props
               をそのまま流すことで、変換層に起因する a11y のバグを作り込まずに済みます。
             </dd>
           </div>
           <div>
             <dt className="font-medium">ブランド色は CSS 変数で変えられます</dt>
             <dd className="text-site-muted">
-              <code className="font-mono text-xs">--novi-color-primary</code>{' '}
+              <code className="font-mono text-[0.875em]">--novi-color-primary</code>{' '}
               を上書きすれば、primary を使う全コンポーネントに反映されます。
             </dd>
           </div>
           <div>
             <dt className="font-medium">日本語入力で誤送信しません</dt>
             <dd className="text-site-muted">
-              Input と TextArea の <code className="font-mono text-xs">onKeyDown</code> は IME
-              変換中のキーを受け取りません。変換確定の Enter でフォームが送信される事故を防げます。
+              Input と TextArea の <code className="font-mono text-[0.875em]">onKeyDown</code> は
+              IME 変換中のキーを受け取りません。変換確定の Enter
+              でフォームが送信される事故を防げます。
             </dd>
           </div>
         </dl>

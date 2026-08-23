@@ -20,6 +20,7 @@ const ComponentDemoBody = dynamic(() => import('./component-demo-body'), {
   ),
 })
 
+/** プレビューとコードは同じデモの一組。16px で近接させ、次の節との 48px と対比させる。 */
 export function ComponentDemo({ slug }: { slug: string }) {
   return (
     <section className="flex flex-col gap-4">

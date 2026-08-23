@@ -28,7 +28,18 @@ export function CodeExample({ code, imports }: { code: string; imports: string[]
   }
 
   return (
-    <div className="relative">
+    <div className="border border-site-border bg-site-subtle">
+      {/* コピーは独立した行に置く。コードの上に重ねると、横に長い行や
+          「コピーしました」に変わったときに文字を覆う（狭い幅で実害が出ていた） */}
+      <div className="flex justify-end border-b border-site-border px-2 py-1.5">
+        <button
+          type="button"
+          onClick={copy}
+          className="border border-site-border bg-site-bg px-2 py-1 text-xs"
+        >
+          {copied ? 'コピーしました' : 'コピー'}
+        </button>
+      </div>
       {/*
         横スクロールする領域はキーボードでも読めなければならない（WCAG 2.1.1）。
         role="region" を手で付けるより、意味を持つ要素で包む方が正しい。
@@ -38,19 +49,12 @@ export function CodeExample({ code, imports }: { code: string; imports: string[]
         aria-label="コード例"
         // biome-ignore lint/a11y/noNoninteractiveTabindex: スクロール領域は WCAG 2.1.1 によりキーボードで読めるようにする必要がある
         tabIndex={0}
-        className="overflow-x-auto border border-site-border bg-site-subtle focus-visible:outline focus-visible:outline-2 focus-visible:outline-site-accent"
+        className="overflow-x-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-site-accent"
       >
-        <pre className="p-4 text-xs leading-relaxed">
+        <pre className="p-6 text-xs leading-relaxed">
           <code data-testid="code-example">{full}</code>
         </pre>
       </section>
-      <button
-        type="button"
-        onClick={copy}
-        className="absolute top-2 right-2 border border-site-border bg-site-bg px-2 py-1 text-xs"
-      >
-        {copied ? 'コピーしました' : 'コピー'}
-      </button>
     </div>
   )
 }

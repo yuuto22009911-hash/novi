@@ -33,9 +33,11 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const { a11y } = getComponent(demo.component)
 
   return (
-    <div className="flex gap-10">
-      <nav aria-label="コンポーネント" className="hidden w-44 shrink-0 lg:block">
-        <ul className="flex flex-col gap-1 text-sm">
+    <div className="flex gap-12">
+      {/* 幅 168px + gap 48px = 216px。旧値（176 + 40）と合計が同じなので
+          本文の実寸が動かず、視覚回帰の基準画像が無効にならない */}
+      <nav aria-label="コンポーネント" className="hidden w-42 shrink-0 lg:block">
+        <ul className="flex flex-col gap-2 text-sm">
           {DEMO_META.map((d) => {
             const s = d.title.toLowerCase()
             return (
@@ -55,7 +57,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         </ul>
       </nav>
 
-      <article className="flex min-w-0 flex-1 flex-col gap-10">
+      <article className="flex min-w-0 flex-1 flex-col gap-[clamp(2rem,5vw,3rem)]">
         {/* サイドバーが出ない幅では、これが唯一のコンポーネント間導線になる。
             JS 不要の details で畳んでおく（開閉状態はページ遷移ごとにリセットされてよい） */}
         <details className="border border-site-border lg:hidden">
@@ -65,7 +67,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             コンポーネント一覧
           </summary>
           <nav aria-label="コンポーネント" className="border-t border-site-border px-4 py-2">
-            <ul className="flex flex-wrap gap-x-5 text-sm">
+            <ul className="flex flex-wrap gap-x-6 text-sm">
               {DEMO_META.map((d) => {
                 const s = d.title.toLowerCase()
                 return (
@@ -89,38 +91,38 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </nav>
         </details>
 
-        <header className="flex flex-col gap-2">
-          <h1 className="text-2xl font-medium tracking-tight">{demo.title}</h1>
-          <p className="text-sm leading-relaxed text-site-muted">{demo.note}</p>
+        <header className="mb-[clamp(0.5rem,2vw,1.5rem)] flex flex-col gap-2">
+          <h1 className="text-3xl font-medium tracking-tight">{demo.title}</h1>
+          <p className="max-w-[40rem] text-base leading-[1.6] text-site-muted">{demo.note}</p>
         </header>
 
         <ComponentDemo slug={slug} />
 
         {/* 折り返し以下の表はスクロールされるまで描画を省く（T-38）。
             contain-intrinsic-size が概算の高さを確保し、スクロールバーの飛びを防ぐ */}
-        <section className="flex flex-col gap-3 [contain-intrinsic-size:auto_600px] [content-visibility:auto]">
-          <h2 className="text-lg font-medium tracking-tight">Props</h2>
+        <section className="flex flex-col gap-4 [contain-intrinsic-size:auto_600px] [content-visibility:auto]">
+          <h2 className="text-xl font-medium tracking-tight">Props</h2>
           <PropsTable name={demo.component} />
         </section>
 
-        <section className="flex flex-col gap-3 [contain-intrinsic-size:auto_200px] [content-visibility:auto]">
-          <h2 className="text-lg font-medium tracking-tight">Slot</h2>
-          <p className="text-sm text-site-muted">
-            構成部位に <code className="font-mono text-xs">data-slot</code> が出力されます。 CSS
-            の上書きやテストはこれを狙ってください。
+        <section className="flex flex-col gap-4 [contain-intrinsic-size:auto_200px] [content-visibility:auto]">
+          <h2 className="text-xl font-medium tracking-tight">Slot</h2>
+          <p className="max-w-[40rem] text-base leading-[1.9] text-site-muted">
+            構成部位に <code className="font-mono text-[0.875em]">data-slot</code> が出力されます。
+            CSS の上書きやテストはこれを狙ってください。
           </p>
           <SlotTable name={demo.component} />
         </section>
 
-        <section className="flex flex-col gap-3 [contain-intrinsic-size:auto_200px] [content-visibility:auto]">
-          <h2 className="text-lg font-medium tracking-tight">アクセシビリティ</h2>
-          <ul className="flex list-disc flex-col gap-1 pl-5 text-sm leading-relaxed text-site-muted">
+        <section className="flex flex-col gap-4 [contain-intrinsic-size:auto_200px] [content-visibility:auto]">
+          <h2 className="text-xl font-medium tracking-tight">アクセシビリティ</h2>
+          <ul className="flex list-disc flex-col gap-2 pl-6 max-w-[40rem] text-base leading-[1.6] text-site-muted">
             {/* 契約の @a11y をそのまま出す。ページごとに書き直すとテーマや実装とズレる */}
             {a11y !== null && <li>{a11y}</li>}
             <li>キーボードだけで操作できます。フォーカスリングはコントラスト比 3:1 以上です。</li>
             <li>本文のコントラスト比は light / dark とも 4.5:1 以上を検査で保証しています。</li>
             <li>
-              <code className="font-mono text-xs">prefers-reduced-motion</code>{' '}
+              <code className="font-mono text-[0.875em]">prefers-reduced-motion</code>{' '}
               が有効なときはアニメーションを行いません。
             </li>
           </ul>

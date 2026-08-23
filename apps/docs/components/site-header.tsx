@@ -39,12 +39,12 @@ export function SiteHeader() {
 
   return (
     <header className="border-b border-site-border">
-      <div className="site-container flex flex-wrap items-center justify-between gap-x-6 gap-y-0 py-2 sm:h-14 sm:flex-nowrap sm:py-0">
+      <div className="site-container flex flex-wrap items-center justify-between gap-x-6 gap-y-0 py-2 sm:h-16 sm:flex-nowrap sm:py-0">
         <Link href="/" className="flex h-12 items-center font-medium tracking-tight sm:h-auto">
           Novi UI
         </Link>
 
-        <nav className="order-last flex w-full items-center gap-x-5 text-sm sm:order-none sm:w-auto sm:gap-4">
+        <nav className="order-last flex w-full items-center gap-x-4 text-sm sm:order-none sm:w-auto">
           {NAV_LINKS.map(({ href, label, match }) => {
             const current = isCurrent(match)
             return (

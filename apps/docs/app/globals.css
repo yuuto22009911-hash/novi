@@ -60,8 +60,15 @@
   .site-container {
     margin-inline: auto;
     max-width: 72rem;
-    /* viewport-fit=cover でノッチの裏に本文が入らないよう safe-area を余白に足す */
-    padding-inline: calc(1.5rem + env(safe-area-inset-left))
-      calc(1.5rem + env(safe-area-inset-right));
+    /* viewport-fit=cover でノッチの裏に本文が入らないよう safe-area を余白に足す。
+       左右は 16px（端末）→ 24px（704px 以上）で追従する。上限を 1.5rem に据え置くのは、
+       視覚回帰を撮る 1280px でプレビューの実寸を 1px も動かさないため */
+    padding-inline: calc(clamp(1rem, 0.4rem + 2.5vw, 1.5rem) + env(safe-area-inset-left))
+      calc(clamp(1rem, 0.4rem + 2.5vw, 1.5rem) + env(safe-area-inset-right));
+  }
+
+  /* 本文の縦リズム。上下とも 8px スケールの端点に着地させる */
+  .site-main {
+    padding-block: clamp(1.5rem, 0.6rem + 3.75vw, 3rem) clamp(3rem, 1.2rem + 7.5vw, 6rem);
   }
 }

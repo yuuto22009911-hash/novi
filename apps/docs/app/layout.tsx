@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <NoviThemeProvider>
           <SiteHeader />
-          <main className="site-container py-10">{children}</main>
+          <main className="site-container site-main">{children}</main>
         </NoviThemeProvider>
 
         {/*

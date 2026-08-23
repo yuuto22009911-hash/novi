@@ -12,7 +12,7 @@ export function Code({ children, label = 'コード' }: { children: string; labe
       tabIndex={0}
       className="overflow-x-auto border border-site-border bg-site-subtle focus-visible:outline focus-visible:outline-2 focus-visible:outline-site-accent"
     >
-      <pre className="p-4 text-xs leading-relaxed">
+      <pre className="p-6 text-xs leading-relaxed">
         <code>{children}</code>
       </pre>
     </section>

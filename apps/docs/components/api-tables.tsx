@@ -47,13 +47,13 @@ export function PropsTable({ name }: { name: string }) {
       <caption className="sr-only">{name} の props 一覧</caption>
       <thead>
         <tr className="border-b border-site-border text-left">
-          <th scope="col" className="py-2 pr-4 font-medium">
+          <th scope="col" className="pt-2 pb-3 pr-4 sm:pr-6 font-medium">
             名前
           </th>
-          <th scope="col" className="py-2 pr-4 font-medium">
+          <th scope="col" className="pt-2 pb-3 pr-4 sm:pr-6 font-medium">
             型
           </th>
-          <th scope="col" className="py-2 font-medium">
+          <th scope="col" className="pt-2 pb-3 font-medium">
             説明
           </th>
         </tr>
@@ -61,14 +61,14 @@ export function PropsTable({ name }: { name: string }) {
       <tbody>
         {props.map((prop) => (
           <tr key={prop.name} className="border-b border-site-border align-top">
-            <td className="py-2 pr-4 font-mono text-xs whitespace-nowrap">
+            <td className="py-3 pr-4 sm:pr-6 font-mono text-xs whitespace-nowrap">
               {prop.name}
               {prop.required && <span className="text-site-accent"> *</span>}
             </td>
-            <td className="py-2 pr-4 font-mono text-xs text-site-muted">
+            <td className="py-3 pr-4 sm:pr-6 font-mono text-xs text-site-muted">
               {displayType(prop.type)}
             </td>
-            <td className="py-2 text-site-muted">{prop.doc}</td>
+            <td className="py-3 text-site-muted">{prop.doc}</td>
           </tr>
         ))}
       </tbody>
@@ -83,7 +83,7 @@ export function SlotTable({ name }: { name: string }) {
   const { slots } = getComponent(name)
 
   return (
-    <ul className="flex flex-wrap gap-2 text-sm">
+    <ul className="flex flex-wrap gap-4 text-sm">
       {slots.all.map((slot) => {
         const required = slots.required.includes(slot)
         return (
