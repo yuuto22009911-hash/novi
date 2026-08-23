@@ -78,6 +78,10 @@ async function loadTheme(source) {
     },
     tokenGroups: data.TOKEN_GROUPS,
     cssVariableName: data.cssVariableName,
+    // カラーセット。tokens.data.mjs が color-set.ts の値を写しており、生成 CSS と同じ定義
+    colorSet: data.COLOR_SET,
+    tone: data[`${source.prefix}_TONE`],
+    defaultColor: data.DEFAULT_COLOR_ID,
   }
 }
 
@@ -306,6 +310,19 @@ const index = {
           ),
           colorRule: theme.rules.COLOR_RULE,
         },
+        // 色の語彙（FR-11）。名前・由来・相方まで IR に載せ、docs / llms / MCP が同じ定義を読む。
+        // 実値は生成 CSS と同じ color-set.ts から来る（tokens.data.mjs 経由）
+        defaultColor: theme.defaultColor,
+        tone: theme.tone,
+        colorSet: theme.colorSet.map(({ id, name, hue, pair, description, light, dark }) => ({
+          id,
+          name,
+          hue,
+          pair,
+          description,
+          light,
+          dark,
+        })),
       },
     ]),
   ),

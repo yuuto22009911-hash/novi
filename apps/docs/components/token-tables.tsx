@@ -14,6 +14,22 @@ interface VariableGroup {
   variables: CssVariable[]
 }
 
+interface ColorSchemeValues {
+  primary: string
+  primaryFg: string
+}
+
+export interface ColorEntry {
+  id: string
+  name: string
+  hue: number
+  /** 相方（差し色）の id。secondary にこの色の値が入る */
+  pair: string
+  description: string
+  light: ColorSchemeValues
+  dark: ColorSchemeValues
+}
+
 interface ThemeEntry {
   pkg: string
   label: string
@@ -25,6 +41,9 @@ interface ThemeEntry {
     exceptions: { file: string; rules: string[]; reason: string }[]
     colorRule: string
   }
+  defaultColor: string
+  tone: { light: { l: number; c: number }; dark: { l: number; c: number } }
+  colorSet: ColorEntry[]
 }
 
 const THEMES = index.themes as unknown as Record<string, ThemeEntry>
