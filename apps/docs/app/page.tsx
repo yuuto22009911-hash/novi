@@ -12,12 +12,12 @@ const DashboardShowcase = dynamic(() =>
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col gap-16">
-      <section className="flex flex-col gap-6">
+    <div className="flex flex-col gap-[clamp(4rem,8vw,6rem)]">
+      <section className="flex flex-col gap-4">
         <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">
           1つの core に、複数の美学。
         </h1>
-        <p className="max-w-2xl leading-relaxed text-site-muted">
+        <p className="mb-8 max-w-[40em] leading-[1.9] text-site-muted">
           挙動とアクセシビリティは <code className="font-mono text-sm">@novi-ui/core</code>{' '}
           が一手に引き受け、テーマは構造とスタイルだけを持ちます。
           右上でテーマを切り替えてください。
@@ -31,13 +31,13 @@ export default function HomePage() {
 
       <section className="flex flex-col gap-4">
         <h2 className="text-xl font-medium tracking-tight">組み上げるとこうなります</h2>
-        <p className="max-w-2xl text-sm leading-relaxed text-site-muted">
+        <p className="mb-2 max-w-[40em] text-sm leading-[1.9] text-site-muted">
           Raster だけで作った管理画面です。面は平らなまま、余白と 1px
           の線と明度差で階層を作り、浮いている層だけが薄い影を持ちます。 情報密度の高い実務画面が
           Raster の得意分野です。右上でテーマを切り替えると、この画面ごと別の見た目になります。
         </p>
         <DashboardShowcase />
-        <p className="max-w-2xl text-sm leading-relaxed text-site-muted">
+        <p className="mt-2 max-w-[40em] text-sm leading-[1.6] text-site-muted">
           このページの外枠がテーマに染まらないのは、比較対象をはっきりさせるための設計です。
           実際のアプリは、上のように Novi だけで組めます。
         </p>
@@ -45,7 +45,7 @@ export default function HomePage() {
 
       <section className="flex flex-col gap-4">
         <h2 className="text-xl font-medium tracking-tight">設計の要点</h2>
-        <dl className="grid gap-6 sm:grid-cols-3">
+        <dl className="mt-2 grid gap-6 sm:grid-cols-3">
           {[
             {
               t: 'Provider が要らない',
@@ -62,7 +62,7 @@ export default function HomePage() {
           ].map((item) => (
             <div key={item.t} className="flex flex-col gap-2 border-t border-site-border pt-4">
               <dt className="font-medium">{item.t}</dt>
-              <dd className="text-sm leading-relaxed text-site-muted">{item.d}</dd>
+              <dd className="max-w-[40em] text-sm leading-[1.6] text-site-muted">{item.d}</dd>
             </div>
           ))}
         </dl>

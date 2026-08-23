@@ -11,12 +11,22 @@ import { useThemeState } from '../lib/use-novi-theme'
  * リンク先そのものより広く取る:「コンポーネント」は Button ページへ飛ぶが、
  * どのコンポーネントのページにいても現在地はコンポーネントの節にいる。
  * /docs/themes/*（デザイン言語）も「テーマの調整」の節として扱う。
+ *
+ * `apart` はライブラリの使い方（前3項目）から半歩離して置く印。
+ * Lookbook は機能の説明ではなく、色の見本帳という性格の違う節なので、
+ * 並びの間隔（16px）を1段広げて（32px）区分を余白で示す。
  */
-const NAV_LINKS = [
+const NAV_LINKS: readonly {
+  href: string
+  label: string
+  match: readonly string[]
+  apart?: boolean
+}[] = [
   { href: '/docs/getting-started/', label: 'はじめに', match: ['/docs/getting-started'] },
   { href: '/docs/components/button/', label: 'コンポーネント', match: ['/docs/components'] },
   { href: '/docs/theming/', label: 'テーマの調整', match: ['/docs/theming', '/docs/themes'] },
-] as const
+  { href: '/docs/lookbook/', label: 'Lookbook', match: ['/docs/lookbook'], apart: true },
+]
 
 /**
  * サイトの外枠。**テーマの影響を受けない**（ADR-D1）。
@@ -39,13 +49,15 @@ export function SiteHeader() {
 
   return (
     <header className="border-b border-site-border">
-      <div className="site-container flex flex-wrap items-center justify-between gap-x-6 gap-y-0 py-2 sm:h-14 sm:flex-nowrap sm:py-0">
+      <div className="site-container flex flex-wrap items-center justify-between gap-x-6 gap-y-0 py-2 sm:h-16 sm:flex-nowrap sm:py-0">
         <Link href="/" className="flex h-12 items-center font-medium tracking-tight sm:h-auto">
           Novi UI
         </Link>
 
-        <nav className="order-last flex w-full items-center gap-x-5 text-sm sm:order-none sm:w-auto sm:gap-4">
-          {NAV_LINKS.map(({ href, label, match }) => {
+        {/* 4項目は 375px の1行に収まらない。ページ全体を横に広げず、
+            ナビ自身をスクロール領域にする（切れて見える文字がスクロールの手がかりになる） */}
+        <nav className="order-last flex w-full items-center gap-x-4 overflow-x-auto text-sm sm:order-none sm:w-auto sm:overflow-visible">
+          {NAV_LINKS.map(({ href, label, match, apart }) => {
             const current = isCurrent(match)
             return (
               <Link
@@ -54,6 +66,8 @@ export function SiteHeader() {
                 aria-current={current ? 'page' : undefined}
                 className={[
                   'flex h-12 items-center whitespace-nowrap sm:h-auto',
+                  // gap-x-4（16px）に足して 32px。節の性格の違いを余白で示す
+                  apart ? 'ml-4' : '',
                   // 現在地は fg（ダークでは白、ライトでは黒）。色弱でも追えるよう下線も足す
                   current
                     ? 'text-site-fg underline decoration-1 underline-offset-[6px]'

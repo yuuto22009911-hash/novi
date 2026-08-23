@@ -149,3 +149,19 @@ test('ヘッダーのナビが現在地を示す', async ({ page }) => {
     await expect(banner().getByRole('link', { name })).not.toHaveAttribute('aria-current', 'page')
   }
 })
+
+test('Lookbook が選択中のモデルの見本帳に掛け替わる', async ({ page }) => {
+  await page.goto('/docs/lookbook/')
+
+  // 既定は Raster の Print Inks。既定色 Ink のカードがある
+  await expect(page.getByRole('heading', { name: /Print Inks/ })).toBeVisible()
+  await expect(page.getByText('Ink', { exact: true })).toBeVisible()
+
+  await page.getByLabel('テーマ').selectOption('tactile')
+
+  // セットごと掛け替わり、Print Inks 側は残らない
+  await expect(page.getByRole('heading', { name: /Textile Dyes/ })).toBeVisible()
+  await expect(page.getByText('Indigo', { exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Print Inks/ })).toBeHidden()
+  await expect(page.getByText('Ink', { exact: true })).toBeHidden()
+})

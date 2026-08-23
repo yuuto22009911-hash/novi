@@ -20,7 +20,13 @@ test.use({
   deviceScaleFactor: 3,
 })
 
-const PAGES = ['/', '/docs/components/button/', '/docs/theming/', '/docs/getting-started/']
+const PAGES = [
+  '/',
+  '/docs/components/button/',
+  '/docs/theming/',
+  '/docs/getting-started/',
+  '/docs/lookbook/',
+]
 
 for (const path of PAGES) {
   test(`${path}: 横スクロールが発生しない`, async ({ page }) => {
