@@ -10,4 +10,4 @@
  * 契約は Phase 2 以降で 1 コンポーネント = 1 PR で足していく（specs/07-theme-flatlay/tasks.md）。
  */
 
-export {}
+export { Button, type ButtonStyleProps, buttonStyles } from './button'
