@@ -93,12 +93,14 @@ describe('client エントリ', () => {
   it('公開 API 一覧', () => {
     expect(names(clientEntry)).toMatchInlineSnapshot(`
       [
+        "INFLOW_PORTAL_PROP",
         "Toast",
         "ToastContent",
         "ToastList",
         "ToastQueue",
         "ToastRegion",
         "ToastStateContext",
+        "inflowPortalProps",
         "useImeSafeKeys",
       ]
     `)
