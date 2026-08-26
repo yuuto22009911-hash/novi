@@ -20,22 +20,18 @@ const SITE = 'https://novi-42r.pages.dev'
 
 const index = JSON.parse(readFileSync(IR, 'utf8'))
 
+const { components, vocabularies, themes } = index
+
 /**
- * カラーセットの色名。**テーマの定義そのものから読む。**
- * ここに書き写すと、色を足したとき AI への説明だけが古くなる。
+ * カラーセットの色名。**IR から読む。**
+ *
+ * かつてテーマ名を配列で持ち、色定義のモジュールを直接 import していた。
+ * 3本目を足したとき配列に入れ忘れ、AI への説明だけが
+ * 「Flatlay: （空）」になっていた。IR は登録した時点で全テーマぶん揃う。
  */
 const COLOR_NAMES = Object.fromEntries(
-  await Promise.all(
-    ['raster', 'tactile'].map(async (id) => {
-      const mod = await import(
-        new URL(`../../../packages/${id}/src/tokens/color-set.ts`, import.meta.url).pathname
-      )
-      const set = mod.RASTER_COLOR_SET ?? mod.TACTILE_COLOR_SET
-      return [id, set.map((c) => c.id)]
-    }),
-  ),
+  Object.entries(themes).map(([id, t]) => [id, (t.colorSet ?? []).map((c) => c.id)]),
 )
-const { components, vocabularies, themes } = index
 
 /**
  * 禁止事項。CI が実際に落とす規則をそのまま出す（検査と説明を一致させる）。

@@ -125,6 +125,16 @@
       "id": "theme-tactile-color",
       "components": ["Button"],
       "instruction": "指で操作する前提のテーマを使い、送信ボタンを茜色にしてください。"
+    },
+    {
+      "id": "theme-flatlay-inflow",
+      "components": ["Select"],
+      "instruction": "紙に印刷して配る注文書の画面を作ってください。開いた選択肢が他の内容に重ならないテーマを使い、数量を選ばせてください。"
+    },
+    {
+      "id": "theme-flatlay-color",
+      "components": ["Button"],
+      "instruction": "重なりを作らないテーマを使い、確定ボタンを青焼き図面の青にしてください。"
     }
   ]
 }

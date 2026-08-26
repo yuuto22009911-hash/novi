@@ -28,6 +28,7 @@ import {
   writeFileSync,
 } from 'node:fs'
 import { basename, join } from 'node:path'
+import { DESIGN_RULES as FLATLAY_RULES } from '../packages/flatlay/scripts/design-rules.data.mjs'
 import { DESIGN_RULES as RASTER_RULES } from '../packages/raster/scripts/design-rules.data.mjs'
 import { DESIGN_RULES as TACTILE_RULES } from '../packages/tactile/scripts/design-rules.data.mjs'
 
@@ -38,7 +39,23 @@ import { DESIGN_RULES as TACTILE_RULES } from '../packages/tactile/scripts/desig
  * 違反として報告してしまう。逆も同じで、Raster のコードを Tactile の規則で
  * 見ると角丸 6px が違反になる。規則はテーマの美学そのもので、共通ではない。
  */
-const RULES_BY_THEME = { raster: RASTER_RULES, tactile: TACTILE_RULES }
+const RULES_BY_THEME = { raster: RASTER_RULES, tactile: TACTILE_RULES, flatlay: FLATLAY_RULES }
+
+/**
+ * 検査するテーマ（`--theme=flatlay`）。指定すると **import 先の一致も合否に入る**。
+ *
+ * テーマを指名して依頼したのに既定の Raster が返ってくるのは、型も規律も
+ * 通ってしまうぶん最も気づきにくい失敗になる。テーマ指定は llms.txt の
+ * 「## テーマ」節が読まれたかどうかの試験でもある。
+ */
+const EXPECTED_THEME = process.argv
+  .find((arg) => arg.startsWith('--theme='))
+  ?.slice('--theme='.length)
+
+if (EXPECTED_THEME !== undefined && !(EXPECTED_THEME in RULES_BY_THEME)) {
+  console.error(`✗ 知らないテーマ: ${EXPECTED_THEME}（${Object.keys(RULES_BY_THEME).join(' / ')}）`)
+  process.exit(1)
+}
 
 const ROOT = new URL('..', import.meta.url).pathname
 const HERE = join(ROOT, 'accuracy')
@@ -152,6 +169,15 @@ for (const [id, path] of found) {
   const lines = source.split('\n')
   // どのテーマを使ったコードかは import 文が決める。既定は raster
   const theme = /@novi-ui\/(\w+)/.exec(source)?.[1] ?? 'raster'
+
+  if (EXPECTED_THEME !== undefined && theme !== EXPECTED_THEME) {
+    classErrors
+      .get(id)
+      ?.push(`[theme] @novi-ui/${theme} を import している（指定は ${EXPECTED_THEME}）`)
+  }
+
+  // 規則は**実際に import したテーマ**のものを当てる。指定側の規則で見ると
+  // 別テーマのコードに無関係な違反が並び、本当の失敗（import 先の取り違え）が埋もれる
   const rules = RULES_BY_THEME[theme] ?? RASTER_RULES
   for (const rule of rules) {
     lines.forEach((line, i) => {
@@ -188,7 +214,10 @@ console.log('')
 if (missing.length > 0) {
   console.log(`未生成: ${missing.join(', ')}（${missing.length}/${prompts.length} 件）`)
 }
-console.log(`検査: ${found.size} 件 / 合格 ${found.size - failed} 件 / 不合格 ${failed} 件`)
+console.log(
+  `検査: ${found.size} 件 / 合格 ${found.size - failed} 件 / 不合格 ${failed} 件` +
+    (EXPECTED_THEME === undefined ? '' : `（テーマ指定: ${EXPECTED_THEME}）`),
+)
 
 if (failed > 0) {
   console.log('')
