@@ -56,6 +56,13 @@ const THEME_SOURCES = [
     tokensModule: 'tactile-tokens.ts',
     prefix: 'TACTILE',
   },
+  {
+    id: 'flatlay',
+    label: 'Flatlay',
+    description: '帳票・文具 / z 軸なし',
+    tokensModule: 'flatlay-tokens.ts',
+    prefix: 'FLATLAY',
+  },
 ]
 
 /** @param {(typeof THEME_SOURCES)[number]} source */

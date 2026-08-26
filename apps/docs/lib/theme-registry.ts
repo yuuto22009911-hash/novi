@@ -20,6 +20,11 @@ export const themeRegistry = {
     description: 'タッチファースト',
     pkg: '@novi-ui/tactile',
   },
+  flatlay: {
+    label: 'Flatlay',
+    description: '帳票・文具 / z 軸なし',
+    pkg: '@novi-ui/flatlay',
+  },
 } as const
 
 export type ThemeName = keyof typeof themeRegistry
