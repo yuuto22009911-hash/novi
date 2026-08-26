@@ -142,6 +142,15 @@ describe('Button: 挙動', () => {
     await userEvent.click(screen.getByRole('button'))
     expect(onPress).not.toHaveBeenCalled()
   })
+
+  it.each(['{Enter}', ' '])('キーボード %s でも押せる', async (key) => {
+    const onPress = vi.fn()
+    render(<Button onPress={onPress}>保存</Button>)
+    await userEvent.tab()
+    expect(document.activeElement).toBe(screen.getByRole('button'))
+    await userEvent.keyboard(key)
+    expect(onPress).toHaveBeenCalledOnce()
+  })
 })
 
 describe('Button: 押下は反転（FR-11 / ADR-F3）', () => {
@@ -155,6 +164,21 @@ describe('Button: 押下は反転（FR-11 / ADR-F3）', () => {
     const root = buttonStyles({ variant }).root()
     expect(root).toContain('data-[pressed]:bg-')
     expect(root).toContain('data-[pressed]:text-')
+  })
+
+  it('押している間だけ反転し、離すと元に戻る', async () => {
+    // 反転は「押した瞬間」を返すためのもの。離しても反転が残ると、
+    // 選択済みトグルと見分けがつかなくなる（Button は状態を持たない）
+    render(<Button>保存</Button>)
+    const button = screen.getByRole('button')
+    // 押下と解除を1本のポインタとして繋ぐため、セッションを立てる
+    const user = userEvent.setup()
+
+    expect(button.hasAttribute('data-pressed')).toBe(false)
+    await user.pointer({ keys: '[MouseLeft>]', target: button })
+    expect(button.hasAttribute('data-pressed')).toBe(true)
+    await user.pointer({ keys: '[/MouseLeft]' })
+    expect(button.hasAttribute('data-pressed')).toBe(false)
   })
 
   it('沈む・縮む表現を使わない（z 軸の語彙）', () => {
