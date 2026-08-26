@@ -45,6 +45,7 @@ export {
   ModalTitle,
   modalStyles,
 } from './modal'
+export { Progress, type ProgressStyleProps, progressStyles } from './progress'
 export {
   Radio,
   RadioGroup,
@@ -60,6 +61,8 @@ export {
   type SelectStyleProps,
   selectStyles,
 } from './select'
+export { Skeleton, type SkeletonStyleProps, skeletonStyles } from './skeleton'
+export { Spinner, type SpinnerStyleProps, spinnerStyles } from './spinner'
 export { Switch, type SwitchStyleProps, switchStyles } from './switch'
 export {
   TabContent,
