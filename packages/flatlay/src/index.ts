@@ -10,6 +10,8 @@
  * 契約は Phase 2 以降で 1 コンポーネント = 1 PR で足していく（specs/07-theme-flatlay/tasks.md）。
  */
 
+export { Avatar, type AvatarStyleProps, avatarStyles, initialsOf } from './avatar'
+export { Badge, type BadgeStyleProps, badgeStyles } from './badge'
 export { Button, type ButtonStyleProps, buttonStyles } from './button'
 export {
   Card,
