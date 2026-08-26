@@ -54,6 +54,8 @@ test.describe('サイト全体', () => {
     '/docs/getting-started/',
     '/docs/theming/',
     '/docs/themes/raster/',
+    '/docs/themes/tactile/',
+    '/docs/themes/flatlay/',
     '/docs/lookbook/',
   ]) {
     test(`${path}: violations 0`, async ({ page }) => {

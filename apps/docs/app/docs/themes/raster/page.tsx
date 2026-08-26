@@ -66,7 +66,7 @@ export default function RasterPage() {
         <blockquote className="border-l-2 border-site-border pl-6 max-w-[40rem] text-base leading-[1.6] text-site-muted">
           {raster.designRules.colorRule}
         </blockquote>
-        <Preview>
+        <Preview theme="raster">
           <div className="flex w-full flex-col gap-2">
             {['bg', 'subtle', 'border', 'muted', 'fg'].map((name) => (
               <div key={name} className="flex items-center gap-3">

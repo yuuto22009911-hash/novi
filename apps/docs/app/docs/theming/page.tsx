@@ -129,6 +129,12 @@ export default function ThemingPage() {
             </Link>{' '}
             — タッチファースト。面を持ち上げる
           </li>
+          <li>
+            <Link href="/docs/themes/flatlay/" className="underline">
+              Flatlay のデザイン言語
+            </Link>{' '}
+            — 帳票・文具。z 軸を持たない
+          </li>
         </ul>
       </section>
     </article>
