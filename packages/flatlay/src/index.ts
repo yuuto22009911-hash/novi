@@ -11,6 +11,7 @@
  */
 
 export { Button, type ButtonStyleProps, buttonStyles } from './button'
+export { Input, type InputStyleProps, inputStyles } from './input'
 export {
   Modal,
   ModalBody,
@@ -34,3 +35,4 @@ export {
   type TabsStyleProps,
   tabsStyles,
 } from './tabs'
+export { TextArea, type TextareaStyleProps, textareaStyles } from './textarea'

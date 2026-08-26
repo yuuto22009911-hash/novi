@@ -162,6 +162,7 @@ describe('帳票の行（FR-07 / ADR-F7）', () => {
   /** 対話要素の主たる面と、その高さを持つ slot。 */
   const CONTROLS: [name: string, fn: StyleFn, slot: string][] = [
     ['button', flatlay.buttonStyles as StyleFn, 'root'],
+    ['input', flatlay.inputStyles as StyleFn, 'inputWrapper'],
     ['select', flatlay.selectStyles as StyleFn, 'trigger'],
     ['tabs', flatlay.tabsStyles as StyleFn, 'tab'],
   ]
