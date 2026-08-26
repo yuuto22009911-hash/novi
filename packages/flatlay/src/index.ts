@@ -12,6 +12,15 @@
 
 export { Button, type ButtonStyleProps, buttonStyles } from './button'
 export {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CardImage,
+  type CardStyleProps,
+  cardStyles,
+} from './card'
+export {
   Checkbox,
   CheckboxGroup,
   type CheckboxGroupStyleProps,
