@@ -54,3 +54,41 @@ for (const theme of THEME_NAMES) {
     })
   }
 }
+
+/**
+ * 印刷しても展開が欠けない（flatlay T-32 / AC-08-1）。
+ *
+ * z 軸を捨てたことの**配当**がここに出る。浮く overlay は印刷すると
+ * 紙の外に落ちるか、下の内容に重なって両方読めなくなる。Flatlay の展開は
+ * フローの一部なので、印刷しても後続を押し下げたまま紙に載る。
+ *
+ * このテーマだけが持つ性質なので、テーマを回す上のループとは分けている。
+ */
+test.describe('印刷（flatlay）', () => {
+  test('展開中の内容がフロー内に残る', async ({ page }) => {
+    await page.goto('/flatlay-probe/')
+    const fixture = page.getByTestId('probe-top')
+    const below = page.getByTestId('below-top')
+
+    await fixture.getByRole('button').click()
+    const popover = fixture.locator('[data-slot="popover"]')
+    await expect(popover).toBeVisible()
+
+    // 画面のまま撮ると print の CSS が効かない。印刷そのものを見る
+    await page.emulateMedia({ media: 'print' })
+
+    // 展開部の下辺より後続の上辺が下にある = 重なっていない。
+    // 浮いていればここが逆転し、印刷で下の内容が隠れる
+    const expanded = await popover.boundingBox()
+    const following = await below.boundingBox()
+    expect(expanded).not.toBeNull()
+    expect(following).not.toBeNull()
+    expect(following?.y ?? 0).toBeGreaterThanOrEqual((expanded?.y ?? 0) + (expanded?.height ?? 0))
+
+    await expect(fixture).toHaveScreenshot('flatlay-print-expanded.png', {
+      animations: 'disabled',
+      maxDiffPixelRatio: 0.01,
+      threshold: 0.05,
+    })
+  })
+})
