@@ -19,6 +19,12 @@ export {
   checkboxGroupStyles,
   checkboxStyles,
 } from './checkbox'
+export {
+  COLOR_OPTIONS,
+  ColorPicker,
+  type ColorPickerStyleProps,
+  colorPickerStyles,
+} from './color-picker'
 export { Input, type InputStyleProps, inputStyles } from './input'
 export {
   Modal,
