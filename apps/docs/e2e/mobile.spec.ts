@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, test } from '@playwright/test'
+import { THEME_NAMES } from '../lib/theme-registry'
 
 /**
  * モバイル（375px）のレイアウト検査。
@@ -26,6 +27,8 @@ const PAGES = [
   '/docs/theming/',
   '/docs/getting-started/',
   '/docs/lookbook/',
+  // 4列の比較表と8色の一覧を持つ。375px で表が枠を破っていないか
+  '/docs/themes/flatlay/',
 ]
 
 for (const path of PAGES) {
@@ -33,6 +36,33 @@ for (const path of PAGES) {
     await page.goto(path)
     // デモの遅延チャンクが載った後の最終状態で測る
     await page.waitForLoadState('networkidle')
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    )
+    expect(overflow).toBeLessThanOrEqual(0)
+  })
+}
+
+/**
+ * 展開したまま横に溢れない（全テーマ）。
+ *
+ * 375px は展開が最も苦しい幅で、テーマごとに逃がし方が違う。
+ * Raster は隣に浮き、Tactile は画面下端のシートになり、**Flatlay は
+ * その場を押し下げる**。浮くものは画面外に出れば済むが、フローに入るものは
+ * 親の幅を超えるとページごと横スクロールする。既定テーマだけ見ていては
+ * この差がまるごと検査されない。
+ */
+for (const theme of THEME_NAMES) {
+  test(`${theme}: 展開しても横スクロールが発生しない`, async ({ page }) => {
+    await page.goto('/docs/components/select/')
+    await page.getByLabel('テーマ').selectOption(theme)
+
+    const preview = page.locator('[data-testid="preview"]')
+    await preview.getByRole('button').first().click()
+    // 一覧の在り処はテーマで違う（raster / tactile は body へポータル、
+    // flatlay はプレビュー内のフロー）。ページ全体から探す
+    await expect(page.locator('[data-slot="listbox"]')).toBeVisible()
 
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - window.innerWidth,
