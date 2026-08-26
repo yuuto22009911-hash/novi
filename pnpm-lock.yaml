@@ -206,6 +206,9 @@ importers:
       '@novi-ui/core':
         specifier: workspace:*
         version: link:../core
+      '@novi-ui/flatlay':
+        specifier: workspace:*
+        version: link:../flatlay
       '@novi-ui/raster':
         specifier: workspace:*
         version: link:../raster
