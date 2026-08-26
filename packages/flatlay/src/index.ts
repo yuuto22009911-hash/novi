@@ -54,6 +54,7 @@ export {
   ModalTitle,
   modalStyles,
 } from './modal'
+export { Popover, PopoverContent, type PopoverStyleProps, popoverStyles } from './popover'
 export { Progress, type ProgressStyleProps, progressStyles } from './progress'
 export {
   Radio,
@@ -82,3 +83,4 @@ export {
   tabsStyles,
 } from './tabs'
 export { TextArea, type TextareaStyleProps, textareaStyles } from './textarea'
+export { Tooltip, type TooltipStyleProps, tooltipStyles } from './tooltip'
