@@ -11,6 +11,14 @@
  */
 
 export { Button, type ButtonStyleProps, buttonStyles } from './button'
+export {
+  Checkbox,
+  CheckboxGroup,
+  type CheckboxGroupStyleProps,
+  type CheckboxStyleProps,
+  checkboxGroupStyles,
+  checkboxStyles,
+} from './checkbox'
 export { Input, type InputStyleProps, inputStyles } from './input'
 export {
   Modal,
