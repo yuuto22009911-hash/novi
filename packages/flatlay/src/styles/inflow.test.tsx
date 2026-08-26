@@ -116,7 +116,7 @@ describe('InflowPopover', () => {
 
     const popover = screen.getByRole('menu').closest('.static\\!') as HTMLElement
     expect(popover).not.toBeNull()
-    for (const cls of ['static!', 'max-h-none!', 'w-auto!', 'transform-none!']) {
+    for (const cls of ['static!', 'z-auto!', 'max-h-none!', 'w-auto!', 'transform-none!']) {
       expect(popover.classList.contains(cls)).toBe(true)
     }
   })
@@ -136,7 +136,7 @@ describe('InflowPopover', () => {
     await user.click(screen.getByRole('button', { name: /サイズ/ }))
 
     const popover = screen.getByRole('listbox').parentElement as HTMLElement
-    expect(popover.className).toBe('static! max-h-none! w-auto! transform-none!')
+    expect(popover.className).toBe('static! z-auto! max-h-none! w-auto! transform-none!')
   })
 
   it('開いたときに最小限だけスクロールする（block: nearest）', async () => {
@@ -144,6 +144,15 @@ describe('InflowPopover', () => {
     await openMenu()
 
     expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' })
+  })
+
+  it('スクロールしても閉じない（展開部は文書と一緒に動く）', async () => {
+    render(<MenuFixture />)
+    await openMenu()
+
+    // 上流の非モーダル Popover は scroll で閉じる。インフロー展開はずれようがないので通さない
+    window.dispatchEvent(new Event('scroll'))
+    expect(screen.getByRole('menu')).toBeTruthy()
   })
 
   it('Select のコレクションが生きている（矢印と Enter で選べる）', async () => {

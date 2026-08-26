@@ -1,8 +1,16 @@
 'use client'
 
 import { inflowPortalProps } from '@novi-ui/core/client'
-import { type ReactNode, useEffect, useState } from 'react'
-import { Popover } from 'react-aria-components'
+import {
+  type ReactNode,
+  type RefObject,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { OverlayTriggerStateContext, Popover } from 'react-aria-components'
 
 /**
  * オーバーレイをドキュメントフローの中に展開する（FR-05 / FR-09）。
@@ -27,26 +35,115 @@ import { Popover } from 'react-aria-components'
  *
  * `useOverlayPosition` は `style` 属性に直接書き込むため、クラスの詳細度では勝てない。
  * - `static!`        浮かせない。フローに戻す（これが原理そのもの）
+ * - `z-auto!`        上流は `z-index: 100000` を書く。層を持たないので剥がす
  * - `max-h-none!`    上流は viewport 収まりで高さを刻むが、フローなら刻む理由がない
  * - `w-auto!`        トリガ幅の計算値を捨て、中身とレイアウトに任せる
  * - `transform-none!` 出現時の変形も打ち消す。動きで飾らない（FR-11）
  */
-const INFLOW_POPOVER_RESET = 'static! max-h-none! w-auto! transform-none!'
+const INFLOW_POPOVER_RESET = 'static! z-auto! max-h-none! w-auto! transform-none!'
 
 /**
- * 開いた瞬間に、展開部が画面外へはみ出していれば最小限だけスクロールする。
+ * 開いた瞬間に画面外へはみ出していれば最小限だけスクロールし、
+ * **そのスクロールで自分が閉じないようにする。**
  *
  * インフロー展開は下方向に伸びるので、ページ末尾のトリガでは中身が折り返しの外に出る。
  * `block: 'nearest'` なのは意図で、`'center'` や `'start'` はトリガまで動かしてしまい、
  * 「押し下げた」という因果が見えなくなる。**見えるところまでしか動かさない。**
  *
+ * 見張りを先に張るのは、上流（`useCloseOnScroll`）が非モーダル Popover を
+ * スクロールで閉じるから。アンカー型なら正しい判断だが、インフロー展開は
+ * 文書と一緒に動くのでずれようがない。自前のスクロールで即座に閉じてしまうし、
+ * 長い一覧を読むために送っただけで畳まれるのはモデルの否定になる。
+ *
+ * 捕捉リスナは上流より先に登録される（子の effect が先に走る）ので、
+ * 上流が `close` を呼ぶ時点では必ず旗が立っている。
+ *
+ * 押している最中は動かさず、離すまで待つ。Select は押し下げたまま項目へ滑らせて
+ * 離す操作を受けるので、指の下でページが動くとそのまま誤選択になる。
+ *
  * Popover は閉じている間アンマウントされるので、この効果は開閉ごとに1度だけ走る。
  */
-function ScrollIntoView({ target }: { target: HTMLElement }): null {
+function InflowScroll({
+  target,
+  scrolling,
+  pressed,
+}: {
+  target: HTMLElement
+  scrolling: RefObject<boolean>
+  pressed: RefObject<boolean>
+}): null {
   useEffect(() => {
-    target.scrollIntoView({ block: 'nearest' })
-  }, [target])
+    const raise = () => {
+      scrolling.current = true
+      // 上流のリスナは同じイベントの中で走る。タスクを跨いだ時点で降ろす
+      setTimeout(() => {
+        scrolling.current = false
+      }, 0)
+    }
+    const scroll = () => target.scrollIntoView({ block: 'nearest' })
+
+    window.addEventListener('scroll', raise, true)
+    if (pressed.current) window.addEventListener('pointerup', scroll, { once: true, capture: true })
+    else scroll()
+
+    return () => {
+      window.removeEventListener('scroll', raise, true)
+      window.removeEventListener('pointerup', scroll, true)
+    }
+  }, [target, scrolling, pressed])
   return null
+}
+
+/**
+ * ポインタが押されている間だけ立つ旗。
+ *
+ * 展開は pointerdown で始まるので、押されたことを知るには**開く前から**張っておく
+ * 必要がある。`InflowPopover` 自体は閉じている間も生きているのでここに置ける。
+ */
+function usePressed(): RefObject<boolean> {
+  const pressed = useRef(false)
+
+  useEffect(() => {
+    const down = () => {
+      pressed.current = true
+    }
+    const up = () => {
+      pressed.current = false
+    }
+    window.addEventListener('pointerdown', down, true)
+    window.addEventListener('pointerup', up, true)
+    window.addEventListener('pointercancel', up, true)
+    return () => {
+      window.removeEventListener('pointerdown', down, true)
+      window.removeEventListener('pointerup', up, true)
+      window.removeEventListener('pointercancel', up, true)
+    }
+  }, [])
+
+  return pressed
+}
+
+/**
+ * スクロール中に来た `close` だけを捨てる状態を作る。
+ *
+ * 上流には close-on-scroll を切る口が無い（`isNonModal` と抱き合わせ）。
+ * Escape・外側クリック・選択による `close` はそのまま通す。
+ */
+function useScrollGuardedState(scrolling: RefObject<boolean>) {
+  const state = useContext(OverlayTriggerStateContext)
+
+  return useMemo(
+    () =>
+      state === null
+        ? null
+        : {
+            ...state,
+            close: () => {
+              if (!scrolling.current) state.close()
+            },
+          },
+    [state, scrolling],
+  )
 }
 
 export interface InflowPopoverProps {
@@ -69,23 +166,30 @@ export interface InflowPopoverProps {
  */
 export function InflowPopover({ children, className, dataSlot }: InflowPopoverProps) {
   const [container, setContainer] = useState<HTMLElement | null>(null)
+  const scrolling = useRef(false)
+  const pressed = usePressed()
+  const state = useScrollGuardedState(scrolling)
 
   return (
     <>
       {/* 展開部の置き場所。閉じている間は高さ 0 で、押し下げは起きない */}
       <div ref={setContainer} data-novi-inflow="" />
       {container !== null && (
-        <Popover
-          isNonModal
-          {...inflowPortalProps(container)}
-          data-slot={dataSlot}
-          className={
-            className === undefined ? INFLOW_POPOVER_RESET : `${INFLOW_POPOVER_RESET} ${className}`
-          }
-        >
-          <ScrollIntoView target={container} />
-          {children}
-        </Popover>
+        <OverlayTriggerStateContext.Provider value={state}>
+          <Popover
+            isNonModal
+            {...inflowPortalProps(container)}
+            data-slot={dataSlot}
+            className={
+              className === undefined
+                ? INFLOW_POPOVER_RESET
+                : `${INFLOW_POPOVER_RESET} ${className}`
+            }
+          >
+            <InflowScroll target={container} scrolling={scrolling} pressed={pressed} />
+            {children}
+          </Popover>
+        </OverlayTriggerStateContext.Provider>
       )}
     </>
   )

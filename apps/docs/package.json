@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@novi-ui/core": "workspace:*",
+    "@novi-ui/flatlay": "workspace:*",
     "@novi-ui/raster": "workspace:*",
     "@novi-ui/tactile": "workspace:*",
     "next": "16.3.1",

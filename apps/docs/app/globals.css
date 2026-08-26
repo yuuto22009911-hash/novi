@@ -6,11 +6,13 @@
 @import "@novi-ui/core/base.css";
 @import "@novi-ui/raster/raster.scoped.css";
 @import "@novi-ui/tactile/tactile.scoped.css";
+@import "@novi-ui/flatlay/flatlay.scoped.css";
 
 /* raster の dist を Tailwind の走査対象に加える。
    これがないとテーマが出力するクラスの CSS が生成されない */
 @source "../../../packages/raster/dist";
 @source "../../../packages/tactile/dist";
+@source "../../../packages/flatlay/dist";
 
 /* ─────────────────────────────────────────────
    サイト UI 独自のトークン。テーマとは独立させる
