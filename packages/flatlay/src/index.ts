@@ -43,6 +43,7 @@ export {
   type SelectStyleProps,
   selectStyles,
 } from './select'
+export { Switch, type SwitchStyleProps, switchStyles } from './switch'
 export {
   TabContent,
   TabItem,
