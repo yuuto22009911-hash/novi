@@ -53,6 +53,11 @@ export interface InflowPopoverProps {
   children: ReactNode
   /** 展開部そのものに乗せるクラス。枠線や余白はテーマ側の styles が渡す。 */
   className?: string
+  /**
+   * 展開面に出す `data-slot`。押し下げ面は slot 契約上の `popover` そのものなので、
+   * 名前は呼び出し側（各コンポーネント）が決める。
+   */
+  dataSlot?: string
 }
 
 /**
@@ -62,7 +67,7 @@ export interface InflowPopoverProps {
  * 「押し下げられた後続」を読むことも触ることもできなくなって、
  * インフローにした意味が消える。
  */
-export function InflowPopover({ children, className }: InflowPopoverProps) {
+export function InflowPopover({ children, className, dataSlot }: InflowPopoverProps) {
   const [container, setContainer] = useState<HTMLElement | null>(null)
 
   return (
@@ -73,6 +78,7 @@ export function InflowPopover({ children, className }: InflowPopoverProps) {
         <Popover
           isNonModal
           {...inflowPortalProps(container)}
+          data-slot={dataSlot}
           className={
             className === undefined ? INFLOW_POPOVER_RESET : `${INFLOW_POPOVER_RESET} ${className}`
           }

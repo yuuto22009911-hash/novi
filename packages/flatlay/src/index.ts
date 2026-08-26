@@ -19,3 +19,10 @@ export {
   ModalTitle,
   modalStyles,
 } from './modal'
+export {
+  Select,
+  SelectItem,
+  type SelectItemProps,
+  type SelectStyleProps,
+  selectStyles,
+} from './select'
