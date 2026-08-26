@@ -163,6 +163,7 @@ describe('帳票の行（FR-07 / ADR-F7）', () => {
   const CONTROLS: [name: string, fn: StyleFn, slot: string][] = [
     ['button', flatlay.buttonStyles as StyleFn, 'root'],
     ['select', flatlay.selectStyles as StyleFn, 'trigger'],
+    ['tabs', flatlay.tabsStyles as StyleFn, 'tab'],
   ]
 
   it.each(CONTROLS)('%s: 高さが行の階級（28 / 32 / 40px）に載る', (name, fn, slot) => {

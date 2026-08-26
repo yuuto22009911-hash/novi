@@ -26,3 +26,11 @@ export {
   type SelectStyleProps,
   selectStyles,
 } from './select'
+export {
+  TabContent,
+  TabItem,
+  TabItems,
+  Tabs,
+  type TabsStyleProps,
+  tabsStyles,
+} from './tabs'
