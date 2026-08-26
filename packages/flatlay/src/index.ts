@@ -38,6 +38,15 @@ export {
 } from './color-picker'
 export { Input, type InputStyleProps, inputStyles } from './input'
 export {
+  Menu,
+  MenuItem,
+  type MenuItemProps,
+  MenuSection,
+  MenuSeparator,
+  type MenuStyleProps,
+  menuStyles,
+} from './menu'
+export {
   Modal,
   ModalBody,
   ModalFooter,
