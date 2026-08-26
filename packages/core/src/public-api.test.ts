@@ -94,6 +94,7 @@ describe('client エントリ', () => {
     expect(names(clientEntry)).toMatchInlineSnapshot(`
       [
         "INFLOW_PORTAL_PROP",
+        "InflowPortalProvider",
         "Toast",
         "ToastContent",
         "ToastList",
@@ -111,8 +112,19 @@ describe('client エントリ', () => {
     expect(leaked).toEqual([])
   })
 
-  it('Provider を export しない（FR-14）', () => {
-    expect(names(clientEntry).filter((n) => /Provider$/.test(n))).toEqual([])
+  /**
+   * FR-14 が禁じているのは「**利用者が mount しなければ動かない** Provider」で、
+   * Provider という語そのものではない。Novi は何も包まずに動く。
+   *
+   * `InflowPortalProvider` はその例外ではなく対象外。上流の overlay が
+   * ポータル先を context でしか受け取らないための入口で、使うのはテーマ実装だけ、
+   * 使わないテーマ（Raster / Tactile）は一度も触れずに完結する。
+   *
+   * ここを増やすときは「これが無いと動かない利用者がいるか」を必ず問うこと。
+   */
+  it('利用者に mount を強いる Provider を export しない（FR-14）', () => {
+    expect(names(clientEntry).filter((n) => /Provider$/.test(n))).toEqual(['InflowPortalProvider'])
+    expect(names(mainEntry).filter((n) => /Provider$/.test(n))).toEqual([])
   })
 })
 

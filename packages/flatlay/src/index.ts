@@ -83,4 +83,11 @@ export {
   tabsStyles,
 } from './tabs'
 export { TextArea, type TextareaStyleProps, textareaStyles } from './textarea'
+export {
+  createToastQueue,
+  type NoviToast,
+  NoviToastRegion,
+  type ToastStyleProps,
+  toastStyles,
+} from './toast'
 export { Tooltip, type TooltipStyleProps, tooltipStyles } from './tooltip'

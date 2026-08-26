@@ -11,7 +11,12 @@
  */
 
 export { type ImeSafeKeyProps, useImeSafeKeys } from '../hooks/use-ime-safe-keys'
-export { INFLOW_PORTAL_PROP, type InflowPortalProps, inflowPortalProps } from '../unstable/portal'
+export {
+  INFLOW_PORTAL_PROP,
+  type InflowPortalProps,
+  InflowPortalProvider,
+  inflowPortalProps,
+} from '../unstable/portal'
 export type {
   QueuedToast,
   ToastListProps,

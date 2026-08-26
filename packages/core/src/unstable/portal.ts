@@ -33,3 +33,18 @@ export type InflowPortalProps = { [INFLOW_PORTAL_PROP]?: Element }
 export function inflowPortalProps(container: Element | null | undefined): InflowPortalProps {
   return container === null || container === undefined ? {} : { [INFLOW_PORTAL_PROP]: container }
 }
+
+/**
+ * ポータル先を**配下すべてに**向け直すプロバイダ。
+ *
+ * `UNSTABLE_portalContainer` を受け取らない overlay 用の口。Toast の region が
+ * これで、prop を持たず常に `document.body` へポータルする。フローの帯として
+ * 置きたいテーマ（Flatlay・ADR-F4）は、region を包んでポータル先を差し替える。
+ *
+ * 上流の名前は `UNSAFE_` 接頭辞つき。`UNSTABLE_` と同じくここが唯一の入口で、
+ * **このファイル以外から `UNSAFE_` を書いてはならない。**
+ *
+ * `react-aria` を直接指しているのは、react-aria-components がこれを再公開して
+ * いないため。react-aria-components の依存なので、解決は保証されている。
+ */
+export { UNSAFE_PortalProvider as InflowPortalProvider } from 'react-aria'
