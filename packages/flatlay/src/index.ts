@@ -11,3 +11,11 @@
  */
 
 export { Button, type ButtonStyleProps, buttonStyles } from './button'
+export {
+  Modal,
+  ModalBody,
+  ModalFooter,
+  type ModalStyleProps,
+  ModalTitle,
+  modalStyles,
+} from './modal'
