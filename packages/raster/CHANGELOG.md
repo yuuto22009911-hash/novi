@@ -1,5 +1,12 @@
 # @novi-ui/raster
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [26bed1e]
+  - @novi-ui/core@0.3.0
+
 ## 0.4.0
 
 ### Minor Changes

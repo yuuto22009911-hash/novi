@@ -1,6 +1,6 @@
 {
   "name": "@novi-ui/core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Behavior, accessibility, type contracts and token conventions for Novi UI. Ships zero styles.",
   "license": "MIT",
   "repository": {
