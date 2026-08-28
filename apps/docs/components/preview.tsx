@@ -15,6 +15,7 @@ export function Preview({
   children,
   className,
   color,
+  theme,
 }: {
   children: ReactNode
   className?: string
@@ -26,13 +27,20 @@ export function Preview({
    * 外側の色指定はそこで止まる。
    */
   color?: string
+  /**
+   * テーマを固定する。既定はヘッダーの選択に追従する。
+   *
+   * 特定のテーマの値を根拠として見せる場所（テーマ紹介ページの色見本）でだけ使う。
+   * 追従させると、別のテーマを選んでいる読者には本文と食い違う色が出る。
+   */
+  theme?: string
 }) {
-  const { theme, scheme } = useThemeState()
+  const { theme: selected, scheme } = useThemeState()
 
   return (
     <div
       data-testid="preview"
-      {...{ [THEME_ATTR]: theme }}
+      {...{ [THEME_ATTR]: theme ?? selected }}
       {...(scheme === null ? {} : { [SCHEME_ATTR]: scheme })}
       {...(color === undefined ? {} : { 'data-novi-color': color })}
       className={[

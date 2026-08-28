@@ -27,7 +27,10 @@ function collect(dir, accept) {
 /** @type {{name: string, run: () => string[]}[]} */
 const RULES = [
   {
-    name: 'UNSTABLE_ の直接 import は core/src/unstable/ の中だけ（FR-09 / ADR-07）',
+    // import だけを見ていると、prop 名としての直書き（`UNSTABLE_portalContainer={...}`）が
+    // すり抜ける。Flatlay はこの prop に原理そのものを預けているので、出現ごと禁じる。
+    // `UNSAFE_` も同じ扱い（Toast の region はポータル先を context でしか受け取らない）
+    name: 'UNSTABLE_ / UNSAFE_ を書けるのは core/src/unstable/ の中だけ（FR-09 / ADR-07）',
     run() {
       const allowed = join('packages', 'core', 'src', 'unstable')
       const problems = []
@@ -36,13 +39,14 @@ const RULES = [
       )) {
         const rel = relative(ROOT, file)
         if (rel.startsWith(allowed + sep)) continue
+        // テストは接頭辞が漏れていないことを「主張する」ために名前を書く必要がある
+        if (/\.test(-d)?\.[jt]sx?$/.test(rel)) continue
         readFileSync(file, 'utf8')
           .split('\n')
           .forEach((line, i) => {
             const t = line.trim()
             if (t.startsWith('*') || t.startsWith('//')) return
-            if (!/\bUNSTABLE_[A-Za-z]/.test(line)) return
-            if (!/\b(import|from|require)\b/.test(line)) return
+            if (!/\bUN(?:STABLE|SAFE)_[A-Za-z]/.test(line)) return
             problems.push(`${rel}:${i + 1}  ${t}`)
           })
       }

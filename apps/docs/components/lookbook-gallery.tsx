@@ -20,6 +20,10 @@ const SET_INFO: Record<ThemeName, { setName: string; lede: string }> = {
     setName: 'Textile Dyes',
     lede: '織物の染料。生地（中立色）まで選んだ色の色相にわずかに染まります。Print Inks とは色相の重複がなく、同じ系統の色でもモデルを替えると発色が変わります。',
   },
+  flatlay: {
+    setName: 'Stationery',
+    lede: '机の上の事務道具。地は染まらず、罫線だけが選んだ色に染まります。彩度は三部作でいちばん低く、染料でも印刷インクでもない「褪せた実用品の色」を狙っています。',
+  },
 }
 
 /**

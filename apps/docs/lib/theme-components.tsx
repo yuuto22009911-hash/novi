@@ -7,6 +7,7 @@
  * 全ページのバンドルに入るため。実装まで一緒に置くと、デモの無いページまで
  * ライブラリ全体を読み込む。ここを import してよいのはデモを描画する画面だけ。
  */
+import * as flatlay from '@novi-ui/flatlay'
 import * as raster from '@novi-ui/raster'
 import * as tactile from '@novi-ui/tactile'
 import type { ThemeName } from './theme-registry'
@@ -15,6 +16,7 @@ import { useThemeState } from './use-novi-theme'
 const themeComponents = {
   raster,
   tactile,
+  flatlay,
 } as const satisfies Record<ThemeName, unknown>
 
 /**

@@ -1,7 +1,7 @@
 {
   "name": "@novi-ui/mcp",
   "version": "0.1.1",
-  "description": "Novi UI MCP server — read-only and offline. Serves component API, slot contracts and Raster design rules to AI agents.",
+  "description": "Novi UI MCP server — read-only and offline. Serves component API, slot contracts and per-theme design rules to AI agents.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@novi-ui/core": "workspace:*",
+    "@novi-ui/flatlay": "workspace:*",
     "@novi-ui/raster": "workspace:*",
     "@novi-ui/tactile": "workspace:*",
     "@types/node": "^26.2.0",

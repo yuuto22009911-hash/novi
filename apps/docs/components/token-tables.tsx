@@ -118,7 +118,7 @@ export function ColorSwatches({ theme }: { theme: string }) {
   if (colors === undefined) throw new Error(`${theme} に色トークンがありません`)
 
   return (
-    <Preview className="gap-3">
+    <Preview theme={theme} className="gap-3">
       <ul className="flex flex-wrap gap-4">
         {colors.variables.map((variable) => (
           <li key={variable.name} className="flex w-32 flex-col gap-2">

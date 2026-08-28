@@ -82,7 +82,8 @@ export type NoviComponentName = keyof typeof NOVI_CONTRACTS
 /**
  * MVP のコンポーネント数。
  *
- * 契約の数（23）とは一致しない。Checkbox/CheckboxGroup、Radio/RadioGroup、
- * Progress/Spinner はそれぞれ1コンポーネントとして数えるため。
+ * 契約の数（24）とは一致しない。Checkbox/CheckboxGroup、Radio/RadioGroup、
+ * Progress/Spinner はそれぞれ1コンポーネントとして数え、ColorPicker は
+ * MVP を締めたあとに足したため（registry.test.ts の POST_MVP_CONTRACTS）。
  */
 export const NOVI_MVP_COMPONENT_COUNT = 20

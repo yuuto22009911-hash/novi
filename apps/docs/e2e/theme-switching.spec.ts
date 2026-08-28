@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { THEME_NAMES, themeRegistry } from '../lib/theme-registry'
 
 /**
  * テーマ / カラースキーム切替の検証（AC-01-1〜3 / AC-04-1〜3）。
@@ -76,12 +77,23 @@ test('スキームを切り替えてもサイト UI は変わらない（ADR-D1�
 test('デモの JSX がテーマ切替で変わらない（AC-01-4）', async ({ page }) => {
   await page.goto('/docs/components/button/')
 
-  const code = await page.getByTestId('code-example').textContent()
-  const withoutImport = (code ?? '').split('\n').slice(1).join('\n')
+  const bodyOf = async () => {
+    const code = await page.getByTestId('code-example').textContent()
+    return { code: code ?? '', body: (code ?? '').split('\n').slice(1).join('\n') }
+  }
 
-  // import 文以外は、どのテーマでも同一であることを固定する
-  expect(withoutImport).toContain('<Button variant="solid" color="primary">保存</Button>')
-  expect(code).toContain("from '@novi-ui/raster'")
+  const first = await bodyOf()
+  expect(first.body).toContain('<Button variant="solid" color="primary">保存</Button>')
+  expect(first.code).toContain(`from '${themeRegistry.raster.pkg}'`)
+
+  // **掛け替わるのは import の1行だけ**。ここが崩れると「テーマを替えても
+  // コードは同じ」という約束が黙って破れる。既定の raster だけ見ていては分からない
+  for (const theme of THEME_NAMES) {
+    await page.getByLabel('テーマ').selectOption(theme)
+    const current = await bodyOf()
+    expect(current.code, `${theme} の import`).toContain(`from '${themeRegistry[theme].pkg}'`)
+    expect(current.body, `${theme} の本体`).toBe(first.body)
+  }
 })
 
 test('theming ページの色見本はプレビュー内でだけ解決される（FR-07）', async ({ page }) => {

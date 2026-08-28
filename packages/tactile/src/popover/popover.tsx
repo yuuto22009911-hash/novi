@@ -34,7 +34,7 @@ export function PopoverContent({
 /**
  * トリガーに紐づいて浮かぶ小さな面。Escape で閉じてトリガーへフォーカスが戻る。
  *
- * Raster では矢印（arrow slot）を描画しない。任意 slot を省略できることの実例。
+ * 矢印（arrow slot）は描画しない。任意 slot を省略できることの実例。
  *
  * @example
  * <Popover placement="bottom">
