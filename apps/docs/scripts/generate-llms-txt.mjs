@@ -34,6 +34,16 @@ const COLOR_NAMES = Object.fromEntries(
 )
 
 /**
+ * 色名の一覧。**short / full の両方に出す。**
+ *
+ * full だけに欠けていると、full しか渡されない AI は色 id を意味から推測して書く
+ * （「青焼き図面の青」→ `blueprint`）。当たっても外れても、それは検査ではなく運になる。
+ */
+const COLOR_SETS = Object.entries(themes)
+  .map(([id, t]) => `- **${t.label}**: ${(COLOR_NAMES[id] ?? []).join(' / ')}`)
+  .join('\n')
+
+/**
  * 禁止事項。CI が実際に落とす規則をそのまま出す（検査と説明を一致させる）。
  *
  * **テーマごとに規則が違う。** Raster は影と scale を禁じ、Tactile は影を許して
@@ -115,12 +125,7 @@ ${Object.entries(themes)
 <html data-novi-theme="tactile" data-novi-color="madder">
 \`\`\`
 
-${Object.entries(themes)
-  .map(([id, t]) => {
-    const names = (COLOR_NAMES[id] ?? []).join(' / ')
-    return `- **${t.label}**: ${names}`
-  })
-  .join('\n')}
+${COLOR_SETS}
 
 \`success\` / \`warning\` / \`danger\` は色選択の影響を受けない。
 
@@ -206,6 +211,15 @@ ${CONVENTIONS}
 **テーマごとに違う値を持つ。** 同じ \`size="md"\` でも高さが違う。
 
 ${numericByTheme}
+
+### カラーセット
+
+\`data-novi-color\` に渡せる色名。**テーマごとに違う。**
+知らない名前を書いても壊れず、そのテーマの既定色になる（＝間違いに気づけない）。
+
+${COLOR_SETS}
+
+\`success\` / \`warning\` / \`danger\` は色選択の影響を受けない。
 
 ## 書いてはいけないクラス
 
