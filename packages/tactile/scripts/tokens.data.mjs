@@ -67,8 +67,7 @@ export const TOKEN_GROUPS = [
     id: 'pad',
     prefix: 'pad-',
     label: '余白（内側）',
-    description:
-      '3モデルで最大。指が触れる面は空間を要求するので、面は左右 28px・上下 24px を取る',
+    description: '3モデルで最大。指が触れる面は空間を要求するので、面は左右 28px・上下 24px を取る',
     values: TACTILE_PAD,
   },
   {

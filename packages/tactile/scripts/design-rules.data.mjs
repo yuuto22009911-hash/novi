@@ -64,8 +64,7 @@ export const DESIGN_RULES = [
   {
     id: 'raw-spacing',
     prohibited: '8px 以上の生の余白ユーティリティ（p/px/py/pt/pb/pl/pr/gap-2 以上）',
-    pattern:
-      /(?<![\w-])(?:p|px|py|pt|pb|pl|pr|gap|gap-x|gap-y)-(?:[2-9]|\d\d)(?:\.5)?(?![\w-])/g,
+    pattern: /(?<![\w-])(?:p|px|py|pt|pb|pl|pr|gap|gap-x|gap-y)-(?:[2-9]|\d\d)(?:\.5)?(?![\w-])/g,
     message:
       '余白はトークン経由（--novi-pad-* / --novi-gap-*）。' +
       '余白がテーマの所有物でないと、各コンポーネントが自分の判断で数値を書き、3モデルが同じ密度に潰れる。' +
