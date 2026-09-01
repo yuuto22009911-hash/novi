@@ -58,6 +58,15 @@ export const DESIGN_RULES = [
     pattern: /(?<![\w-])duration-(?!\[var\(--novi)/g,
     message: 'モーションの時間はトークン経由にする',
   },
+  {
+    id: 'raw-spacing',
+    prohibited: '8px 以上の生の余白ユーティリティ（p/px/py/pt/pb/pl/pr/gap-2 以上）',
+    pattern: /(?<![\w-])(?:p|px|py|pt|pb|pl|pr|gap|gap-x|gap-y)-(?:[2-9]|\d\d)(?:\.5)?(?![\w-])/g,
+    message:
+      '余白はトークン経由（--novi-pad-* / --novi-gap-*）。余白がテーマの所有物でないと、' +
+      '各コンポーネントが各自の判断で数値を書き、3モデルが同じ密度に潰れる。' +
+      '8px 未満の微小インセットは部品の位置合わせなので生値を許す',
+  },
 ]
 
 /**
@@ -79,6 +88,22 @@ export const DESIGN_RULE_EXCEPTIONS = {
     rules: ['literal-color'],
     reason:
       'カラーセット Print Inks の値を定義する場所（specs/06-tones-and-colors）。raster-tokens.ts と同じ「定義」側',
+  },
+  'textarea.styles.ts': {
+    rules: ['raw-spacing'],
+    reason:
+      '縦 padding が入力欄の実効の高さを作っており、Input の h-8 / h-10 / h-12 に対応させてある。' +
+      'pad 語彙に control-y は無く、面の縦余白（16px）を当てると1行入力との高さの連続性が壊れる',
+  },
+  'tabs.styles.ts': {
+    rules: ['raw-spacing'],
+    reason:
+      '同上。タブの縦 padding はタブバーの行の高さそのもので、面の縦余白を当てると見出しの帯が本文より重くなる',
+  },
+  'badge.styles.ts': {
+    rules: ['raw-spacing'],
+    reason:
+      'Badge の左右は文字を囲む最小のインセット。高さ 20〜28px の部品には最小の control-x-sm（12px）でも過大で、pad 語彙のどれにも当てはまらない',
   },
 }
 

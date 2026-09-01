@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { contrastRatio } from '../testing/color'
-import { NOVI_COLORS, NOVI_RADII } from '../tokens'
+import {
+  NOVI_COLORS,
+  NOVI_GAP_TOKENS,
+  NOVI_PAD_TOKENS,
+  NOVI_RADII,
+  NOVI_TRACKING_TOKENS,
+} from '../tokens'
 import { DARK_COLORS, LIGHT_COLORS, SCHEME_INDEPENDENT_TOKENS, TOKEN_PREFIX } from './definitions'
 
 const SCHEMES = [
@@ -31,6 +37,36 @@ describe('トークンの網羅性（FR-15）', () => {
   it('radius が NOVI_RADII を網羅している', () => {
     const radius = SCHEME_INDEPENDENT_TOKENS.radius ?? {}
     expect(NOVI_RADII.filter((r) => !(r in radius))).toEqual([])
+  })
+
+  it('pad が NOVI_PAD_TOKENS を網羅している（FR-D8）', () => {
+    const pad = SCHEME_INDEPENDENT_TOKENS.pad ?? {}
+    expect(NOVI_PAD_TOKENS.filter((t) => !(t in pad))).toEqual([])
+  })
+
+  it('gap が NOVI_GAP_TOKENS を網羅している（FR-D8）', () => {
+    const gap = SCHEME_INDEPENDENT_TOKENS.gap ?? {}
+    expect(NOVI_GAP_TOKENS.filter((t) => !(t in gap))).toEqual([])
+  })
+
+  it('tracking が NOVI_TRACKING_TOKENS を網羅している（FR-D8）', () => {
+    const tracking = SCHEME_INDEPENDENT_TOKENS.tracking ?? {}
+    expect(NOVI_TRACKING_TOKENS.filter((t) => !(t in tracking))).toEqual([])
+  })
+
+  it('font に heading と numeric がある（ADR-D2）', () => {
+    const font = SCHEME_INDEPENDENT_TOKENS.font ?? {}
+    expect(['sans', 'mono', 'heading', 'numeric'].filter((k) => !(k in font))).toEqual([])
+  })
+
+  it('余白は inline < stack < section の順に広がる（ADR-D1）', () => {
+    // 比が 1:1 に潰れると近接の法則が働かず、詰まって見える
+    const gap = SCHEME_INDEPENDENT_TOKENS.gap ?? {}
+    const [inline, stack, section] = NOVI_GAP_TOKENS.map((t) =>
+      Number.parseFloat(gap[t] as string),
+    ) as [number, number, number]
+    expect(stack).toBeGreaterThan(inline)
+    expect(section).toBeGreaterThan(stack)
   })
 
   // NOVI_SIZES（コンポーネントの寸法 sm/md/lg）と text スケール（xs/sm/base/lg/xl…）は

@@ -56,12 +56,26 @@ const variant: VariantMap<NoviVariant, { inputWrapper: string }> = {
   },
 }
 
-/** 1行入力と違い高さは固定しない。余白と文字サイズだけを段階で変える。 */
+/**
+ * 1行入力と違い高さは固定しない。**段が変えるのは左右の余白だけ。**
+ *
+ * 上下は書く面の余白（surface-y）で一定にする。複数行を書く面で上下だけ詰めると、
+ * カーソルが枠の縁に寄って、指を置いたときに親指で最終行が隠れる。
+ */
 const size: VariantMap<NoviSize, { inputWrapper: string; textarea: string }> = {
   // 入力の文字は全段 base(17px)。16px を割ると iOS Safari が自動ズームする
-  sm: { inputWrapper: 'px-3 py-2', textarea: 'text-[length:var(--novi-text-base)]' },
-  md: { inputWrapper: 'px-4 py-3', textarea: 'text-[length:var(--novi-text-base)]' },
-  lg: { inputWrapper: 'px-5 py-4', textarea: 'text-[length:var(--novi-text-base)]' },
+  sm: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-sm)] py-[var(--novi-pad-surface-y)]',
+    textarea: 'text-[length:var(--novi-text-base)]',
+  },
+  md: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-md)] py-[var(--novi-pad-surface-y)]',
+    textarea: 'text-[length:var(--novi-text-base)]',
+  },
+  lg: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-lg)] py-[var(--novi-pad-surface-y)]',
+    textarea: 'text-[length:var(--novi-text-base)]',
+  },
 }
 
 const radius: VariantMap<NoviRadius, { inputWrapper: string }> = {

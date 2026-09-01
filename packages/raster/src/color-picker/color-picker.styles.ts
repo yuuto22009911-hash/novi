@@ -15,12 +15,13 @@ import { disabledState, focusRing } from '../styles/focus-ring'
  * 円にすると Radio と見分けがつかなくなる（あちらは「1つ選ぶ」の形）。
  */
 const slots = {
-  root: ['flex flex-col gap-2', disabledState].join(' '),
+  root: ['flex flex-col gap-[var(--novi-gap-inline)]', disabledState].join(' '),
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
   description: 'text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]',
   errorMessage: 'text-[length:var(--novi-text-xs)] text-[var(--novi-color-danger)]',
-  // 見本帳なので折り返して並べる。縦1列にすると色同士を比べられない
-  list: 'flex flex-wrap items-start gap-2',
+  // 見本帳なので折り返して並べる。縦1列にすると色同士を比べられない。
+  // 間隔は行内の詰め。離すと1枚の見本帳ではなく個別のボタンの列に見える
+  list: 'flex flex-wrap items-start gap-[var(--novi-gap-inline)]',
   item: [
     'inline-flex flex-col items-center gap-1',
     'cursor-pointer',

@@ -96,7 +96,11 @@ const variant: VariantMap<NoviVariant, { root: string }> = {
 const size: VariantMap<NoviSize, { root: string; dot: string }> = {
   sm: { root: 'h-4 px-1 text-[length:var(--novi-text-xs)]', dot: 'size-1.5' },
   md: { root: 'h-5 px-1.5 text-[length:var(--novi-text-xs)]', dot: 'size-1.5' },
-  lg: { root: 'h-6 px-2 text-[length:var(--novi-text-sm)]', dot: 'size-2' },
+  // lg だけ左右をトークンで取る。sm / md の 4 / 6px は字の当たりを合わせる微小インセット
+  lg: {
+    root: 'h-6 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]',
+    dot: 'size-2',
+  },
 }
 
 const radius: VariantMap<NoviRadius, { root: string }> = {

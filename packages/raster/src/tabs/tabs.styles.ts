@@ -16,7 +16,7 @@ import { focusRing } from '../styles/focus-ring'
  * 下線は非テキストコントラスト 3:1 を満たす色を使う。
  */
 const slots = {
-  root: 'flex flex-col gap-4',
+  root: 'flex flex-col gap-[var(--novi-gap-stack)]',
   list: 'flex gap-1 border-b border-[var(--novi-color-border)]',
   tab: [
     'relative cursor-pointer outline-none whitespace-nowrap',
@@ -40,13 +40,19 @@ const variant: VariantMap<NoviVariant, { list: string; tab: string }> = {
   outline: { list: 'border-b border-[var(--novi-color-border)]', tab: '' },
   soft: { list: 'bg-[var(--novi-color-subtle)] border-transparent', tab: '' },
   ghost: { list: 'border-transparent', tab: '' },
-  plain: { list: 'border-transparent gap-4', tab: 'border-b-0' },
+  // 下線も面も持たない plain は、タブの切れ目を余白だけで示す
+  plain: { list: 'border-transparent gap-[var(--novi-gap-stack)]', tab: 'border-b-0' },
 }
 
+/**
+ * 左右は Button / Input と同じトークン。
+ * 縦だけは生値のまま残す — タブの縦余白はタブバーの行の高さそのもので、
+ * 面の縦余白（16px）を当てると見出しの帯が本文より重くなる。
+ */
 const size: VariantMap<NoviSize, { tab: string }> = {
-  sm: { tab: 'px-2.5 py-1.5 text-[length:var(--novi-text-sm)]' },
-  md: { tab: 'px-3 py-2 text-[length:var(--novi-text-base)]' },
-  lg: { tab: 'px-4 py-2.5 text-[length:var(--novi-text-base)]' },
+  sm: { tab: 'px-[var(--novi-pad-control-x-sm)] py-1.5 text-[length:var(--novi-text-sm)]' },
+  md: { tab: 'px-[var(--novi-pad-control-x-md)] py-2 text-[length:var(--novi-text-base)]' },
+  lg: { tab: 'px-[var(--novi-pad-control-x-lg)] py-2.5 text-[length:var(--novi-text-base)]' },
 }
 
 /**

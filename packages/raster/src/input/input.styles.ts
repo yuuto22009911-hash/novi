@@ -19,7 +19,7 @@ const slots = {
   // Button と同じ focusRing 定義がそのまま使える（属性名を書き換える必要がない）。
   inputWrapper: [
     'text-[var(--novi-color-fg)]',
-    'flex items-center gap-2 w-full',
+    'flex items-center gap-[var(--novi-gap-inline)] w-full',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',
     'transition-[border-color,opacity]',
@@ -62,11 +62,20 @@ const variant: VariantMap<NoviVariant, { inputWrapper: string }> = {
   plain: { inputWrapper: 'bg-transparent border-transparent' },
 }
 
-/** 高さは Button と揃える。32 / 40 / 48px。 */
+/** 高さは Button と揃える。32 / 40 / 48px。左右のインセットも同じトークンを使う。 */
 const size: VariantMap<NoviSize, { inputWrapper: string; input: string }> = {
-  sm: { inputWrapper: 'h-8 px-2.5', input: 'text-[length:var(--novi-text-sm)]' },
-  md: { inputWrapper: 'h-10 px-3', input: 'text-[length:var(--novi-text-base)]' },
-  lg: { inputWrapper: 'h-12 px-3.5', input: 'text-[length:var(--novi-text-base)]' },
+  sm: {
+    inputWrapper: 'h-8 px-[var(--novi-pad-control-x-sm)]',
+    input: 'text-[length:var(--novi-text-sm)]',
+  },
+  md: {
+    inputWrapper: 'h-10 px-[var(--novi-pad-control-x-md)]',
+    input: 'text-[length:var(--novi-text-base)]',
+  },
+  lg: {
+    inputWrapper: 'h-12 px-[var(--novi-pad-control-x-lg)]',
+    input: 'text-[length:var(--novi-text-base)]',
+  },
 }
 
 const radius: VariantMap<NoviRadius, { inputWrapper: string }> = {

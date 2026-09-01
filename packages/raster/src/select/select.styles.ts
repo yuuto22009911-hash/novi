@@ -15,7 +15,7 @@ const slots = {
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
   trigger: [
     'text-[var(--novi-color-fg)]',
-    'flex items-center justify-between gap-2 w-full',
+    'flex items-center justify-between gap-[var(--novi-gap-inline)] w-full',
     'text-left',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',
@@ -44,8 +44,9 @@ const slots = {
   ].join(' '),
   listbox: 'outline-none p-1 flex flex-col',
   option: [
-    'flex items-center justify-between gap-2',
-    'px-2 py-1.5 cursor-pointer outline-none',
+    'flex items-center justify-between gap-[var(--novi-gap-inline)]',
+    // Menu の項目と同じ寸法。縦は 6px に詰めて一覧性を優先する
+    'px-[var(--novi-pad-control-x-sm)] py-1.5 cursor-pointer outline-none',
     'text-[var(--novi-color-fg)]',
     'rounded-[var(--novi-radius-sm)]',
     // 選択中は面ではなく文字の強さで示す。面を増やさない
@@ -70,15 +71,15 @@ const variant: VariantMap<NoviVariant, { trigger: string }> = {
 /** 高さは Button / Input と揃える。32 / 40 / 48px。 */
 const size: VariantMap<NoviSize, { trigger: string; option: string }> = {
   sm: {
-    trigger: 'h-8 px-2.5 text-[length:var(--novi-text-sm)]',
+    trigger: 'h-8 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]',
     option: 'text-[length:var(--novi-text-sm)]',
   },
   md: {
-    trigger: 'h-10 px-3 text-[length:var(--novi-text-base)]',
+    trigger: 'h-10 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-base)]',
     option: 'text-[length:var(--novi-text-base)]',
   },
   lg: {
-    trigger: 'h-12 px-3.5 text-[length:var(--novi-text-base)]',
+    trigger: 'h-12 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-base)]',
     option: 'text-[length:var(--novi-text-base)]',
   },
 }

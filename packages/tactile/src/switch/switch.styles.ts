@@ -18,7 +18,11 @@ import { disabledState, focusRing } from '../styles/focus-ring'
 const slots = {
   // 行全体が押せる。トラック（31px）だけでは指のタップ下限を割るため、
   // ラベルを含む行に 44px の下限を持たせる（e2e の実測で判明）
-  root: ['inline-flex items-center gap-3 min-h-11', 'cursor-pointer', disabledState].join(' '),
+  root: [
+    'inline-flex items-center gap-[var(--novi-gap-inline)] min-h-11',
+    'cursor-pointer',
+    disabledState,
+  ].join(' '),
   track: [
     'shrink-0 inline-flex items-center',
     'rounded-[var(--novi-radius-full)]',

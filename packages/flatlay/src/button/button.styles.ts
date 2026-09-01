@@ -17,7 +17,7 @@ import { monoNumeric } from '../styles/mono'
 // tv() の戻り値で `s.startContent` が undefined 扱いになって呼べなくなる（ADR-R5）。
 const slots = {
   root: [
-    'inline-flex items-center justify-center gap-2',
+    'inline-flex items-center justify-center gap-[var(--novi-gap-inline)]',
     'font-medium whitespace-nowrap select-none',
     // 罫線の幅は全 variant が持つ。影が無い以上、輪郭を示せるのは線だけ。
     // 色は variant が決める（ghost / plain だけが transparent を選ぶ）
@@ -104,9 +104,9 @@ const color: VariantMap<NoviColor, { root: string }> = {
  * 広げる細工はしない（それは Tactile の領分で、そこが3本目の密度の identity）。
  */
 const size: VariantMap<NoviSize, { root: string }> = {
-  sm: { root: 'h-7 px-2.5 text-[length:var(--novi-text-sm)]' },
-  md: { root: 'h-8 px-3 text-[length:var(--novi-text-base)]' },
-  lg: { root: 'h-10 px-4 text-[length:var(--novi-text-base)]' },
+  sm: { root: 'h-7 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]' },
+  md: { root: 'h-8 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-base)]' },
+  lg: { root: 'h-10 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-base)]' },
 }
 
 const radius: VariantMap<NoviRadius, { root: string }> = {

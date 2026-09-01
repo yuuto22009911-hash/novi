@@ -17,7 +17,8 @@ import { tapTarget } from '../styles/tap-target'
 // tv() の戻り値で `s.startContent` が undefined 扱いになって呼べなくなる（ADR-R5）。
 const slots = {
   root: [
-    'inline-flex items-center justify-center gap-2',
+    // アイコンと文字は1つの塊。塊の内側の距離はテーマが持つ
+    'inline-flex items-center justify-center gap-[var(--novi-gap-inline)]',
     'font-medium whitespace-nowrap select-none',
     'border border-transparent',
     // 押下フィードバック。指の下で沈む感触を作る。
@@ -101,12 +102,14 @@ const color: VariantMap<NoviColor, { root: string }> = {
 /**
  * 高さは 40 / 48 / 56px（Raster は 32 / 40 / 48）。
  * 最小段でも 40px あり、擬似要素と合わせて実効タップ領域が 44px を割らない。
- * 水平余白も広い — 指の接触面は文字の幅より大きい。
+ *
+ * 左右の余白は `--novi-pad-control-x-*` に預ける。**段の差が出るのは横方向だけ** —
+ * 縦は面の余白（surface-y）で一定に保つ。指の当たり方は段が変わっても変わらない。
  */
 const size: VariantMap<NoviSize, { root: string }> = {
-  sm: { root: 'h-10 px-4 text-[length:var(--novi-text-sm)]' },
-  md: { root: 'h-12 px-5 text-[length:var(--novi-text-base)]' },
-  lg: { root: 'h-14 px-6 text-[length:var(--novi-text-base)]' },
+  sm: { root: 'h-10 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]' },
+  md: { root: 'h-12 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-base)]' },
+  lg: { root: 'h-14 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-base)]' },
 }
 
 const radius: VariantMap<NoviRadius, { root: string }> = {

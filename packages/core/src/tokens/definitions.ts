@@ -30,6 +30,41 @@ export const SCHEME_INDEPENDENT_TOKENS: Record<string, Record<string, string>> =
     '12': '48px',
     '16': '64px',
   },
+  /**
+   * 意味を持つ余白。**コンポーネントが消費するのはこちら**（ADR-D1）。
+   *
+   * 生の `space-*` は利用者の逃げ口として残すが、コンポーネントからは使わない。
+   * 素の数値を直接書くと、余白がテーマの所有物にならず、
+   * 3テーマが同じ密度に潰れる（実際に潰れていた）。
+   */
+  pad: {
+    // 面（Card / Modal / Popover / Menu / Toast）の内側
+    'surface-x': '20px',
+    'surface-y': '16px',
+    // コントロール（Button / Input / Select トリガー）の左右
+    'control-x-sm': '12px',
+    'control-x-md': '16px',
+    'control-x-lg': '20px',
+  },
+  /**
+   * 要素間の距離。
+   *
+   * **inline < stack < section** の比がそのまま「余白の多さ」の知覚になる。
+   * 絶対値ではなく比が効く（近接の法則）。比が 1:1 に潰れると詰まって見える。
+   */
+  gap: {
+    // 行内（アイコン ↔ ラベル）
+    inline: '8px',
+    // 縦に積む同格の要素間
+    stack: '16px',
+    // 面の中の区画間
+    section: '24px',
+  },
+  /** 字送り。テーマの「声」を作る主要な軸のひとつ（ADR-D2）。 */
+  tracking: {
+    tight: '0em',
+    normal: '0em',
+  },
   text: {
     xs: '12px',
     sm: '14px',
@@ -46,6 +81,10 @@ export const SCHEME_INDEPENDENT_TOKENS: Record<string, Record<string, string>> =
   font: {
     sans: 'system-ui, sans-serif',
     mono: 'ui-monospace, monospace',
+    // 見出しの書体。sans と別に持つことで、テーマが見出しだけ声を変えられる
+    heading: 'var(--novi-font-sans)',
+    // font-variant-numeric の値。数字の字形もテーマの声のうち
+    numeric: 'normal',
   },
   shadow: {
     none: 'none',

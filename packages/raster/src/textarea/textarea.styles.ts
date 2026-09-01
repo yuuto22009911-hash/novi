@@ -49,11 +49,24 @@ const variant: VariantMap<NoviVariant, { inputWrapper: string }> = {
   plain: { inputWrapper: 'bg-transparent border-transparent' },
 }
 
-/** 1行入力と違い高さは固定しない。余白と文字サイズだけを段階で変える。 */
+/**
+ * 1行入力と違い高さは固定しない。左右は Input と同じトークン、
+ * 縦だけは生値のまま残す — この値が Input の h-8 / h-10 / h-12 に対応する
+ * 実効の高さを作っており、面の縦余白（16px）を当てると1行入力との連続性が壊れる。
+ */
 const size: VariantMap<NoviSize, { inputWrapper: string; textarea: string }> = {
-  sm: { inputWrapper: 'px-2.5 py-1.5', textarea: 'text-[length:var(--novi-text-sm)]' },
-  md: { inputWrapper: 'px-3 py-2', textarea: 'text-[length:var(--novi-text-base)]' },
-  lg: { inputWrapper: 'px-3.5 py-2.5', textarea: 'text-[length:var(--novi-text-base)]' },
+  sm: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-sm)] py-1.5',
+    textarea: 'text-[length:var(--novi-text-sm)]',
+  },
+  md: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-md)] py-2',
+    textarea: 'text-[length:var(--novi-text-base)]',
+  },
+  lg: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-lg)] py-2.5',
+    textarea: 'text-[length:var(--novi-text-base)]',
+  },
 }
 
 const radius: VariantMap<NoviRadius, { inputWrapper: string }> = {

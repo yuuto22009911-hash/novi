@@ -33,7 +33,7 @@ const slots = {
    * 色を base に書くと tailwind-merge が後勝ちで落とすので、ここには幅しか置かない。
    */
   inputWrapper: [
-    'flex items-center gap-2 w-full',
+    'flex items-center gap-[var(--novi-gap-inline)] w-full',
     'text-[var(--novi-color-fg)]',
     'border',
     'rounded-[var(--novi-radius-sm)]',
@@ -76,9 +76,18 @@ const variant: VariantMap<NoviVariant, { inputWrapper: string }> = {
 
 /** 高さは Button と同じ帳票の行。28 / 32 / 40px。 */
 const size: VariantMap<NoviSize, { inputWrapper: string; input: string }> = {
-  sm: { inputWrapper: 'h-7 px-2.5', input: 'text-[length:var(--novi-text-sm)]' },
-  md: { inputWrapper: 'h-8 px-3', input: 'text-[length:var(--novi-text-base)]' },
-  lg: { inputWrapper: 'h-10 px-4', input: 'text-[length:var(--novi-text-base)]' },
+  sm: {
+    inputWrapper: 'h-7 px-[var(--novi-pad-control-x-sm)]',
+    input: 'text-[length:var(--novi-text-sm)]',
+  },
+  md: {
+    inputWrapper: 'h-8 px-[var(--novi-pad-control-x-md)]',
+    input: 'text-[length:var(--novi-text-base)]',
+  },
+  lg: {
+    inputWrapper: 'h-10 px-[var(--novi-pad-control-x-lg)]',
+    input: 'text-[length:var(--novi-text-base)]',
+  },
 }
 
 const radius: VariantMap<NoviRadius, { inputWrapper: string }> = {

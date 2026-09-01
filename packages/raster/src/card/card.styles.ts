@@ -19,10 +19,18 @@ const slots = {
     'shadow-none',
     'overflow-hidden',
   ].join(' '),
-  // header と footer は境界線で仕切る。背景色を変えて面を増やさない
-  header: 'px-4 py-3 border-b border-[var(--novi-color-border)]',
-  body: 'px-4 py-4 flex-1',
-  footer: 'px-4 py-3 border-t border-[var(--novi-color-border)]',
+  // header と footer は境界線で仕切る。背景色を変えて面を増やさない。
+  // 3区画とも面の余白は同じ値で、切れ目は境界線が伝える。
+  // 区画ごとに縦余白を変えると「どの区画が主か」を余白が語ってしまう
+  header: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'font-[family-name:var(--novi-font-heading)]',
+    'tracking-[var(--novi-tracking-tight)] leading-[var(--novi-leading-heading)]',
+    'border-b border-[var(--novi-color-border)]',
+  ].join(' '),
+  body: 'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)] flex-1',
+  footer:
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)] border-t border-[var(--novi-color-border)]',
   image: 'w-full object-cover',
 } satisfies SlotMap<typeof cardSlots, (typeof cardRequiredSlots)[number]>
 

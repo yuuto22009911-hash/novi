@@ -20,6 +20,16 @@ const themeComponents = {
 } as const satisfies Record<ThemeName, unknown>
 
 /**
+ * 名前でテーマの実装を引く。
+ *
+ * **3テーマを並べて比べる画面だけが使う。** 通常のデモは `useNoviTheme()` を使うこと。
+ * こちらを使うと、そのデモはヘッダーのテーマ切替に追従しなくなる。
+ */
+export function themeComponentsFor(name: ThemeName) {
+  return themeComponents[name]
+}
+
+/**
  * 現在のテーマのコンポーネント群を返す。
  *
  * デモはこれ経由で解決するため、**特定のテーマを import しない**。

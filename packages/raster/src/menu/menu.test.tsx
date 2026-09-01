@@ -86,7 +86,10 @@ describe('Menu: 操作', () => {
 
 describe('Menu: Raster のデザイン規律', () => {
   it('ショートカットは等幅数字で桁を揃える', () => {
-    expect(menuStyles().itemShortcut()).toContain('tabular-nums')
+    // 字形はテーマの所有物。値そのもの（tabular-nums）は raster-tokens.test.ts が守る
+    expect(menuStyles().itemShortcut()).toContain(
+      '[font-variant-numeric:var(--novi-font-numeric)]',
+    )
   })
 
   it('浮く層としてトークンの影を持つ（ADR-R8）', () => {

@@ -25,8 +25,9 @@ const slots = {
   // 行の切れ目も線。Select の一覧と同じ帳票の目
   list: 'outline-none flex flex-col divide-y divide-[var(--novi-color-border)]',
   item: [
-    'flex items-center justify-between gap-3',
-    'min-h-7 px-2 py-1 cursor-pointer outline-none',
+    // 一覧の行は面ではなく行。左右は面の余白（20px）ではなくコントロールの刻みで取る
+    'flex items-center justify-between gap-[var(--novi-gap-inline)]',
+    'min-h-7 px-[var(--novi-pad-control-x-sm)] py-1 cursor-pointer outline-none',
     'text-[var(--novi-color-fg)]',
     'data-[focused]:bg-[var(--novi-color-subtle)]',
     // 押下は反転スタンプ（ADR-F3）。選ばれた瞬間だけ面が返る
@@ -50,7 +51,7 @@ const slots = {
   section: 'flex flex-col',
   // 表の見出し行。地を一段落として、浮かせずに階層を作る
   sectionLabel: [
-    'px-2 py-1',
+    'px-[var(--novi-pad-control-x-sm)] py-1',
     'bg-[var(--novi-color-subtle)]',
     'text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]',
     mono,

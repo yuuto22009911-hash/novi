@@ -1,4 +1,10 @@
-import { NOVI_COLORS, NOVI_RADII } from '@novi-ui/core'
+import {
+  NOVI_COLORS,
+  NOVI_GAP_TOKENS,
+  NOVI_PAD_TOKENS,
+  NOVI_RADII,
+  NOVI_TRACKING_TOKENS,
+} from '@novi-ui/core'
 import { chromaOf, contrastRatio, parseOklch, relativeLuminance } from '@novi-ui/core/testing'
 import { describe, expect, it } from 'vitest'
 import {
@@ -17,11 +23,15 @@ import {
   FLATLAY_CONTROL_HEIGHTS,
   FLATLAY_DARK_COLORS,
   FLATLAY_FONTS,
+  FLATLAY_GAP,
+  FLATLAY_LEADING,
   FLATLAY_LIGHT_COLORS,
   FLATLAY_MOTION,
+  FLATLAY_PAD,
   FLATLAY_RADII,
   FLATLAY_SHADOWS,
   FLATLAY_TEXT,
+  FLATLAY_TRACKING,
   MAX_RADIUS_PX,
   MAX_SEMANTIC_CHROMA,
   SEMANTIC_COLOR_KEYS,
@@ -346,6 +356,51 @@ describe('Flatlay デザイン言語（数値定義）', () => {
 
   it('イージングも1本（緩急で階層を語らない）', () => {
     expect(FLATLAY_MOTION['ease-emphasized']).toBe(FLATLAY_MOTION['ease-standard'])
+  })
+
+  it('pad が NOVI_PAD_TOKENS を網羅している', () => {
+    expect(NOVI_PAD_TOKENS.filter((t) => !(t in FLATLAY_PAD))).toEqual([])
+  })
+
+  it('gap が NOVI_GAP_TOKENS を網羅している', () => {
+    expect(NOVI_GAP_TOKENS.filter((t) => !(t in FLATLAY_GAP))).toEqual([])
+  })
+
+  it('tracking が NOVI_TRACKING_TOKENS を網羅している', () => {
+    expect(NOVI_TRACKING_TOKENS.filter((t) => !(t in FLATLAY_TRACKING))).toEqual([])
+  })
+
+  it('gap が inline < stack < section の順に広がる', () => {
+    const [inline, stack, section] = NOVI_GAP_TOKENS.map((t) =>
+      Number.parseFloat(FLATLAY_GAP[t] as string),
+    )
+    expect(inline).toBeLessThan(stack as number)
+    expect(stack).toBeLessThan(section as number)
+  })
+
+  it('section が stack の 2 倍以上ある（区画の切れ目だけが大きく空く）', () => {
+    // Flatlay の支配軸は罫線と行。区切りは線が引き受けるので、余白で語るのは
+    // 「まとまりの外か内か」だけになる。比が縮むと Card の header/body/footer が
+    // 1:1 に潰れ、線はあるのにグループが読めない状態に戻る
+    const stack = Number.parseFloat(FLATLAY_GAP.stack as string)
+    const section = Number.parseFloat(FLATLAY_GAP.section as string)
+    expect(section / stack).toBeGreaterThanOrEqual(2)
+  })
+
+  it('見出しの書体が mono を指す（3モデルで唯一 sans を使わない）', () => {
+    // Web フォントを足せない以上、テーマの声を分けられるのは 2 スタックの
+    // 使い分けだけ。ここが sans に戻った瞬間、Flatlay は書体で何も語らなくなる
+    expect(FLATLAY_FONTS.heading).toBe('var(--novi-font-mono)')
+    expect(FLATLAY_FONTS.heading).not.toContain('sans')
+  })
+
+  it('本文の行送りが 1.65 以上（余白を padding でなく行送りで取る）', () => {
+    // surface-y が3モデル最小の 14px でも詰まって見えないのはこの値のおかげ。
+    // 下げるなら padding を厚くすることになり、支配軸そのものが入れ替わる
+    expect(Number.parseFloat(FLATLAY_LEADING.body as string)).toBeGreaterThanOrEqual(1.65)
+    expect(Number.parseFloat(FLATLAY_LEADING.heading as string)).toBeLessThan(
+      Number.parseFloat(FLATLAY_LEADING.body as string),
+    )
   })
 
   it('mono が実体のあるスタックで、sans と別物である（G6 / ADR-F7）', () => {

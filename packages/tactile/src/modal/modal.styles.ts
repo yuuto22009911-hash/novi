@@ -41,8 +41,12 @@ const slots = {
   ].join(' '),
   // header は描画しない（任意 slot の省略）。title だけが body の上に載る
   title: [
-    'px-5 pt-5 pb-2',
+    // 下だけ gap トークンなのは、この余白が「見出しと本文の距離」そのものだから。
+    // 面の余白（surface-y）で開けると、見出しが本文から切り離されて別の区画に見える
+    'px-[var(--novi-pad-surface-x)] pt-[var(--novi-pad-surface-y)] pb-[var(--novi-gap-inline)]',
     'text-[length:var(--novi-text-lg)] font-bold',
+    'font-[family-name:var(--novi-font-heading)]',
+    'tracking-[var(--novi-tracking-tight)] leading-[var(--novi-leading-heading)]',
     'text-[var(--novi-color-fg)]',
   ].join(' '),
   closeButton: [
@@ -56,11 +60,16 @@ const slots = {
     'data-[pressed]:scale-[0.97] motion-reduce:data-[pressed]:scale-100',
     focusRing,
   ].join(' '),
-  body: ['px-5 pb-5 pt-1', 'text-[var(--novi-color-fg)] leading-[var(--novi-leading-body)]'].join(
-    ' ',
-  ),
-  // 縦積み。横並びだと1つあたりの幅が指に対して狭くなる
-  footer: 'flex flex-col gap-2 px-5 pb-5',
+  body: [
+    'px-[var(--novi-pad-surface-x)] pb-[var(--novi-pad-surface-y)] pt-1',
+    'text-[var(--novi-color-fg)] leading-[var(--novi-leading-body)]',
+  ].join(' '),
+  // 縦積み。横並びだと1つあたりの幅が指に対して狭くなる。
+  // ボタン列は1つの塊なので gap は inline。stack まで開けると別々の操作に見える
+  footer: [
+    'flex flex-col gap-[var(--novi-gap-inline)]',
+    'px-[var(--novi-pad-surface-x)] pb-[var(--novi-pad-surface-y)]',
+  ].join(' '),
 } satisfies SlotMap<typeof modalSlots, (typeof modalRequiredSlots)[number]>
 
 /**

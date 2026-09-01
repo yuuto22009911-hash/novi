@@ -13,16 +13,20 @@ const slots = {
   // 右下に固定する。操作の起点から遠く、視線移動が最小になる位置
   // 上端に出すのは、下端がシートとソフトウェアキーボードに占有されるため。
   // safe-area(top) はノッチぶんを避ける
+  // 画面端からの逃げは safe-area に足す形でしか書けないので、加算する値もトークンにする。
+  // 生の 0.75rem を残すと、テーマを跨いだときにここだけ密度が動かない
   region: [
-    'fixed top-0 inset-x-0 z-50 flex flex-col gap-2 outline-none',
-    'p-3 pt-[calc(env(safe-area-inset-top,0px)+0.75rem)]',
+    'fixed top-0 inset-x-0 z-50 flex flex-col gap-[var(--novi-gap-inline)] outline-none',
+    'p-[var(--novi-gap-inline)]',
+    'pt-[calc(env(safe-area-inset-top,0px)+var(--novi-gap-inline))]',
     // 横向きではノッチが左右に来る。上端だけ避けても通知はノッチに隠れる（FR-13）
-    'pl-[calc(env(safe-area-inset-left,0px)+0.75rem)]',
-    'pr-[calc(env(safe-area-inset-right,0px)+0.75rem)]',
+    'pl-[calc(env(safe-area-inset-left,0px)+var(--novi-gap-inline))]',
+    'pr-[calc(env(safe-area-inset-right,0px)+var(--novi-gap-inline))]',
   ].join(' '),
   root: [
     'text-[var(--novi-color-fg)]',
-    'flex items-start gap-3 px-4 py-3 outline-none',
+    'flex items-start gap-[var(--novi-gap-inline)] outline-none',
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
     'bg-[var(--novi-color-surface)]',
     'rounded-[var(--novi-radius-lg)]',
     'shadow-[var(--novi-shadow-md)]',

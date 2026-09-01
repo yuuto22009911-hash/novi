@@ -19,9 +19,12 @@ describe('メインエントリ', () => {
       [
         "NOVI_COLORS",
         "NOVI_CONTRACTS",
+        "NOVI_GAP_TOKENS",
         "NOVI_MVP_COMPONENT_COUNT",
+        "NOVI_PAD_TOKENS",
         "NOVI_RADII",
         "NOVI_SIZES",
+        "NOVI_TRACKING_TOKENS",
         "NOVI_VARIANTS",
         "accordionRequiredSlots",
         "accordionSlots",

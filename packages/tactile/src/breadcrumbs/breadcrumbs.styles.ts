@@ -16,7 +16,7 @@ const slots = {
     // 先頭の項目だけ区切り文字を隠す。各項目が自分の前に区切りを持つ構造
     '[&>li:first-child>[data-slot=separator]]:hidden',
   ].join(' '),
-  item: 'flex items-center gap-2',
+  item: 'flex items-center gap-[var(--novi-gap-inline)]',
   // 薄く小さいリンクはタップ違反の典型。当たり判定を擬似要素で 44px に広げる
   link: [
     'relative inline-flex items-center min-h-11',

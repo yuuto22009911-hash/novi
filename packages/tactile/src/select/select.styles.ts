@@ -24,7 +24,7 @@ const slots = {
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
   trigger: [
     'text-[var(--novi-color-fg)]',
-    'flex items-center justify-between gap-2 w-full',
+    'flex items-center justify-between gap-[var(--novi-gap-inline)] w-full',
     'text-left',
     'bg-[var(--novi-color-surface)]',
     'shadow-[var(--novi-shadow-sm)]',
@@ -55,10 +55,11 @@ const slots = {
     'pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]',
     'data-[entering]:motion-safe:animate-[novi-slide-up_260ms_var(--novi-ease-emphasized)]',
   ].join(' '),
-  listbox: 'outline-none p-2 flex flex-col',
+  // Menu と同じ溝。行の背景が丸く抜けて見えるための位置合わせで、余白の設計ではない
+  listbox: 'outline-none p-1.5 flex flex-col',
   option: [
-    'flex items-center justify-between gap-3',
-    'px-3 cursor-pointer outline-none',
+    'flex items-center justify-between gap-[var(--novi-gap-inline)]',
+    'px-[var(--novi-pad-control-x-md)] cursor-pointer outline-none',
     'text-[var(--novi-color-fg)]',
     'rounded-[var(--novi-radius-md)]',
     'transition-[background-color] duration-[var(--novi-duration-fast)] ease-[var(--novi-ease-standard)]',
@@ -76,15 +77,15 @@ const slots = {
  */
 const size: VariantMap<NoviSize, { trigger: string; option: string }> = {
   sm: {
-    trigger: 'h-10 px-3 text-[length:var(--novi-text-sm)]',
+    trigger: 'h-10 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]',
     option: 'h-12 text-[length:var(--novi-text-sm)]',
   },
   md: {
-    trigger: 'h-12 px-4 text-[length:var(--novi-text-base)]',
+    trigger: 'h-12 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-base)]',
     option: 'h-14 text-[length:var(--novi-text-base)]',
   },
   lg: {
-    trigger: 'h-14 px-5 text-[length:var(--novi-text-base)]',
+    trigger: 'h-14 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-base)]',
     option: 'h-16 text-[length:var(--novi-text-base)]',
   },
 }

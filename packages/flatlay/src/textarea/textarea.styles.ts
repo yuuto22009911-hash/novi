@@ -56,11 +56,26 @@ const variant: VariantMap<NoviVariant, { inputWrapper: string }> = {
   plain: { inputWrapper: 'bg-transparent border-transparent px-0' },
 }
 
-/** 1行入力と違い高さは `rows` が決めるので、余白と文字サイズだけを段階で変える。 */
+/**
+ * 1行入力と違い高さは `rows` が決めるので、左右の余白と文字サイズだけを段階で変える。
+ *
+ * 上下だけ段を持たず面の余白（14px）を使うのは、複数行の記入欄が**行の集まり＝面**
+ * だから。密度を担うのは行送り（`leading-body` 1.7）で、上下 padding を段で動かすと
+ * 枠と1行目の距離だけが変わり、行同士の間隔と食い違って罫線の目が崩れる。
+ */
 const size: VariantMap<NoviSize, { inputWrapper: string; textarea: string }> = {
-  sm: { inputWrapper: 'px-2.5 py-1.5', textarea: 'text-[length:var(--novi-text-sm)]' },
-  md: { inputWrapper: 'px-3 py-2', textarea: 'text-[length:var(--novi-text-base)]' },
-  lg: { inputWrapper: 'px-4 py-2.5', textarea: 'text-[length:var(--novi-text-base)]' },
+  sm: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-sm)] py-[var(--novi-pad-surface-y)]',
+    textarea: 'text-[length:var(--novi-text-sm)]',
+  },
+  md: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-md)] py-[var(--novi-pad-surface-y)]',
+    textarea: 'text-[length:var(--novi-text-base)]',
+  },
+  lg: {
+    inputWrapper: 'px-[var(--novi-pad-control-x-lg)] py-[var(--novi-pad-surface-y)]',
+    textarea: 'text-[length:var(--novi-text-base)]',
+  },
 }
 
 const radius: VariantMap<NoviRadius, { inputWrapper: string }> = {

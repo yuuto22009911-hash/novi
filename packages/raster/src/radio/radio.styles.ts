@@ -12,7 +12,11 @@ import { tv } from 'tailwind-variants'
 import { disabledState, focusRing } from '../styles/focus-ring'
 
 const slots = {
-  root: ['inline-flex items-start gap-2', 'cursor-pointer', disabledState].join(' '),
+  root: [
+    'inline-flex items-start gap-[var(--novi-gap-inline)]',
+    'cursor-pointer',
+    disabledState,
+  ].join(' '),
   // 円は radius-full を使う数少ない例外。Checkbox（四角）との形の差で
   // 「1つだけ選ぶ」ことを示すため、ここは丸を守る
   control: [
@@ -60,9 +64,10 @@ export const radioStyles = tv({
 })
 
 const groupSlots = {
-  root: 'flex flex-col gap-2',
+  // CheckboxGroup と同じ比。フィールドの部品は近く、選択肢どうしはそれより離す
+  root: 'flex flex-col gap-[var(--novi-gap-inline)]',
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
-  list: 'flex flex-col gap-2',
+  list: 'flex flex-col gap-[var(--novi-gap-stack)]',
   description: 'text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]',
   errorMessage: 'text-[length:var(--novi-text-xs)] text-[var(--novi-color-danger)]',
 } satisfies SlotMap<typeof radioGroupSlots, (typeof radioGroupRequiredSlots)[number]>
@@ -77,8 +82,8 @@ export const radioGroupStyles = tv({
   slots: groupSlots,
   variants: {
     orientation: {
-      vertical: { list: 'flex-col gap-2' },
-      horizontal: { list: 'flex-row gap-4 flex-wrap' },
+      vertical: { list: 'flex-col gap-[var(--novi-gap-stack)]' },
+      horizontal: { list: 'flex-row gap-[var(--novi-gap-stack)] flex-wrap' },
     },
   },
   defaultVariants: { orientation: 'vertical' },

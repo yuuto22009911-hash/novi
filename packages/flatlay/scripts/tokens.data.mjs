@@ -19,11 +19,15 @@ import {
 import {
   FLATLAY_DARK_COLORS,
   FLATLAY_FONTS,
+  FLATLAY_GAP,
+  FLATLAY_LEADING,
   FLATLAY_LIGHT_COLORS,
   FLATLAY_MOTION,
+  FLATLAY_PAD,
   FLATLAY_RADII,
   FLATLAY_SHADOWS,
   FLATLAY_TEXT,
+  FLATLAY_TRACKING,
 } from '../src/tokens/flatlay-tokens.ts'
 
 /**
@@ -66,6 +70,35 @@ export const TOKEN_GROUPS = [
     description:
       'mono を精密に定義する初のテーマ。数値・ショートカット・コード・ラベルがこれを消費する',
     values: FLATLAY_FONTS,
+  },
+  {
+    id: 'pad',
+    prefix: 'pad-',
+    label: '余白（内側）',
+    description:
+      '面は 20/14px、コントロールの左右は 10/12/16px。上下が薄いのは余白を行送りで取るため',
+    values: FLATLAY_PAD,
+  },
+  {
+    id: 'gap',
+    prefix: 'gap-',
+    label: '余白（要素間）',
+    description: '8/12/24px。section が stack の 2 倍あり、区画の切れ目だけが大きく空く',
+    values: FLATLAY_GAP,
+  },
+  {
+    id: 'tracking',
+    prefix: 'tracking-',
+    label: '字送り',
+    description: '見出しでも詰めない（tight=0em）。詰めるのは語をまとまりに見せる操作だから',
+    values: FLATLAY_TRACKING,
+  },
+  {
+    id: 'leading',
+    prefix: 'leading-',
+    label: '行送り',
+    description: '本文 1.7 は野帳の罫線間隔。Flatlay が余白を取る主な手段はこちら',
+    values: FLATLAY_LEADING,
   },
   {
     id: 'motion',

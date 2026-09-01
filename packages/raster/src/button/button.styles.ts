@@ -17,7 +17,7 @@ import { disabledState, focusRing } from '../styles/focus-ring'
 // satisfies なら契約を検査しつつ、実際に定義した slot の情報が保たれる。
 const slots = {
   root: [
-    'inline-flex items-center justify-center gap-2',
+    'inline-flex items-center justify-center gap-[var(--novi-gap-inline)]',
     'font-medium whitespace-nowrap select-none',
     'border border-transparent',
     'transition-[background-color,border-color,color,opacity]',
@@ -104,9 +104,9 @@ const variant: VariantMap<NoviVariant, { root: string }> = {
 
 /** 高さは 8px グリッドに乗せる。32 / 40 / 48px（AC-01-2）。 */
 const size: VariantMap<NoviSize, { root: string }> = {
-  sm: { root: 'h-8 px-3 text-[length:var(--novi-text-sm)]' },
-  md: { root: 'h-10 px-4 text-[length:var(--novi-text-base)]' },
-  lg: { root: 'h-12 px-5 text-[length:var(--novi-text-base)]' },
+  sm: { root: 'h-8 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]' },
+  md: { root: 'h-10 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-base)]' },
+  lg: { root: 'h-12 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-base)]' },
 }
 
 /** Raster では md / lg も 2px に潰れる（ADR-R1）。API は語彙どおり受け付ける。 */

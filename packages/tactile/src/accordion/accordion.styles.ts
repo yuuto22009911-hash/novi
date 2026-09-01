@@ -19,9 +19,12 @@ const slots = {
   // 見出し要素とその中のボタンを分ける。支援技術のために必要
   heading: 'm-0',
   trigger: [
-    'flex items-center justify-between gap-4 w-full text-left',
+    'flex items-center justify-between gap-[var(--novi-gap-inline)] w-full text-left',
     'cursor-pointer outline-none',
     'text-[var(--novi-color-fg)]',
+    // trigger のラベルがこの項目の見出し。別書体は積まず、字送りと行送りで階層を作る
+    'font-[family-name:var(--novi-font-heading)]',
+    'tracking-[var(--novi-tracking-tight)] leading-[var(--novi-leading-heading)]',
     'transition-colors duration-[var(--novi-duration-fast)] ease-[var(--novi-ease-standard)]',
     'hover:bg-[var(--novi-color-subtle)]',
     'data-[disabled]:opacity-40 data-[disabled]:cursor-default',
@@ -43,14 +46,33 @@ const variant: VariantMap<NoviVariant, { root: string; item: string }> = {
   outline: { root: 'border-t border-[var(--novi-color-border)]', item: 'border-b' },
   soft: { root: 'border-t-0 gap-1', item: 'bg-[var(--novi-color-subtle)] border-b-0' },
   ghost: { root: 'border-t-0', item: 'border-b border-[var(--novi-color-border)]' },
-  plain: { root: 'border-t-0 gap-2', item: 'border-b-0' },
+  // 罫線も面も持たないので、項目の切れ目は距離だけが示す
+  plain: { root: 'border-t-0 gap-[var(--novi-gap-inline)]', item: 'border-b-0' },
 }
 
-/** trigger は行全体が押せる。どの段でも 48px を下回らせない。 */
+/**
+ * trigger は行全体が押せる。どの段でも 48px を下回らせない。
+ *
+ * 行は「面」なので余白は面のトークンで揃え、**段が変えるのは高さの下限と文字サイズだけ**。
+ * trigger と panel が同じ左右余白を共有しないと、開いたときに見出しと本文の左端がずれ、
+ * どの見出しに属する本文なのかが読めなくなる。
+ */
+const surface = 'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]'
+const panelSurface = 'px-[var(--novi-pad-surface-x)] pb-[var(--novi-pad-surface-y)]'
+
 const size: VariantMap<NoviSize, { trigger: string; panel: string }> = {
-  sm: { trigger: 'min-h-12 px-4 py-3 text-[length:var(--novi-text-sm)]', panel: 'px-4 pb-3' },
-  md: { trigger: 'min-h-14 px-5 py-4 text-[length:var(--novi-text-base)]', panel: 'px-5 pb-4' },
-  lg: { trigger: 'min-h-16 px-6 py-5 text-[length:var(--novi-text-base)]', panel: 'px-6 pb-5' },
+  sm: {
+    trigger: `min-h-12 ${surface} text-[length:var(--novi-text-sm)]`,
+    panel: panelSurface,
+  },
+  md: {
+    trigger: `min-h-14 ${surface} text-[length:var(--novi-text-base)]`,
+    panel: panelSurface,
+  },
+  lg: {
+    trigger: `min-h-16 ${surface} text-[length:var(--novi-text-base)]`,
+    panel: panelSurface,
+  },
 }
 
 /**

@@ -18,10 +18,24 @@ const slots = {
     'shadow-[var(--novi-shadow-sm)]',
     'overflow-hidden',
   ].join(' '),
-  // header と footer は境界線で仕切る。背景色を変えて面を増やさない
-  header: 'px-4 py-3 border-b border-[var(--novi-color-border)]',
-  body: 'px-4 py-4 flex-1',
-  footer: 'px-4 py-3 border-t border-[var(--novi-color-border)]',
+  // header と footer は境界線で仕切る。背景色を変えて面を増やさない。
+  // 3段とも同じ余白トークンを使う。以前は py-3 / py-4 / py-3 と実質 1:1 で、
+  // 「区画の中」と「区画の境目」が同じ距離だったため詰まって見えていた
+  header: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'border-b border-[var(--novi-color-border)]',
+    // 見出しの声。別書体を積まず、字送りと行送りだけで本文と階層を分ける
+    'font-[family-name:var(--novi-font-heading)]',
+    'tracking-[var(--novi-tracking-tight)] leading-[var(--novi-leading-heading)]',
+  ].join(' '),
+  body: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)] flex-1',
+    'leading-[var(--novi-leading-body)]',
+  ].join(' '),
+  footer: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'border-t border-[var(--novi-color-border)]',
+  ].join(' '),
   image: 'w-full object-cover',
 } satisfies SlotMap<typeof cardSlots, (typeof cardRequiredSlots)[number]>
 

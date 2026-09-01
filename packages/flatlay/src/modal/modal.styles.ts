@@ -1,7 +1,7 @@
 import type { modalRequiredSlots, modalSlots, NoviSize, SlotMap, VariantMap } from '@novi-ui/core'
 import { tv } from 'tailwind-variants'
 import { disabledState, focusRing } from '../styles/focus-ring'
-import { mono } from '../styles/mono'
+import { heading, mono } from '../styles/mono'
 
 /**
  * Flatlay の Modal は **全画面テイクオーバー**（design.md 着手条件1）。
@@ -25,7 +25,8 @@ const slots = {
   ].join(' '),
   // 書類のヘッダ行。下辺の罫線が「ここから別の文書」を示す唯一の手がかりになる
   header: [
-    'shrink-0 flex items-center gap-3 px-4 h-10',
+    'shrink-0 flex items-center gap-[var(--novi-gap-inline)]',
+    'px-[var(--novi-pad-surface-x)] h-10',
     'border-b border-[var(--novi-color-border-strong)]',
   ].join(' '),
   /**
@@ -34,7 +35,10 @@ const slots = {
    * ✕ が「閉じて消す」なら、テイクオーバーは前の紙に**戻る**ので矢印になる。
    */
   closeButton: [
-    'shrink-0 inline-flex items-center gap-1.5 h-7 px-2 -ml-2',
+    // 負のマージンは左右 padding と同値でなければならない。字が header の左端
+    // （= surface-x の基準線）に載らないと、下の本文と列が揃わない
+    'shrink-0 inline-flex items-center gap-1.5 h-7',
+    'px-[var(--novi-pad-control-x-sm)] -ml-[var(--novi-pad-control-x-sm)]',
     'text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)]',
     'border border-transparent',
     'hover:text-[var(--novi-color-fg)] hover:bg-[var(--novi-color-subtle)]',
@@ -44,13 +48,18 @@ const slots = {
     focusRing,
     disabledState,
   ].join(' '),
-  title: 'truncate text-[length:var(--novi-text-base)] font-medium',
+  title: `truncate text-[length:var(--novi-text-base)] font-medium ${heading}`,
   // 本文だけが行長の制限を受ける。`mx-auto` ではなく左寄せなのは、
   // 帳票の本文が紙の左端から始まるため（中央寄せは「作品」の版面設計の言葉）
-  body: 'grow w-full px-4 py-4 leading-[var(--novi-leading-body)]',
+  body: [
+    'grow w-full',
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'leading-[var(--novi-leading-body)]',
+  ].join(' '),
   // 操作行は上辺の罫線で本文と切る。左揃えは header の「← 戻る」と縦の線を合わせるため
   footer: [
-    'shrink-0 flex items-center gap-2 w-full px-4 py-3',
+    'shrink-0 flex items-center gap-[var(--novi-gap-inline)] w-full',
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
     'border-t border-[var(--novi-color-border)]',
   ].join(' '),
 } satisfies SlotMap<typeof modalSlots, (typeof modalRequiredSlots)[number]>

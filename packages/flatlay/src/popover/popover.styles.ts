@@ -27,7 +27,11 @@ const slots = {
   ].join(' '),
   // 浮いていないので、どこから来た面かを指す必要が無い
   arrow: 'hidden',
-  content: 'px-3 py-2 leading-[var(--novi-leading-body)]',
+  // 読むための注記なので、余白は面の刻みで取り、密度は行送りが担う
+  content: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'leading-[var(--novi-leading-body)]',
+  ].join(' '),
 } satisfies SlotMap<typeof popoverSlots, (typeof popoverRequiredSlots)[number]>
 
 const radius: VariantMap<NoviRadius, { root: string }> = {

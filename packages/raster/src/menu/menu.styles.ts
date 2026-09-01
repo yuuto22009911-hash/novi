@@ -14,8 +14,9 @@ const slots = {
   ].join(' '),
   list: 'outline-none p-1 flex flex-col',
   item: [
-    'flex items-center gap-3 justify-between',
-    'px-2 py-1.5 cursor-pointer outline-none',
+    'flex items-center gap-[var(--novi-gap-inline)] justify-between',
+    // 縦は 6px。行を詰めて一覧性を稼ぐ場所なので、面の縦余白は当てない
+    'px-[var(--novi-pad-control-x-sm)] py-1.5 cursor-pointer outline-none',
     'text-[var(--novi-color-fg)]',
     'rounded-[var(--novi-radius-sm)]',
     'data-[focused]:bg-[var(--novi-color-subtle)]',
@@ -24,12 +25,17 @@ const slots = {
   itemLabel: 'truncate',
   itemDescription: 'text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]',
   // ショートカットは桁を揃える。等幅数字にしないと縦の線が揃わない
-  itemShortcut:
-    'shrink-0 text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)] tabular-nums',
+  itemShortcut: [
+    'shrink-0 text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]',
+    '[font-variant-numeric:var(--novi-font-numeric)]',
+  ].join(' '),
   separator: 'my-1 h-px bg-[var(--novi-color-border)]',
   section: 'flex flex-col',
-  sectionLabel:
-    'px-2 pt-2 pb-1 text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)] tracking-wide',
+  // 上の余白だけ広いのは、見出しが「下の項目群のもの」だと近接で示すため
+  sectionLabel: [
+    'px-[var(--novi-pad-control-x-sm)] pt-[var(--novi-gap-inline)] pb-1',
+    'text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)] tracking-wide',
+  ].join(' '),
 } satisfies SlotMap<typeof menuSlots, (typeof menuRequiredSlots)[number]>
 
 /**
