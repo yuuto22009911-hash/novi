@@ -1,8 +1,10 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { LazyMount } from '../components/lazy-mount'
 
 // デモはライブラリ全体を引き込むため遅延させる（T-38）。
-// HTML は静的に描画済みなので、遅れて届くのはインタラクションだけ
+// ファーストビューの Hero だけが初回に組み上がり、下の2つは近づいてから
+// マウントする（すべてを初回に hydration すると LCP 要素の描画が待たされる）
 const HeroPreview = dynamic(() =>
   import('../components/hero-preview').then((m) => ({ default: m.HeroPreview })),
 )
@@ -42,7 +44,10 @@ export default function HomePage() {
           ——どれもテーマが所有する値です。Raster は 4px グリッドの規律、Tactile は面積、Flatlay
           は罫線と等幅の見出しが、それぞれの支配軸です。
         </p>
-        <ThemeTriptych />
+        {/* 予約高さは実測値（375px で 932px / 1280px で 345px） */}
+        <LazyMount placeholderClassName="min-h-[58rem] sm:min-h-[21.5rem]">
+          <ThemeTriptych />
+        </LazyMount>
       </section>
 
       <section className="flex flex-col gap-4">
@@ -52,7 +57,10 @@ export default function HomePage() {
           の線と明度差で階層を作り、浮いている層だけが薄い影を持ちます。 情報密度の高い実務画面が
           Raster の得意分野です。右上でテーマを切り替えると、この画面ごと別の見た目になります。
         </p>
-        <DashboardShowcase />
+        {/* 予約高さは実測値（375px で 2078px / 1280px で 965px） */}
+        <LazyMount placeholderClassName="min-h-[130rem] sm:min-h-[60.5rem]">
+          <DashboardShowcase />
+        </LazyMount>
         <p className="mt-2 max-w-[40em] text-sm leading-[1.6] text-site-muted">
           このページの外枠がテーマに染まらないのは、比較対象をはっきりさせるための設計です。
           実際のアプリは、上のように Novi だけで組めます。

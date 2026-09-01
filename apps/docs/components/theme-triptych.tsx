@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import { themeComponentsFor } from '../lib/theme-components'
 import { THEME_NAMES, type ThemeName, themeRegistry } from '../lib/theme-registry'
 import { Preview } from './preview'
@@ -58,41 +57,15 @@ function ThemeCard({ name }: { name: ThemeName }) {
 }
 
 /**
- * 近づくまで中身を組み立てない。
- *
- * ここは3テーマぶんの実装を**同時に**マウントするため、ページ内で最も
- * hydration が重い。初回に走らせるとメインスレッドが詰まり、ファーストビューの
- * 文章の描画まで待たされる（実測で TBT が約4倍、LCP がそれに引きずられた）。
- * この節はスクロールしないと見えないので、見える直前まで遅らせてよい。
- *
- * 高さを先に確保しているのは、到達したときに下の節が飛び跳ねないため。
+ * 3テーマぶんの実装を同時にマウントするため、ページ内で最も hydration が重い。
+ * 呼び出し側は `LazyMount` で包むこと。
  */
 export function ThemeTriptych() {
-  const ref = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (el === null) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) setIsVisible(true)
-      },
-      // 見えてから組み立てると間に合わないので、少し手前で始める
-      { rootMargin: '300px' },
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <div
-      ref={ref}
-      // 予約高さは実測値（375px で 932px / 1280px で 345px）
-      className={isVisible ? 'grid gap-8 sm:grid-cols-3' : 'min-h-[58rem] sm:min-h-[21.5rem]'}
-    >
-      {isVisible ? THEME_NAMES.map((name) => <ThemeCard key={name} name={name} />) : null}
+    <div className="grid gap-8 sm:grid-cols-3">
+      {THEME_NAMES.map((name) => (
+        <ThemeCard key={name} name={name} />
+      ))}
     </div>
   )
 }
