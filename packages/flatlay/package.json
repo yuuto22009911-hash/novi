@@ -1,6 +1,6 @@
 {
   "name": "@novi-ui/flatlay",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Novi UI theme 3 — no z-axis. Opening takes space: inflow expansion, full-screen takeover, rules instead of shadows.",
   "license": "MIT",
   "repository": {
