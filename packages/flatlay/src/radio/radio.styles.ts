@@ -23,7 +23,11 @@ import { mono } from '../styles/mono'
  * 小さすぎて読めないため。ここだけは記号ではなく面が状態を持つ。
  */
 const slots = {
-  root: ['inline-flex items-start gap-2', 'cursor-pointer', disabledState].join(' '),
+  root: [
+    'inline-flex items-start gap-[var(--novi-gap-inline)]',
+    'cursor-pointer',
+    disabledState,
+  ].join(' '),
   control: [
     'shrink-0 inline-grid place-items-center',
     'border border-[var(--novi-color-border-strong)]',
@@ -73,10 +77,10 @@ export const radioStyles = tv({
 })
 
 const groupSlots = {
-  root: 'flex flex-col gap-2',
+  root: 'flex flex-col gap-[var(--novi-gap-stack)]',
   // 項目名は等幅（Input / CheckboxGroup と同じ扱い・ADR-F7）
   label: `text-[length:var(--novi-text-sm)] text-[var(--novi-color-fg)] ${mono}`,
-  list: 'flex flex-col gap-2',
+  list: 'flex flex-col gap-[var(--novi-gap-stack)]',
   description: `text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)] ${mono}`,
   errorMessage: `text-[length:var(--novi-text-sm)] text-[var(--novi-color-danger)] ${mono}`,
 } satisfies SlotMap<typeof radioGroupSlots, (typeof radioGroupRequiredSlots)[number]>
@@ -91,8 +95,8 @@ export const radioGroupStyles = tv({
   slots: groupSlots,
   variants: {
     orientation: {
-      vertical: { list: 'flex-col gap-2' },
-      horizontal: { list: 'flex-row gap-4 flex-wrap' },
+      vertical: { list: 'flex-col gap-[var(--novi-gap-stack)]' },
+      horizontal: { list: 'flex-row gap-[var(--novi-gap-stack)] flex-wrap' },
     },
   },
   defaultVariants: { orientation: 'vertical' },

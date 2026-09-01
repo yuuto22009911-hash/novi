@@ -78,6 +78,14 @@ export const DESIGN_RULES = [
     pattern: /(?<![\w-])duration-(?!\[var\(--novi)/g,
     message: 'モーションの時間はトークン経由にする（Flatlay は 100ms の1本しかない）',
   },
+  {
+    id: 'raw-spacing',
+    prohibited: '8px 以上の生の余白ユーティリティ（p/px/py/pt/pb/pl/pr/gap-2 以上）',
+    pattern: /(?<![\w-])(?:p|px|py|pt|pb|pl|pr|gap|gap-x|gap-y)-(?:[2-9]|\d\d)(?:\.5)?(?![\w-])/g,
+    message:
+      '余白はトークン経由（--novi-pad-* / --novi-gap-*）。生値で書くと3モデルが同じ密度に潰れ、' +
+      '「余白がテーマの所有物」でなくなる。8px 未満の微小インセットだけが例外（字やアイコンの当たり合わせ）',
+  },
 ]
 
 /**
@@ -111,6 +119,12 @@ export const DESIGN_RULE_EXCEPTIONS = {
     rules: ['position'],
     reason:
       '例外2号。ポインタ追従の一時表示はフローに入れられない（レイアウトが動くと hover が外れる）ため、唯一の浮きとして absolute を許す（ADR-F6）',
+  },
+  'accordion.styles.ts': {
+    rules: ['raw-spacing'],
+    reason:
+      'panel の pl-6/8/10 は見出しの字下げに揃える階段で、階層の表現であって余白の設計ではない。' +
+      'pr / pb はその階段と対で決まり、trigger の上下は行の高さそのもの。左右はトークン化済み',
   },
 }
 

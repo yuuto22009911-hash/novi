@@ -11,10 +11,12 @@ import { focusRing } from '../styles/focus-ring'
 
 const slots = {
   // 右下に固定する。操作の起点から遠く、視線移動が最小になる位置
-  region: 'fixed bottom-4 right-4 z-50 flex flex-col gap-2 outline-none max-w-sm',
+  region:
+    'fixed bottom-4 right-4 z-50 flex flex-col gap-[var(--novi-gap-stack)] outline-none max-w-sm',
   root: [
     'text-[var(--novi-color-fg)]',
-    'flex items-start gap-3 px-4 py-3 outline-none',
+    'flex items-start gap-[var(--novi-gap-inline)] outline-none',
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
     'bg-[var(--novi-color-bg)]',
     'border border-[var(--novi-color-border-strong)]',
     'shadow-[var(--novi-shadow-lg)]',

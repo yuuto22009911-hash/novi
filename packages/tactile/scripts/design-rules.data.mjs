@@ -62,6 +62,15 @@ export const DESIGN_RULES = [
     message: '色は必ず --novi-color-* を経由する。リテラル値を書かない',
   },
   {
+    id: 'raw-spacing',
+    prohibited: '8px 以上の生の余白ユーティリティ（p/px/py/pt/pb/pl/pr/gap-2 以上）',
+    pattern: /(?<![\w-])(?:p|px|py|pt|pb|pl|pr|gap|gap-x|gap-y)-(?:[2-9]|\d\d)(?:\.5)?(?![\w-])/g,
+    message:
+      '余白はトークン経由（--novi-pad-* / --novi-gap-*）。' +
+      '余白がテーマの所有物でないと、各コンポーネントが自分の判断で数値を書き、3モデルが同じ密度に潰れる。' +
+      '8px 未満の微小インセット（アイコンの位置合わせ）だけ生値を許す',
+  },
+  {
     id: 'duration',
     prohibited: 'duration-*（--novi-duration-* の任意値を除く）',
     pattern: /(?<![\w-])duration-(?!\[var\(--novi)/g,

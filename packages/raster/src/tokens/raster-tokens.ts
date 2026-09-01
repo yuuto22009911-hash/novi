@@ -56,6 +56,73 @@ export const RASTER_TEXT: Record<string, string> = {
   '3xl': '36px',
 }
 
+/**
+ * 内側の余白。**すべて 4px の倍数**（Raster の支配軸「寸法の規律」）。
+ *
+ * 高さを 8px グリッドに乗せておきながら余白だけ 10px・14px と外れると、
+ * 格子は目に見えなくても崩れる。Raster は「格子」なので、余白も高さと同じ格子に乗せる。
+ *
+ * 面（surface）とコントロール（control）を分けているのは、両者で余白の役目が違うから。
+ * 面の余白は内容を紙の縁から離すためのもので大きさが一定、
+ * コントロールの左右余白は文字の長さに対する持ち手の幅なので size に追従する。
+ */
+export const RASTER_PAD: Record<string, string> = {
+  'surface-x': '20px',
+  'surface-y': '16px',
+  'control-x-sm': '12px',
+  'control-x-md': '16px',
+  'control-x-lg': '20px',
+}
+
+/**
+ * 要素間の距離。**inline : stack : section = 1 : 2 : 3。**
+ *
+ * 余白の知覚を作るのは絶対値ではなく「グループ内とグループ間の比」（近接の法則）。
+ * 比が 1:1 に潰れると、どこまでが一塊なのかが読めず、画面全体が詰まって見える。
+ * 実際に Card の header / body / footer が py-3 / py-4 / py-3 と実質 1:1 だったため、
+ * 区画の切れ目が境界線でしか伝わっていなかった。
+ */
+export const RASTER_GAP: Record<string, string> = {
+  inline: '8px',
+  stack: '16px',
+  section: '24px',
+}
+
+/**
+ * 字送り。**締めるのは見出しだけ。**
+ *
+ * 大きい文字は字間が広く見えるので、見出しは -0.014em 詰めて塊としての強さを出す。
+ * 同じ処理を本文に掛けると語の切れ目が曖昧になり可読性が落ちるので、normal は 0 のまま。
+ */
+export const RASTER_TRACKING: Record<string, string> = {
+  tight: '-0.014em',
+  normal: '0em',
+}
+
+/**
+ * 行送り。本文は読むためのもの、見出しは見るためのもので必要な高さが違う。
+ * 見出しに本文と同じ 1.6 を与えると、2行になった瞬間に1行ずつが離れて塊に見えなくなる。
+ */
+export const RASTER_LEADING: Record<string, string> = {
+  body: '1.6',
+  heading: '1.2',
+}
+
+/**
+ * 書体。Raster は書体で飾らないので、見出しは本文と同じ sans を参照する
+ * （声の違いは字送りと行送りで作る）。それでも変数を分けておくのは、
+ * 利用者が `--novi-font-heading` だけを差し替えられるようにするため。
+ *
+ * `numeric` は `font-variant-numeric` の値。tabular-nums にすると数字の桁幅が揃い、
+ * 表やカウンタの値が更新されても行が横に踊らない。
+ */
+export const RASTER_FONTS: Record<string, string> = {
+  sans: 'system-ui, sans-serif',
+  mono: 'ui-monospace, monospace',
+  heading: 'var(--novi-font-sans)',
+  numeric: 'tabular-nums',
+}
+
 /** 8px グリッド上に乗る高さ。タップ領域は最小 24px、タッチ環境は 44px を目標。 */
 export const RASTER_CONTROL_HEIGHTS: Record<string, number> = {
   sm: 32,

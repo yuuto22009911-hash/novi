@@ -20,7 +20,10 @@ const slots = {
   ].join(' '),
   // Raster では arrow を描画しない。任意 slot を省略する実例
   arrow: 'hidden',
-  content: 'px-4 py-3 text-[var(--novi-color-fg)] leading-[var(--novi-leading-body)]',
+  content: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'text-[var(--novi-color-fg)] leading-[var(--novi-leading-body)]',
+  ].join(' '),
 } satisfies SlotMap<typeof popoverSlots, (typeof popoverRequiredSlots)[number]>
 
 const radius: VariantMap<NoviRadius, { root: string }> = {
@@ -60,7 +63,10 @@ export const tooltipStyles = tv({
       'data-[entering]:motion-safe:animate-[novi-fade-in_120ms_ease-out]',
     ].join(' '),
     arrow: 'hidden',
-    content: 'px-2 py-1 text-[length:var(--novi-text-xs)] leading-snug',
+    // 補足の吹き出しは面ではなくラベル。面の余白を当てると本題より重くなるので、
+    // 横は最小のコントロール余白、縦は文字が枠に触れない最小値だけを取る
+    content:
+      'px-[var(--novi-pad-control-x-sm)] py-1 text-[length:var(--novi-text-xs)] leading-snug',
   } satisfies SlotMap<typeof tooltipSlots, (typeof tooltipRequiredSlots)[number]>,
 })
 

@@ -21,7 +21,8 @@ import { focusRing } from '../styles/focus-ring'
  * 下線1本は視線には十分でも、指には「どこまでが自分の区画か」を伝えない。
  */
 const slots = {
-  root: 'flex flex-col gap-4',
+  // トラックとパネルは別の区画。ここを詰めると、どのタブの中身なのかが読めなくなる
+  root: 'flex flex-col gap-[var(--novi-gap-stack)]',
   list: [
     'flex gap-1 w-fit',
     'bg-[var(--novi-color-subtle)]',
@@ -49,7 +50,7 @@ const slots = {
     'rounded-[var(--novi-radius-sm)]',
     'shadow-[var(--novi-shadow-sm)]',
   ].join(' '),
-  panel: 'outline-none text-[var(--novi-color-fg)]',
+  panel: 'outline-none text-[var(--novi-color-fg)] leading-[var(--novi-leading-body)]',
 } satisfies SlotMap<typeof tabsSlots, (typeof tabsRequiredSlots)[number]>
 
 const variant: VariantMap<NoviVariant, { list: string; indicator: string }> = {
@@ -60,20 +61,21 @@ const variant: VariantMap<NoviVariant, { list: string; indicator: string }> = {
   },
   soft: { list: 'bg-[var(--novi-color-subtle)]', indicator: 'shadow-[var(--novi-shadow-none)]' },
   ghost: {
-    list: 'bg-transparent p-0 gap-2',
+    list: 'bg-transparent p-0 gap-[var(--novi-gap-inline)]',
     indicator: 'bg-[var(--novi-color-subtle)] shadow-[var(--novi-shadow-none)]',
   },
   plain: {
-    list: 'bg-transparent p-0 gap-4',
+    // トラックが無いぶん、区画の境目は距離だけで示す
+    list: 'bg-transparent p-0 gap-[var(--novi-gap-stack)]',
     indicator: 'bg-transparent shadow-[var(--novi-shadow-none)]',
   },
 }
 
 /** どの段でもタップ下限を割らない。トラックの内側なので上下の余白も確保する。 */
 const size: VariantMap<NoviSize, { tab: string }> = {
-  sm: { tab: 'h-10 px-4 text-[length:var(--novi-text-sm)]' },
-  md: { tab: 'h-12 px-5 text-[length:var(--novi-text-base)]' },
-  lg: { tab: 'h-14 px-6 text-[length:var(--novi-text-base)]' },
+  sm: { tab: 'h-10 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]' },
+  md: { tab: 'h-12 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-base)]' },
+  lg: { tab: 'h-14 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-base)]' },
 }
 
 /**

@@ -8,7 +8,7 @@ import type {
 } from '@novi-ui/core'
 import { tv } from 'tailwind-variants'
 import { focusRing } from '../styles/focus-ring'
-import { mono } from '../styles/mono'
+import { heading, mono } from '../styles/mono'
 
 /**
  * Accordion は Flatlay の**主役**。
@@ -30,9 +30,11 @@ const slots = {
   // 見出し要素とその中のボタンを分ける。支援技術のために必要
   heading: 'm-0',
   trigger: [
-    'flex items-center gap-2 w-full text-left',
+    'flex items-center gap-[var(--novi-gap-inline)] w-full text-left',
     'cursor-pointer outline-none',
     'text-[var(--novi-color-fg)]',
+    // 見出しは mono（spec 08）。記号インジケータと同じ書体になり、行頭が縦に揃う
+    heading,
     'hover:bg-[var(--novi-color-subtle)]',
     // 押した瞬間だけ反転する。開いているという状態は記号が持つ（ADR-F3）
     'data-[pressed]:bg-[var(--novi-color-fg)] data-[pressed]:text-[var(--novi-color-bg)]',
@@ -58,11 +60,27 @@ const variant: VariantMap<NoviVariant, { root: string; item: string }> = {
   plain: { root: 'border-t-0', item: 'border-b-0' },
 }
 
-/** 行の高さは Select / Menu と同じ帳票の刻み。パネルは見出しの字下げに揃える。 */
+/**
+ * 行の高さは Select / Menu と同じ帳票の刻み。パネルは見出しの字下げに揃える。
+ *
+ * **例外**: パネルの `pl-*` は字下げの階段で、余白の設計ではなく階層の表現。
+ * `pr` / `pb` はその階段と対で決まり、`trigger` の上下は行の高さそのもの。
+ * どれもトークンに載せると、字下げと行の刻みが別々に動いて列が崩れる
+ * （`raw-spacing` の例外として `design-rules.data.mjs` に登録済み）。
+ */
 const size: VariantMap<NoviSize, { trigger: string; panel: string }> = {
-  sm: { trigger: 'px-2 py-1.5 text-[length:var(--novi-text-sm)]', panel: 'pl-6 pr-2 pb-1.5' },
-  md: { trigger: 'px-3 py-2 text-[length:var(--novi-text-base)]', panel: 'pl-8 pr-3 pb-2' },
-  lg: { trigger: 'px-4 py-3 text-[length:var(--novi-text-base)]', panel: 'pl-10 pr-4 pb-3' },
+  sm: {
+    trigger: 'px-[var(--novi-pad-control-x-sm)] py-1.5 text-[length:var(--novi-text-sm)]',
+    panel: 'pl-6 pr-2 pb-1.5',
+  },
+  md: {
+    trigger: 'px-[var(--novi-pad-control-x-md)] py-2 text-[length:var(--novi-text-base)]',
+    panel: 'pl-8 pr-3 pb-2',
+  },
+  lg: {
+    trigger: 'px-[var(--novi-pad-control-x-lg)] py-3 text-[length:var(--novi-text-base)]',
+    panel: 'pl-10 pr-4 pb-3',
+  },
 }
 
 /**

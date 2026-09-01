@@ -1,4 +1,10 @@
-import { NOVI_COLORS, NOVI_RADII } from '@novi-ui/core'
+import {
+  NOVI_COLORS,
+  NOVI_GAP_TOKENS,
+  NOVI_PAD_TOKENS,
+  NOVI_RADII,
+  NOVI_TRACKING_TOKENS,
+} from '@novi-ui/core'
 import { chromaOf, contrastRatio, parseOklch, relativeLuminance } from '@novi-ui/core/testing'
 import { describe, expect, it } from 'vitest'
 import {
@@ -21,11 +27,15 @@ import {
   SEMANTIC_COLOR_KEYS,
   TACTILE_CONTROL_HEIGHTS,
   TACTILE_DARK_COLORS,
+  TACTILE_GAP,
+  TACTILE_LEADING,
   TACTILE_LIGHT_COLORS,
   TACTILE_MOTION,
+  TACTILE_PAD,
   TACTILE_RADII,
   TACTILE_SHADOWS,
   TACTILE_TEXT,
+  TACTILE_TRACKING,
 } from './tactile-tokens'
 
 /**
@@ -324,6 +334,42 @@ describe('Tactile デザイン言語（数値定義）', () => {
       expect(v).toBeGreaterThanOrEqual(0)
       expect(v).toBeLessThanOrEqual(1)
     }
+  })
+
+  // 語彙は core が持ち、値は各テーマが持つ。網羅していないトークンがあると、
+  // その CSS 変数だけ未定義のまま出力され、参照側は黙って初期値に落ちる
+  it('pad が NOVI_PAD_TOKENS を網羅している', () => {
+    expect(NOVI_PAD_TOKENS.filter((t) => !(t in TACTILE_PAD))).toEqual([])
+  })
+
+  it('gap が NOVI_GAP_TOKENS を網羅している', () => {
+    expect(NOVI_GAP_TOKENS.filter((t) => !(t in TACTILE_GAP))).toEqual([])
+  })
+
+  it('tracking が NOVI_TRACKING_TOKENS を網羅している', () => {
+    expect(NOVI_TRACKING_TOKENS.filter((t) => !(t in TACTILE_TRACKING))).toEqual([])
+  })
+
+  it('gap が inline < stack < section の順に広がる', () => {
+    const steps = ['inline', 'stack', 'section'].map((k) =>
+      Number.parseFloat(TACTILE_GAP[k] as string),
+    )
+    for (let i = 1; i < steps.length; i++) {
+      expect(steps[i]).toBeGreaterThan(steps[i - 1] as number)
+    }
+  })
+
+  it('section / stack の比が 1.5 以上（余白のコントラスト）', () => {
+    // 「塊の内側」と「塊の外側」の距離が近いほど、絶対値をいくら増やしても詰まって見える。
+    // 単調増加だけでは 20/21/22 のような無意味な段も通ってしまう
+    const stack = Number.parseFloat(TACTILE_GAP.stack as string)
+    const section = Number.parseFloat(TACTILE_GAP.section as string)
+    expect(section / stack).toBeGreaterThanOrEqual(1.5)
+  })
+
+  it('本文の行送りが 1.7 以上（支配軸「面積」は行送りにも及ぶ）', () => {
+    // 腕を伸ばした距離・手ブレのある状態で読む前提。行が近いと次の行を目で拾い直せない
+    expect(Number.parseFloat(TACTILE_LEADING.body as string)).toBeGreaterThanOrEqual(1.7)
   })
 })
 

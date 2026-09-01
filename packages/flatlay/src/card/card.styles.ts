@@ -8,6 +8,7 @@ import type {
 } from '@novi-ui/core'
 import { tv } from 'tailwind-variants'
 import { disabledState, focusRing } from '../styles/focus-ring'
+import { heading } from '../styles/mono'
 
 /**
  * Flatlay の Card は**書類の枠**。両テーマも影は使わないが、こちらは
@@ -24,10 +25,22 @@ const slots = {
     'rounded-[var(--novi-radius-sm)]',
     'overflow-hidden',
   ].join(' '),
-  // header と footer は罫線で仕切る。地の色を変えて面を増やさない
-  header: 'px-3 py-2 border-b border-[var(--novi-color-border)]',
-  body: 'px-3 py-3 flex-1',
-  footer: 'px-3 py-2 border-t border-[var(--novi-color-border)]',
+  // header と footer は罫線で仕切る。地の色を変えて面を増やさない。
+  // 見出しが mono なのは Flatlay だけ（spec 08）。書体そのものが header の役割を示す
+  header: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'border-b border-[var(--novi-color-border)]',
+    heading,
+  ].join(' '),
+  // 上下 14px でも詰まって見えないのは、行送り 1.7 が余白を引き受けているから
+  body: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)] flex-1',
+    'leading-[var(--novi-leading-body)]',
+  ].join(' '),
+  footer: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'border-t border-[var(--novi-color-border)]',
+  ].join(' '),
   image: 'w-full object-cover',
 } satisfies SlotMap<typeof cardSlots, (typeof cardRequiredSlots)[number]>
 

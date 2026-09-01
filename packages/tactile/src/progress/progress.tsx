@@ -40,7 +40,7 @@ export function Progress({
       {({ percentage, valueText }) => (
         <>
           {(label !== undefined || showValueLabel === true) && (
-            <span className="flex items-baseline justify-between gap-2">
+            <span className="flex items-baseline justify-between gap-[var(--novi-gap-inline)]">
               {label !== undefined && (
                 <Label data-slot="label" className={s.label({ class: classNames?.label })}>
                   {label}

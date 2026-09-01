@@ -18,7 +18,11 @@ import { disabledState, focusRing } from '../styles/focus-ring'
  * 形が見慣れないぶん ON/OFF が読み取りにくいので、**ラベルの併記を強く推奨**する。
  */
 const slots = {
-  root: ['inline-flex items-center gap-2', 'cursor-pointer', disabledState].join(' '),
+  root: [
+    'inline-flex items-center gap-[var(--novi-gap-inline)]',
+    'cursor-pointer',
+    disabledState,
+  ].join(' '),
   track: [
     'shrink-0 inline-flex items-center',
     'rounded-[var(--novi-radius-full)]',

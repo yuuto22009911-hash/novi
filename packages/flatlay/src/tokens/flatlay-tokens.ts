@@ -44,6 +44,71 @@ export const FLATLAY_SHADOWS: Record<string, string> = {
 }
 
 /**
+ * 面の内側と、コントロールの左右の余白。**余白はテーマの所有物**（spec 08）。
+ *
+ * `surface-y` が 14px と3モデルで最小なのに詰まって見えないのは、余白を padding では
+ * なく `FLATLAY_LEADING.body`（1.7）の行送りで取っているから。野帳の罫線間隔が広いのと
+ * 同じ理屈で、帳票は「箱の内側を空ける」のではなく「行を離す」。padding を厚くすると
+ * 罫線と本文の距離だけが伸び、行同士は詰まったままになって帳票に見えなくなる。
+ *
+ * `surface-x`（20px）だけが `surface-y` より厚いのは、左端が読み出しの基準線だから。
+ * 罫線から字が始まるまでの距離は列の見出し位置そのもので、ここが浅いと線に字が触れる。
+ *
+ * `control-x-*` は 10 / 12 / 16px。高さ（28/32/40px）に対して横が詰まっているのは、
+ * 行の中に置いても行が膨らまない寸法を優先しているため。
+ */
+export const FLATLAY_PAD: Record<string, string> = {
+  'surface-x': '20px',
+  'surface-y': '14px',
+  'control-x-sm': '10px',
+  'control-x-md': '12px',
+  'control-x-lg': '16px',
+}
+
+/**
+ * 要素間の余白。**比が余白の知覚を作る。**
+ *
+ * `section / stack` は 24 / 12 = **2.0 で3モデル最大**。罫線で区切る美学なので、
+ * 区画の切れ目だけが大きく空き、区画の中は等間隔に詰まる。従来は Card の
+ * header / body / footer が実質 1:1 で、線はあるのに「まとまり」が読めなかった。
+ *
+ * `inline`（8px）は同じ行の中で記号と語を離す距離。行を跨がないので最小に置く。
+ */
+export const FLATLAY_GAP: Record<string, string> = {
+  inline: '8px',
+  stack: '12px',
+  section: '24px',
+}
+
+/**
+ * 字送り。**見出しでも字を詰めない。**
+ *
+ * `tight` が 0em なのは意図。字を詰めるのは複数の語を1つの「まとまり」に見せる操作で、
+ * 帳票の見出しは各項目が独立している。詰めた瞬間に、隣の項目との境界より
+ * 語の内側のほうが強く結ばれてしまう。
+ *
+ * `normal` の +0.01em は、等幅の規則正しさを sans の本文にも及ぼすための微量。
+ */
+export const FLATLAY_TRACKING: Record<string, string> = {
+  tight: '0em',
+  normal: '0.01em',
+}
+
+/**
+ * 行送り。**Flatlay が余白を取る主な手段はこちら**（padding ではない）。
+ *
+ * `body` 1.7 は野帳の罫線間隔。`surface-y` が 14px で足りるのはこの値が支えていて、
+ * 片方だけを動かすと密度が崩れる（`flatlay-tokens.test.ts` が下限 1.65 を固定する）。
+ *
+ * `heading` 1.35 は、見出しが2行に折り返しても行が離れすぎないための値。
+ * 見出しは「読み進める文」ではなく「見つける札」なので、本文より締める。
+ */
+export const FLATLAY_LEADING: Record<string, string> = {
+  body: '1.7',
+  heading: '1.35',
+}
+
+/**
  * 本文 16px は入力欄の自動ズーム回避の下限。比率 ≒1.18 と両テーマより詰まっているのは、
  * 帳票が「読む文書」ではなく「引く表」だから。
  */
@@ -64,10 +129,19 @@ export const FLATLAY_TEXT: Record<string, string> = {
  * 数値・ショートカット・コード・ラベルの slot がこれを消費する。
  * core の既定（`ui-monospace, monospace`）のままでは、フォールバックが痩せていて
  * 環境によって等幅にならない。
+ *
+ * `heading` が mono を指すのは **3モデルで唯一、見出しの書体が本文と違う**という宣言。
+ * Web フォントを足せない以上、テーマの声を分けられるのは既存2スタックの使い分けだけで、
+ * そこが最大の識別子になる（ADR-F7 の mono 運用の延長）。
+ *
+ * `numeric` は帳票が数字を**突き合わせて読む**ため。桁が縦に揃い（tabular-nums）、
+ * 0 と O が判別できる（slashed-zero）ことは、書式ではなく情報の正しさに属する。
  */
 export const FLATLAY_FONTS: Record<string, string> = {
   sans: 'system-ui, sans-serif',
   mono: "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace",
+  heading: 'var(--novi-font-mono)',
+  numeric: 'tabular-nums slashed-zero',
 }
 
 /**

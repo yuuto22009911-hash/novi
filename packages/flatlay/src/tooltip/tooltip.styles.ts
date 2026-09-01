@@ -26,7 +26,7 @@ const slots = {
   ].join(' '),
   // 矢印は描かない。指す先は重なりの位置が示している
   arrow: 'hidden',
-  content: `px-2 py-1 text-[length:var(--novi-text-xs)] leading-snug ${mono}`,
+  content: `px-[var(--novi-pad-control-x-sm)] py-1 text-[length:var(--novi-text-xs)] leading-snug ${mono}`,
 } satisfies SlotMap<typeof tooltipSlots, (typeof tooltipRequiredSlots)[number]>
 
 /**

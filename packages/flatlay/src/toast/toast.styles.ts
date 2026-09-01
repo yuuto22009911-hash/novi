@@ -28,7 +28,8 @@ const slots = {
   // 固定しない。置いた場所がそのまま表示位置になる（アプリ先頭を推奨）
   region: 'flex flex-col gap-1.5 w-full outline-none',
   root: [
-    'w-full flex items-start gap-3 px-3 py-2 outline-none',
+    'w-full flex items-start gap-[var(--novi-gap-inline)]',
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)] outline-none',
     'text-[var(--novi-color-fg)] bg-[var(--novi-color-subtle)]',
     // 左端の太い罫が朱書きの線。色はここだけが受け持つ
     'border border-[var(--novi-color-border-strong)]',

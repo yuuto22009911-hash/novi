@@ -46,7 +46,10 @@ describe('Progress: Raster のデザイン規律', () => {
   })
 
   it('数値ラベルは等幅数字で桁を揃える', () => {
-    expect(progressStyles().valueLabel()).toContain('tabular-nums')
+    // 字形はテーマの所有物。値そのもの（tabular-nums）は raster-tokens.test.ts が守る
+    expect(progressStyles().valueLabel()).toContain(
+      '[font-variant-numeric:var(--novi-font-numeric)]',
+    )
   })
 
   it('不確定表示は translate のみで表現する（scale / rotate を使わない）', () => {

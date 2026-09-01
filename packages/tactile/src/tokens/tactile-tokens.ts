@@ -55,6 +55,88 @@ export const TACTILE_TEXT: Record<string, string> = {
 }
 
 /**
+ * 内側の余白。**3モデルで最大**（ADR-D1）。
+ *
+ * 触覚モデルの支配軸は「面積」。指が触れる面は空間を要求するので、
+ * 面（Card / Modal / Popover / シート）は左右 28px・上下 24px を取る。
+ * 左右を上下より広くしているのは、横は指がはみ出しても押し間違いにならないが、
+ * 縦は隣の行に当たるため — 詰めていい方向と詰めてはいけない方向が違う。
+ *
+ * `control-x-*` はコントロールの左右で、段の差はここにだけ出る。
+ * 指の接触面は文字の幅より大きいので、文字量に対して常に広く取る。
+ */
+export const TACTILE_PAD: Record<string, string> = {
+  'surface-x': '28px',
+  'surface-y': '24px',
+  'control-x-sm': '16px',
+  'control-x-md': '20px',
+  'control-x-lg': '24px',
+}
+
+/**
+ * 要素間の距離。**絶対値ではなく比が余白の知覚を作る。**
+ *
+ * inline(10) < stack(20) < section(32) で、隣の段との比を 1.6 倍以上に開ける。
+ * 以前は Card の header / body / footer が py-3 / py-4 / py-3 と実質 1:1 で、
+ * 「グループ内」と「グループ間」が同じ距離だった。比が 1 に潰れると、
+ * どれだけ絶対値を増やしても中身は詰まって見える。
+ */
+export const TACTILE_GAP: Record<string, string> = {
+  // アイコンと文字、ラベルと補足など「1つの塊の内側」
+  inline: '10px',
+  // 積まれた行どうし。塊の境目が読める最小の距離
+  stack: '20px',
+  // 区画と区画。ここだけスクロールの単位として認識される
+  section: '32px',
+}
+
+/**
+ * 字送り。**normal を +0.006em とわずかに開けているのは Tactile だけ。**
+ *
+ * 字を詰めると硬くなり、開けると柔らかくなる。触って操作する面は柔らかい方が近い。
+ * Raster の 0em（機械的な既定値のまま）、Flatlay の +0.01em（規則性の表明）に対する
+ * 第3の声で、3モデルが同じタイポに潰れないための識別子でもある。
+ *
+ * `tight` を負にするのは見出しだけ。大きい字は既定の字間だとバラけて見える。
+ */
+export const TACTILE_TRACKING: Record<string, string> = {
+  tight: '-0.006em',
+  normal: '0.006em',
+}
+
+/**
+ * 行送り。`body` の 1.75 は**3モデルで最大**。
+ *
+ * 本文を 17px にしたのと同じ理由で、腕を伸ばした距離・手ブレのある状態で読む前提。
+ * 行が近いと次の行を目で拾い直せない。支配軸「面積」は行間にも及ぶ。
+ *
+ * `heading` を 1.3 に詰めるのは、見出しは1〜2行で読み終わるため。
+ * ここまで本文と離すことで、行送りの差だけで階層が読める。
+ */
+export const TACTILE_LEADING: Record<string, string> = {
+  body: '1.75',
+  heading: '1.3',
+}
+
+/**
+ * 書体。**独自のフォントを積まない** — 読み込み待ちの間だけ字面が変わるのは、
+ * 指で触れている最中に面が動くのと同じで、触覚モデルでは最も嫌われる。
+ *
+ * `heading` が `--novi-font-sans` を指すのは、見出しを別書体にせず
+ * 字送り（tracking-tight）と行送り（leading-heading）だけで階層を作るため。
+ *
+ * `numeric: normal`（プロポーショナル）は意図。Tactile が扱うのは「引く表」ではなく
+ * 「読む文章」で、桁を揃えると数字だけが文中で浮く。
+ * Raster / Flatlay の tabular-nums に対する、もう1つのモデル識別子。
+ */
+export const TACTILE_FONTS: Record<string, string> = {
+  sans: 'system-ui, sans-serif',
+  mono: 'ui-monospace, monospace',
+  heading: 'var(--novi-font-sans)',
+  numeric: 'normal',
+}
+
+/**
  * 最小段でもタップ下限（44px）を視覚寸法で割らない。
  * `sm` の 40px は視覚寸法で、実効タップ領域は擬似要素で 44px に広げる（styles/tap-target.ts）。
  */

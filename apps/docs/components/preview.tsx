@@ -12,11 +12,19 @@ import { useThemeState } from '../lib/use-novi-theme'
  * これがないとサイト UI までテーマ色に染まる。
  */
 export function Preview({
+  bare = false,
   children,
   className,
   color,
   theme,
 }: {
+  /**
+   * 外枠と内側の余白を外す。
+   *
+   * 中身自体が面を持つ（Card など）ときに枠を重ねると
+   * 「箱の中の箱」になり、テーマが設計した余白が読めなくなる。
+   */
+  bare?: boolean
   children: ReactNode
   className?: string
   /**
@@ -44,7 +52,8 @@ export function Preview({
       {...(scheme === null ? {} : { [SCHEME_ATTR]: scheme })}
       {...(color === undefined ? {} : { 'data-novi-color': color })}
       className={[
-        'rounded-none border border-site-border bg-[var(--novi-color-bg)] p-6',
+        'bg-[var(--novi-color-bg)]',
+        bare ? '' : 'rounded-none border border-site-border p-6',
         'flex flex-wrap items-start gap-4',
         className ?? '',
       ].join(' ')}

@@ -79,6 +79,8 @@ const CONVENTIONS = `## 必ず守ること（他のライブラリと違う点�
 - variant は \`${vocabularies.variants.join(' | ')}\` の${vocabularies.variants.length}つのみ
 - size は \`${vocabularies.sizes.join(' | ')}\`、color は \`${vocabularies.colors.join(' | ')}\`
 - 色は \`--novi-color-*\` の CSS 変数を使う。リテラルの色値を書かない
+- **余白も \`p-4\` / \`gap-4\` ではなくトークンで書く**。面の内側は \`--novi-pad-surface-x\` / \`--novi-pad-surface-y\`、コントロールの左右は \`--novi-pad-control-x-{sm,md,lg}\`、要素間は \`--novi-gap-{inline,stack,section}\`
+- 見出しは \`--novi-font-heading\` / \`--novi-tracking-tight\` / \`--novi-leading-heading\`、本文は \`--novi-leading-body\`。数字は \`--novi-font-numeric\`
 - スタイルの拡張は \`tv({ extend, slots })\`。**\`base\` は slot 定義では効かない**
 - variant のクラスを上書きしたいときは \`classNames={{ <slot>: '...' }}\` を使う`
 

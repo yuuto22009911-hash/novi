@@ -16,7 +16,8 @@ import { focusRing } from '../styles/focus-ring'
  */
 const slots = {
   backdrop: [
-    'fixed inset-0 z-50 grid place-items-center p-4',
+    // 画面端とパネルの距離。panel / full の max-h が引く 2rem はこの値の 2 倍を指す
+    'fixed inset-0 z-50 grid place-items-center p-[var(--novi-pad-surface-y)]',
     'bg-[var(--novi-color-overlay)]',
     'data-[entering]:motion-safe:animate-[novi-fade-in_120ms_ease-out]',
   ].join(' '),
@@ -30,21 +31,31 @@ const slots = {
   ].join(' '),
   // 見出しと閉じるを同じ行に置く。情報の階層を横方向で作る
   header: [
-    'flex items-baseline justify-between gap-4',
-    'px-6 pt-5 pb-4',
+    'flex items-baseline justify-between gap-[var(--novi-gap-inline)]',
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
     'border-b border-[var(--novi-color-border)]',
   ].join(' '),
-  title: 'text-[length:var(--novi-text-lg)] font-medium tracking-tight text-[var(--novi-color-fg)]',
+  title: [
+    'text-[length:var(--novi-text-lg)] font-medium',
+    'font-[family-name:var(--novi-font-heading)]',
+    'tracking-[var(--novi-tracking-tight)] leading-[var(--novi-leading-heading)]',
+    'text-[var(--novi-color-fg)]',
+  ].join(' '),
   closeButton: [
     'shrink-0 grid place-items-center size-8 -mr-2',
     'text-[var(--novi-color-muted)] hover:text-[var(--novi-color-fg)]',
     'transition-colors duration-[var(--novi-duration-fast)] ease-[var(--novi-ease-standard)]',
     focusRing,
   ].join(' '),
-  body: 'px-6 py-5 text-[var(--novi-color-fg)] leading-[var(--novi-leading-body)]',
-  footer: ['flex justify-end gap-2 px-6 py-4', 'border-t border-[var(--novi-color-border)]'].join(
-    ' ',
-  ),
+  body: [
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'text-[var(--novi-color-fg)] leading-[var(--novi-leading-body)]',
+  ].join(' '),
+  footer: [
+    'flex justify-end gap-[var(--novi-gap-inline)]',
+    'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+    'border-t border-[var(--novi-color-border)]',
+  ].join(' '),
 } satisfies SlotMap<typeof modalSlots, (typeof modalRequiredSlots)[number]>
 
 const size: VariantMap<NoviSize | 'full', { panel: string }> = {

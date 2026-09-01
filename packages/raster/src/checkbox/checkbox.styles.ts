@@ -12,7 +12,11 @@ import { tv } from 'tailwind-variants'
 import { disabledState, focusRing } from '../styles/focus-ring'
 
 const slots = {
-  root: ['inline-flex items-start gap-2', 'cursor-pointer', disabledState].join(' '),
+  root: [
+    'inline-flex items-start gap-[var(--novi-gap-inline)]',
+    'cursor-pointer',
+    disabledState,
+  ].join(' '),
   // 角丸 0 の四角。円にしない
   control: [
     'shrink-0 inline-grid place-items-center',
@@ -75,9 +79,11 @@ export const checkboxStyles = tv({
 })
 
 const groupSlots = {
-  root: 'flex flex-col gap-2',
+  // フィールドの部品（ラベル・本体・説明）は近い。選択肢どうしはそれより離す —
+  // この比がないと、どこまでが1つのフィールドなのかが読めない
+  root: 'flex flex-col gap-[var(--novi-gap-inline)]',
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
-  list: 'flex flex-col gap-2',
+  list: 'flex flex-col gap-[var(--novi-gap-stack)]',
   description: 'text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]',
   errorMessage: 'text-[length:var(--novi-text-xs)] text-[var(--novi-color-danger)]',
 } satisfies SlotMap<typeof checkboxGroupSlots, (typeof checkboxGroupRequiredSlots)[number]>
@@ -92,8 +98,8 @@ export const checkboxGroupStyles = tv({
   slots: groupSlots,
   variants: {
     orientation: {
-      vertical: { list: 'flex-col gap-2' },
-      horizontal: { list: 'flex-row gap-4 flex-wrap' },
+      vertical: { list: 'flex-col gap-[var(--novi-gap-stack)]' },
+      horizontal: { list: 'flex-row gap-[var(--novi-gap-stack)] flex-wrap' },
     },
   },
   defaultVariants: { orientation: 'vertical' },

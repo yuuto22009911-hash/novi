@@ -1,6 +1,16 @@
 import AxeBuilder from '@axe-core/playwright'
-import { expect, test } from '@playwright/test'
+import { expect, type Page, test } from '@playwright/test'
 import { THEME_NAMES } from '../lib/theme-registry'
+
+/**
+ * ホームのダッシュボードは近づくまで組み立てられない（`LazyMount`）。
+ * 実利用者と同じく、そこまで降りてから触る。
+ */
+async function goToHomeDashboard(page: Page) {
+  await page.goto('/')
+  await page.getByRole('heading', { name: '組み上げるとこうなります' }).scrollIntoViewIfNeeded()
+  await expect(page.getByRole('tab', { name: '概要' })).toBeVisible()
+}
 
 /**
  * モバイル（375px）のレイアウト検査。
@@ -141,8 +151,7 @@ test('モバイルの axe: violations 0', async ({ page }) => {
  */
 for (const tab of ['概要', '売上', '顧客']) {
   test(`ダッシュボード（${tab}）の値が欠けずに読める`, async ({ page }) => {
-    await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await goToHomeDashboard(page)
     await page.getByRole('tab', { name: tab }).click()
 
     const clipped = await page.evaluate(() =>
@@ -158,8 +167,7 @@ for (const tab of ['概要', '売上', '顧客']) {
 }
 
 test('ダッシュボードの一覧が横スクロールなしで読める', async ({ page }) => {
-  await page.goto('/')
-  await page.waitForLoadState('networkidle')
+  await goToHomeDashboard(page)
 
   // 表のままだと 412px の中身が 211px の枠に押し込まれ、状態バッジが切れていた。
   // 狭い画面では1件1ブロックに組み替わり、表は出ない

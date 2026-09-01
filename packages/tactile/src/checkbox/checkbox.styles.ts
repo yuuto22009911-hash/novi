@@ -21,7 +21,7 @@ import { tapTarget } from '../styles/tap-target'
  */
 const slots = {
   root: [
-    'inline-flex items-center gap-3 min-h-12 py-1',
+    'inline-flex items-center gap-[var(--novi-gap-inline)] min-h-12 py-1',
     'cursor-pointer',
     tapTarget,
     disabledState,
@@ -91,9 +91,11 @@ export const checkboxStyles = tv({
 })
 
 const groupSlots = {
-  root: 'flex flex-col gap-2',
+  // ラベル・一覧・補足は1つのフィールドの部品なので inline。
+  // 一覧の中の行どうしは stack — 44px の当たり判定が重なると押し間違える
+  root: 'flex flex-col gap-[var(--novi-gap-inline)]',
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
-  list: 'flex flex-col gap-2',
+  list: 'flex flex-col gap-[var(--novi-gap-stack)]',
   description: 'text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)]',
   errorMessage: 'text-[length:var(--novi-text-sm)] text-[var(--novi-color-danger)]',
 } satisfies SlotMap<typeof checkboxGroupSlots, (typeof checkboxGroupRequiredSlots)[number]>
@@ -108,8 +110,9 @@ export const checkboxGroupStyles = tv({
   slots: groupSlots,
   variants: {
     orientation: {
-      vertical: { list: 'flex-col gap-2' },
-      horizontal: { list: 'flex-row gap-4 flex-wrap' },
+      vertical: { list: 'flex-col gap-[var(--novi-gap-stack)]' },
+      // 横並びは当たり判定が左右で重なる。縦積みより広く取る
+      horizontal: { list: 'flex-row gap-[var(--novi-gap-section)] flex-wrap' },
     },
   },
   defaultVariants: { orientation: 'vertical' },

@@ -18,11 +18,16 @@ import {
 } from '../src/tokens/color-set.ts'
 import {
   TACTILE_DARK_COLORS,
+  TACTILE_FONTS,
+  TACTILE_GAP,
+  TACTILE_LEADING,
   TACTILE_LIGHT_COLORS,
   TACTILE_MOTION,
+  TACTILE_PAD,
   TACTILE_RADII,
   TACTILE_SHADOWS,
   TACTILE_TEXT,
+  TACTILE_TRACKING,
 } from '../src/tokens/tactile-tokens.ts'
 
 /**
@@ -57,6 +62,44 @@ export const TOKEN_GROUPS = [
     label: '文字サイズ',
     description: '本文 17px は iOS の本文寸法。入力欄は 16px を下回らせない（自動ズーム回避）',
     values: TACTILE_TEXT,
+  },
+  {
+    id: 'pad',
+    prefix: 'pad-',
+    label: '余白（内側）',
+    description: '3モデルで最大。指が触れる面は空間を要求するので、面は左右 28px・上下 24px を取る',
+    values: TACTILE_PAD,
+  },
+  {
+    id: 'gap',
+    prefix: 'gap-',
+    label: '余白（要素間）',
+    description:
+      'inline 10 < stack 20 < section 32。絶対値ではなく「塊の内側と外側の比」が余白の知覚を作る',
+    values: TACTILE_GAP,
+  },
+  {
+    id: 'tracking',
+    prefix: 'tracking-',
+    label: '字送り',
+    description:
+      'normal を +0.006em とわずかに開けているのは Tactile だけ。詰めると硬く、開けると柔らかい',
+    values: TACTILE_TRACKING,
+  },
+  {
+    id: 'leading',
+    prefix: 'leading-',
+    label: '行送り',
+    description: '本文 1.75 は3モデルで最大。腕を伸ばした距離で次の行を目で拾い直せる間隔',
+    values: TACTILE_LEADING,
+  },
+  {
+    id: 'font',
+    prefix: 'font-',
+    label: '書体',
+    description:
+      '独自フォントを積まない（読み込み中に字面が動くのを避ける）。数字はプロポーショナルで、文中に馴染ませる',
+    values: TACTILE_FONTS,
   },
   {
     id: 'motion',

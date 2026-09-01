@@ -83,9 +83,18 @@ const variant: VariantMap<NoviVariant, { root: string }> = {
 const size: VariantMap<NoviSize, { root: string; dot: string }> = {
   // Badge は表示専用でタップ対象ではないため、高さの下限（40px）の対象外。
   // 文字だけは読める大きさを保つ
-  sm: { root: 'h-6 px-2 text-[length:var(--novi-text-xs)]', dot: 'size-1.5' },
-  md: { root: 'h-7 px-2.5 text-[length:var(--novi-text-sm)]', dot: 'size-2' },
-  lg: { root: 'h-8 px-3 text-[length:var(--novi-text-sm)]', dot: 'size-2.5' },
+  sm: {
+    root: 'h-6 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-xs)]',
+    dot: 'size-1.5',
+  },
+  md: {
+    root: 'h-7 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-sm)]',
+    dot: 'size-2',
+  },
+  lg: {
+    root: 'h-8 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-sm)]',
+    dot: 'size-2.5',
+  },
 }
 
 const radius: VariantMap<NoviRadius, { root: string }> = {

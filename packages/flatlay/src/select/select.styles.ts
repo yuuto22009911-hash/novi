@@ -30,7 +30,7 @@ const slots = {
   ].join(' '),
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
   trigger: [
-    'flex items-center justify-between gap-2 w-full text-left',
+    'flex items-center justify-between gap-[var(--novi-gap-inline)] w-full text-left',
     'text-[var(--novi-color-fg)]',
     // 罫線の幅は全 variant が持つ。色は variant が決める（Button と同じ型）
     'border',
@@ -56,7 +56,9 @@ const slots = {
   // 行の切れ目も線。押し下げた面の中で、どこまでが 1 行かを示せるのはこれだけ
   listbox: 'outline-none flex flex-col divide-y divide-[var(--novi-color-border)]',
   option: [
-    'flex items-center gap-2 px-2 cursor-pointer outline-none',
+    // 一覧の行は面ではなく行。左右は面の余白（20px）ではなくコントロールの刻みで取る
+    'flex items-center gap-[var(--novi-gap-inline)] px-[var(--novi-pad-control-x-sm)]',
+    'cursor-pointer outline-none',
     'text-[var(--novi-color-fg)]',
     'data-[focused]:bg-[var(--novi-color-subtle)]',
     'data-[selected]:font-medium',
@@ -76,15 +78,15 @@ const slots = {
  */
 const size: VariantMap<NoviSize, { trigger: string; option: string }> = {
   sm: {
-    trigger: 'h-7 px-2.5 text-[length:var(--novi-text-sm)]',
+    trigger: 'h-7 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]',
     option: 'h-6 text-[length:var(--novi-text-sm)]',
   },
   md: {
-    trigger: 'h-8 px-3 text-[length:var(--novi-text-base)]',
+    trigger: 'h-8 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-base)]',
     option: 'h-7 text-[length:var(--novi-text-base)]',
   },
   lg: {
-    trigger: 'h-10 px-4 text-[length:var(--novi-text-base)]',
+    trigger: 'h-10 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-base)]',
     option: 'h-8 text-[length:var(--novi-text-base)]',
   },
 }

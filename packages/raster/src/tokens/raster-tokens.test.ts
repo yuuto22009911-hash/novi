@@ -1,4 +1,10 @@
-import { NOVI_COLORS, NOVI_RADII } from '@novi-ui/core'
+import {
+  NOVI_COLORS,
+  NOVI_GAP_TOKENS,
+  NOVI_PAD_TOKENS,
+  NOVI_RADII,
+  NOVI_TRACKING_TOKENS,
+} from '@novi-ui/core'
 import { chromaOf, contrastRatio } from '@novi-ui/core/testing'
 import { describe, expect, it } from 'vitest'
 import {
@@ -6,10 +12,15 @@ import {
   NEUTRAL_COLOR_KEYS,
   RASTER_CONTROL_HEIGHTS,
   RASTER_DARK_COLORS,
+  RASTER_FONTS,
+  RASTER_GAP,
+  RASTER_LEADING,
   RASTER_LIGHT_COLORS,
+  RASTER_PAD,
   RASTER_RADII,
   RASTER_SHADOWS,
   RASTER_TEXT,
+  RASTER_TRACKING,
   SEMANTIC_COLOR_KEYS,
 } from './raster-tokens'
 
@@ -145,5 +156,54 @@ describe('Raster デザイン言語（数値定義）', () => {
       expect(ratio).toBeGreaterThan(1)
       expect(ratio).toBeLessThanOrEqual(1.3)
     }
+  })
+
+  it('pad が NOVI_PAD_TOKENS を網羅している', () => {
+    expect(NOVI_PAD_TOKENS.filter((t) => !(t in RASTER_PAD))).toEqual([])
+  })
+
+  it('gap が NOVI_GAP_TOKENS を網羅している', () => {
+    expect(NOVI_GAP_TOKENS.filter((t) => !(t in RASTER_GAP))).toEqual([])
+  })
+
+  it('tracking が NOVI_TRACKING_TOKENS を網羅している', () => {
+    expect(NOVI_TRACKING_TOKENS.filter((t) => !(t in RASTER_TRACKING))).toEqual([])
+  })
+
+  it('余白がすべて 4px の倍数（Raster の支配軸「寸法の規律」）', () => {
+    // 高さを 8px グリッドに乗せながら余白だけ格子から外れると、
+    // 見えない格子が崩れる。トークンの段階で外れ値を作れなくする
+    const offGrid = Object.entries({ ...RASTER_PAD, ...RASTER_GAP }).filter(
+      ([, value]) => Number.parseFloat(value) % 4 !== 0,
+    )
+    expect(offGrid).toEqual([])
+  })
+
+  it('数字が等幅（表やカウンタの値が更新されても行が横に踊らない）', () => {
+    expect(RASTER_FONTS.numeric).toBe('tabular-nums')
+  })
+
+  it('締める字送りは見出しだけで、本文は 0 のまま', () => {
+    expect(Number.parseFloat(RASTER_TRACKING.tight as string)).toBeLessThan(0)
+    expect(Number.parseFloat(RASTER_TRACKING.normal as string)).toBe(0)
+  })
+
+  it('行送りは本文 > 見出し（読む文字と見る文字で必要な高さが違う）', () => {
+    expect(Number(RASTER_LEADING.body)).toBeGreaterThan(Number(RASTER_LEADING.heading))
+  })
+
+  it('gap が inline < stack < section の順に広がる', () => {
+    const [inline, stack, section] = NOVI_GAP_TOKENS.map((t) =>
+      Number.parseFloat(RASTER_GAP[t] as string),
+    ) as [number, number, number]
+    expect(inline).toBeLessThan(stack)
+    expect(stack).toBeLessThan(section)
+  })
+
+  it('section と stack の比が 1.5 以上（余白のコントラスト）', () => {
+    // 比が 1.0 に潰れると「どこまでが一塊か」を余白が語れなくなり、画面が詰まって見える
+    const stack = Number.parseFloat(RASTER_GAP.stack as string)
+    const section = Number.parseFloat(RASTER_GAP.section as string)
+    expect(section / stack).toBeGreaterThanOrEqual(1.5)
   })
 })

@@ -24,7 +24,11 @@ import { mono } from '../styles/mono'
  * 語彙をひとつに保つほうが手応えが読める。
  */
 const slots = {
-  root: ['inline-flex items-start gap-2', 'cursor-pointer', disabledState].join(' '),
+  root: [
+    'inline-flex items-start gap-[var(--novi-gap-inline)]',
+    'cursor-pointer',
+    disabledState,
+  ].join(' '),
   // 円にしない。書類のチェック欄は必ず角のある箱で、丸は Radio の担当
   control: [
     'shrink-0 inline-grid place-items-center',
@@ -95,10 +99,10 @@ export const checkboxStyles = tv({
 })
 
 const groupSlots = {
-  root: 'flex flex-col gap-2',
+  root: 'flex flex-col gap-[var(--novi-gap-stack)]',
   // こちらは項目名なので等幅（Input の label と同じ扱い・ADR-F7）
   label: `text-[length:var(--novi-text-sm)] text-[var(--novi-color-fg)] ${mono}`,
-  list: 'flex flex-col gap-2',
+  list: 'flex flex-col gap-[var(--novi-gap-stack)]',
   description: `text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)] ${mono}`,
   errorMessage: `text-[length:var(--novi-text-sm)] text-[var(--novi-color-danger)] ${mono}`,
 } satisfies SlotMap<typeof checkboxGroupSlots, (typeof checkboxGroupRequiredSlots)[number]>
@@ -113,8 +117,8 @@ export const checkboxGroupStyles = tv({
   slots: groupSlots,
   variants: {
     orientation: {
-      vertical: { list: 'flex-col gap-2' },
-      horizontal: { list: 'flex-row gap-4 flex-wrap' },
+      vertical: { list: 'flex-col gap-[var(--novi-gap-stack)]' },
+      horizontal: { list: 'flex-row gap-[var(--novi-gap-stack)] flex-wrap' },
     },
   },
   defaultVariants: { orientation: 'vertical' },

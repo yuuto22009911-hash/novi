@@ -22,8 +22,11 @@ const slots = {
     'transition-[width,transform]',
     'duration-[var(--novi-duration-fast)] ease-[var(--novi-ease-standard)]',
   ].join(' '),
-  // 桁が揺れないよう等幅数字にする
-  valueLabel: 'text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)] tabular-nums',
+  // 数字の字形はテーマが決める。Raster は等幅なので、値が更新されても行が横に踊らない
+  valueLabel: [
+    'text-[length:var(--novi-text-xs)] text-[var(--novi-color-muted)]',
+    '[font-variant-numeric:var(--novi-font-numeric)]',
+  ].join(' '),
 } satisfies SlotMap<typeof progressSlots, (typeof progressRequiredSlots)[number]>
 
 const color: VariantMap<NoviColor, { root: string }> = {

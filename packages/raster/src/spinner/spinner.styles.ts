@@ -16,7 +16,7 @@ import { tv } from 'tailwind-variants'
  * `prefers-reduced-motion` のときは回転を止める。
  */
 const slots = {
-  root: 'inline-flex items-center gap-2',
+  root: 'inline-flex items-center gap-[var(--novi-gap-inline)]',
   circle: 'shrink-0 motion-safe:animate-spin text-[var(--c)]',
   label: 'text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)]',
 } satisfies SlotMap<typeof spinnerSlots, (typeof spinnerRequiredSlots)[number]>

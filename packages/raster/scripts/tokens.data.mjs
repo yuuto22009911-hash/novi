@@ -20,11 +20,16 @@ import {
 } from '../src/tokens/color-set.ts'
 import {
   RASTER_DARK_COLORS,
+  RASTER_FONTS,
+  RASTER_GAP,
+  RASTER_LEADING,
   RASTER_LIGHT_COLORS,
   RASTER_MOTION,
+  RASTER_PAD,
   RASTER_RADII,
   RASTER_SHADOWS,
   RASTER_TEXT,
+  RASTER_TRACKING,
 } from '../src/tokens/raster-tokens.ts'
 
 /**
@@ -59,6 +64,44 @@ export const TOKEN_GROUPS = [
     label: '文字サイズ',
     description: '比率 1.2（minor third）。単一比率で階層を作る',
     values: RASTER_TEXT,
+  },
+  {
+    id: 'pad',
+    prefix: 'pad-',
+    label: '余白（内側）',
+    description:
+      '面とコントロールの内側の余白。すべて 4px の倍数で、高さと同じ格子の上に乗せている',
+    values: RASTER_PAD,
+  },
+  {
+    id: 'gap',
+    prefix: 'gap-',
+    label: '余白（要素間）',
+    description:
+      '要素と要素の距離。inline : stack : section = 1 : 2 : 3 の比が「どこまでが一塊か」を伝える',
+    values: RASTER_GAP,
+  },
+  {
+    id: 'tracking',
+    prefix: 'tracking-',
+    label: '字送り',
+    description: '文字同士の詰め。Raster が締めるのは見出しだけで、本文は可読性のため 0 に置く',
+    values: RASTER_TRACKING,
+  },
+  {
+    id: 'leading',
+    prefix: 'leading-',
+    label: '行送り',
+    description: '行と行の距離。読む文章（body）と見る文字（heading）で必要な高さが違う',
+    values: RASTER_LEADING,
+  },
+  {
+    id: 'font',
+    prefix: 'font-',
+    label: '書体',
+    description:
+      '本文・等幅・見出しの書体と、数字の字形。Raster は書体で飾らず、見出しも sans を参照する',
+    values: RASTER_FONTS,
   },
   {
     id: 'motion',

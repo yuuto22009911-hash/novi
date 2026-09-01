@@ -17,12 +17,13 @@ import { tapTarget } from '../styles/tap-target'
  * 小さく詰めた見本帳は指では押し分けられない。
  */
 const slots = {
-  root: ['flex flex-col gap-2', disabledState].join(' '),
+  root: ['flex flex-col gap-[var(--novi-gap-inline)]', disabledState].join(' '),
   label: 'text-[length:var(--novi-text-sm)] font-medium text-[var(--novi-color-fg)]',
   description: 'text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)]',
   errorMessage: 'text-[length:var(--novi-text-sm)] text-[var(--novi-color-danger)]',
-  // 玉と玉の間は 12px 空ける。44px の当たり判定どうしが重なると押し間違える
-  list: 'flex flex-wrap items-start gap-3',
+  // 玉どうしは stack。44px の当たり判定が重なると押し間違えるので、
+  // 玉の直径ではなく「玉と玉の距離」で誤タップを防ぐ
+  list: 'flex flex-wrap items-start gap-[var(--novi-gap-stack)]',
   item: [
     'inline-flex flex-col items-center gap-1.5',
     'cursor-pointer',

@@ -17,5 +17,24 @@ export const mono = 'font-(family-name:--novi-font-mono)'
  *
  * `tabular-nums` を等幅と併せるのは、等幅フォントでも比例数字を持つ環境があるため。
  * 揃わない数字は、書類として読むときに一覧性を丸ごと失う。
+ *
+ * `--novi-font-numeric` はそこに `slashed-zero` を重ねる。帳票は数字を突き合わせて
+ * 読むので、0 と O が判別できないと転記のたびに読み違える。
  */
-export const monoNumeric = `${mono} tabular-nums`
+export const monoNumeric = `${mono} tabular-nums [font-variant-numeric:var(--novi-font-numeric)]`
+
+/**
+ * 見出しの声。**3モデルで唯一、見出しが sans を使わない**（spec 08）。
+ *
+ * Web フォントを足せない以上、テーマごとに書体で語れるのは既存2スタックの
+ * 使い分けだけになる。本文 sans / 見出し mono という分担は帳票の作法そのもので、
+ * ここが Flatlay の最大の識別子になる。
+ *
+ * 字を詰めない（`tracking-tight` は 0em）のは意図。詰めるのは複数の語を1つの
+ * まとまりに見せる操作で、帳票の見出しは各項目が独立している。
+ */
+export const heading = [
+  'font-[family-name:var(--novi-font-heading)]',
+  'tracking-[var(--novi-tracking-tight)]',
+  'leading-[var(--novi-leading-heading)]',
+].join(' ')

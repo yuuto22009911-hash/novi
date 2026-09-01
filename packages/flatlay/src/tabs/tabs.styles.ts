@@ -8,6 +8,7 @@ import type {
 } from '@novi-ui/core'
 import { tv } from 'tailwind-variants'
 import { disabledState, focusRing } from '../styles/focus-ring'
+import { heading } from '../styles/mono'
 
 /**
  * Flatlay の Tabs は**地続きタブ**（Raster は下線1本・Tactile はセグメンテッド）。
@@ -31,6 +32,8 @@ const slots = {
   tab: [
     'flex items-center justify-center whitespace-nowrap cursor-pointer select-none',
     'text-[var(--novi-color-muted)] hover:text-[var(--novi-color-fg)]',
+    // タブ名は見出し。等幅にすると、選択で font-medium が乗っても幅が動かない
+    heading,
     // 罫線の幅は全 variant が持つ。色は variant が決める
     'border border-transparent',
     // 見出し列の下辺罫線に 1px 重ねる。選択中はこの 1px を地色で塗って切れ目にする
@@ -45,7 +48,7 @@ const slots = {
   ].join(' '),
   // 切れ目は罫線に空ける穴なので、描く要素を持たない（Tactile との決定的な差）
   indicator: 'hidden',
-  panel: 'outline-none text-[var(--novi-color-fg)]',
+  panel: 'outline-none text-[var(--novi-color-fg)] leading-[var(--novi-leading-body)]',
 } satisfies SlotMap<typeof tabsSlots, (typeof tabsRequiredSlots)[number]>
 
 /**
@@ -85,25 +88,35 @@ const variant: VariantMap<NoviVariant, { list: string; tab: string; panel: strin
   ghost: {
     list: 'border-b border-[var(--novi-color-border)]',
     tab: 'hover:bg-[var(--novi-color-subtle)] data-[selected]:border-b-[var(--novi-color-bg)]',
-    panel: 'p-0 pt-4',
+    panel: 'p-0 pt-[var(--novi-pad-surface-y)]',
   },
   plain: {
     list: 'border-b border-transparent',
     tab: '',
-    panel: 'p-0 pt-4',
+    panel: 'p-0 pt-[var(--novi-pad-surface-y)]',
   },
 }
 
 /**
  * 見出しの高さは 28 / 32 / 40px（Button と同じ帳票の行）。
  *
- * パネルの余白も段で動かす。囲みの中の余白なので、行の高さと揃っていないと
- * 「紙が一続き」に見えない。
+ * **パネルの余白は段で動かさない。** 見出しの寸法が変わってもパネルは同じ紙で、
+ * 中身の密度を決めるのは行送りだから。段で動かすと、タブを小さくしただけで
+ * 本文の左端が動き、他の面と列が揃わなくなる。
  */
 const size: VariantMap<NoviSize, { tab: string; panel: string }> = {
-  sm: { tab: 'h-7 px-3 text-[length:var(--novi-text-sm)]', panel: 'p-3' },
-  md: { tab: 'h-8 px-4 text-[length:var(--novi-text-base)]', panel: 'p-4' },
-  lg: { tab: 'h-10 px-5 text-[length:var(--novi-text-base)]', panel: 'p-5' },
+  sm: {
+    tab: 'h-7 px-[var(--novi-pad-control-x-sm)] text-[length:var(--novi-text-sm)]',
+    panel: 'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+  },
+  md: {
+    tab: 'h-8 px-[var(--novi-pad-control-x-md)] text-[length:var(--novi-text-base)]',
+    panel: 'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+  },
+  lg: {
+    tab: 'h-10 px-[var(--novi-pad-control-x-lg)] text-[length:var(--novi-text-base)]',
+    panel: 'px-[var(--novi-pad-surface-x)] py-[var(--novi-pad-surface-y)]',
+  },
 }
 
 /**

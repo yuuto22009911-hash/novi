@@ -20,7 +20,7 @@ import { mono } from '../styles/mono'
  * 二重に線を引くと升目が太って方眼に見えなくなる。
  */
 const slots = {
-  root: ['flex flex-col gap-2', disabledState].join(' '),
+  root: ['flex flex-col gap-[var(--novi-gap-stack)]', disabledState].join(' '),
   // 項目名は等幅（Input / CheckboxGroup と同じ扱い・ADR-F7）
   label: `text-[length:var(--novi-text-sm)] text-[var(--novi-color-fg)] ${mono}`,
   description: `text-[length:var(--novi-text-sm)] text-[var(--novi-color-muted)] ${mono}`,

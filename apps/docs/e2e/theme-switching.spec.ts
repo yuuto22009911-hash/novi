@@ -117,7 +117,8 @@ test('theming ページの色見本はプレビュー内でだけ解決される
 
 test('ダッシュボードがテーマのトークンで描かれている（T-28）', async ({ page }) => {
   await page.goto('/')
-  await page.waitForLoadState('networkidle')
+  // ダッシュボードは近づくまで組み立てられない（`LazyMount`）
+  await page.getByRole('heading', { name: '組み上げるとこうなります' }).scrollIntoViewIfNeeded()
 
   const bar = page.locator('[role="img"][aria-label*="売上推移"] > div').first()
   await expect(bar).toBeVisible()
