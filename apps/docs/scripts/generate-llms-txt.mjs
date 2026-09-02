@@ -99,15 +99,22 @@ ${CONVENTIONS}
 
 ## インストール
 
+**前提: React 19 / Tailwind CSS v4（必須）。** テーマの CSS はトークン定義だけで、コンポーネントのクラスは利用側の Tailwind が \`@source\` で生成する。\`@source\` を書き忘れると無スタイルで描画される。
+
 \`\`\`bash
 pnpm add @novi-ui/core @novi-ui/raster react-aria-components
 \`\`\`
 
 \`\`\`css
-@import '@novi-ui/core/base.css';
-@import '@novi-ui/raster/raster.css';
+/* app/globals.css */
+@import "tailwindcss";
+@import "@novi-ui/core/base.css";
+@import "@novi-ui/raster/raster.css";
+/* パスはこの CSS ファイルからの相対 */
 @source "../node_modules/@novi-ui/raster/dist";
 \`\`\`
+
+ダークは \`<html data-novi-scheme="dark">\`（省略で OS 追従）。
 
 ## テーマ
 

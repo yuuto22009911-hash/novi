@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Novi UI</title>
+  <rect width="64" height="64" rx="14" fill="#2b3a67"/>
+  <path fill="#f6f4ee" d="M17 15h9v34h-9zM38 15h9v34h-9zM17 15h9l21 34h-9z"/>
+</svg>

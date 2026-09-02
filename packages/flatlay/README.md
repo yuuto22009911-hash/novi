@@ -9,6 +9,9 @@ Modal は画面を占め、階層は罫線と地色と面積だけで作りま�
 pnpm add @novi-ui/flatlay @novi-ui/core react-aria-components
 ```
 
+> **Tailwind CSS v4 が必要です。** テーマの CSS はトークン定義だけで、コンポーネントのクラスは利用側の Tailwind が生成します。
+> `globals.css` に `@source "../node_modules/@novi-ui/flatlay/dist";` を足してください（パスは CSS ファイルからの相対）。
+
 ```tsx
 import '@novi-ui/core/base.css'
 import '@novi-ui/flatlay/flatlay.css'

@@ -21,9 +21,37 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
+const SITE_URL = 'https://novi-42r.pages.dev'
+const DESCRIPTION = '1つの core に、複数の美学。AI に書かせても崩れない React UI ライブラリ。'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: { default: 'Novi UI', template: '%s — Novi UI' },
-  description: '1つの core に、複数の美学。AI に書かせても崩れない React UI ライブラリ。',
+  description: DESCRIPTION,
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '32x32' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'Novi UI',
+    title: 'Novi UI',
+    description: DESCRIPTION,
+    url: SITE_URL,
+    locale: 'ja_JP',
+    images: [
+      { url: '/og.png', width: 1200, height: 630, alt: 'Novi UI — 1つの core に、複数の美学。' },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Novi UI',
+    description: DESCRIPTION,
+    images: ['/og.png'],
+  },
 }
 
 /**
