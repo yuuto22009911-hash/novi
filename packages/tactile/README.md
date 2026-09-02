@@ -9,6 +9,9 @@ Novi UI のテーマ2。**タッチファースト。**
 pnpm add @novi-ui/tactile @novi-ui/core react-aria-components
 ```
 
+> **Tailwind CSS v4 が必要です。** テーマの CSS はトークン定義だけで、コンポーネントのクラスは利用側の Tailwind が生成します。
+> `globals.css` に `@source "../node_modules/@novi-ui/tactile/dist";` を足してください（パスは CSS ファイルからの相対）。
+
 ```tsx
 import '@novi-ui/core/base.css'
 import '@novi-ui/tactile/tactile.css'

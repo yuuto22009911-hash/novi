@@ -9,6 +9,9 @@ Novi UI のテーマ1。**ミニマル / スイス系。**
 pnpm add @novi-ui/raster @novi-ui/core react-aria-components
 ```
 
+> **Tailwind CSS v4 が必要です。** テーマの CSS はトークン定義だけで、コンポーネントのクラスは利用側の Tailwind が生成します。
+> `globals.css` に `@source "../node_modules/@novi-ui/raster/dist";` を足してください（パスは CSS ファイルからの相対）。
+
 ```tsx
 import '@novi-ui/core/base.css'
 import '@novi-ui/raster/raster.css'
