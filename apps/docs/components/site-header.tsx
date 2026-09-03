@@ -22,6 +22,7 @@ const NAV_LINKS: readonly {
   match: readonly string[]
   apart?: boolean
 }[] = [
+  { href: '/docs/why/', label: 'なぜ Novi か', match: ['/docs/why'] },
   { href: '/docs/getting-started/', label: 'はじめに', match: ['/docs/getting-started'] },
   { href: '/docs/components/button/', label: 'コンポーネント', match: ['/docs/components'] },
   { href: '/docs/theming/', label: 'テーマの調整', match: ['/docs/theming', '/docs/themes'] },

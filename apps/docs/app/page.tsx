@@ -91,6 +91,9 @@ export default function HomePage() {
       <section className="flex flex-col gap-4">
         <h2 className="text-2xl font-medium tracking-[-0.015em]">はじめる</h2>
         <div className="flex flex-wrap gap-4 text-sm">
+          <Link href="/docs/why/" className="text-site-accent underline-offset-4 hover:underline">
+            なぜ Novi か
+          </Link>
           <Link
             href="/docs/getting-started/"
             className="text-site-accent underline-offset-4 hover:underline"

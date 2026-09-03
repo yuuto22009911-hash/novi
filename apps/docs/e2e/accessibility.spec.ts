@@ -51,6 +51,7 @@ for (const theme of THEME_NAMES) {
 test.describe('サイト全体', () => {
   for (const path of [
     '/',
+    '/docs/why/',
     '/docs/getting-started/',
     '/docs/theming/',
     '/docs/themes/raster/',
