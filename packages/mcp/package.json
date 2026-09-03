@@ -1,6 +1,6 @@
 {
   "name": "@novi-ui/mcp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Novi UI MCP server — read-only and offline. Serves component API, slot contracts and per-theme design rules to AI agents.",
   "license": "MIT",
   "repository": {

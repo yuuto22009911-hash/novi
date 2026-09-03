@@ -1,5 +1,29 @@
 # @novi-ui/raster
 
+## 0.6.0
+
+### Minor Changes
+
+- c1ec6d9: `tailwindcss ^4` を peerDependencies に追加
+  
+  テーマの CSS はトークン定義だけを持ち、コンポーネントのクラスは利用側の
+  Tailwind が `@source` で生成する。この前提はこれまで暗黙で、README も
+  「CSS を2行 import すれば動く」と書いていた。宣言に変え、README と
+  はじめにページに必須であることと `@source` の書き方を明記した。
+
+### Patch Changes
+
+- c1ec6d9: LICENSE ファイルを同梱し、MCP の同梱データを最新の IR で再生成する
+  
+  package.json は MIT を宣言していたが本文がリポジトリにも配布物にも無く、
+  GitHub はライセンス未設定と表示していた。
+  
+  MCP は core 0.4.0 で入った余白・書体トークン（pad / gap / tracking /
+  font-heading）の規約を含まないまま公開されていた。core やテーマが変わると
+  MCP の応答も変わるので、以後は同時に changeset を要求する検査を lint に入れた。
+- Updated dependencies [c1ec6d9]
+  - @novi-ui/core@0.4.1
+
 ## 0.5.0
 
 ### Minor Changes
