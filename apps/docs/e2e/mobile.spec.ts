@@ -3,7 +3,7 @@ import { expect, type Page, test } from '@playwright/test'
 import { THEME_NAMES } from '../lib/theme-registry'
 
 /**
- * ホームのダッシュボードは近づくまで組み立てられない（`LazyMount`）。
+ * ホームのダッシュボードは近づくまで組み立てられない（`LazyDemo`）。
  * 実利用者と同じく、そこまで降りてから触る。
  */
 async function goToHomeDashboard(page: Page) {
@@ -105,6 +105,8 @@ test('ヘッダーのリンクが1行のまま保たれ、タップターゲッ�
 
 test('トップのデモが画面内に収まる', async ({ page }) => {
   await page.goto('/')
+  // デモは近づくまで組み立てない（LazyDemo）。見出しまでスクロールして呼び出す
+  await page.getByRole('heading', { name: '右上でテーマを切り替える' }).scrollIntoViewIfNeeded()
   const preview = page.locator('[data-testid="preview"]').first()
   await expect(preview).toBeVisible()
 

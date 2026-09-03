@@ -58,7 +58,7 @@ function ThemeCard({ name }: { name: ThemeName }) {
 
 /**
  * 3テーマぶんの実装を同時にマウントするため、ページ内で最も hydration が重い。
- * 呼び出し側は `LazyMount` で包むこと。
+ * 呼び出し側は `LazyDemo` 経由で遅延させること。
  */
 export function ThemeTriptych() {
   return (

@@ -13,6 +13,8 @@
 @source "../../../packages/raster/dist";
 @source "../../../packages/tactile/dist";
 @source "../../../packages/flatlay/dist";
+/* トップの Modal 見本のクラス（ビルド時に theme から書き出した JSON） */
+@source "../.generated/modal-stage-classes.json";
 
 /* ─────────────────────────────────────────────
    サイト UI 独自のトークン。テーマとは独立させる
