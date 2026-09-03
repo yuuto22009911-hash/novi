@@ -52,6 +52,7 @@ test.describe('サイト全体', () => {
   for (const path of [
     '/',
     '/docs/why/',
+    '/en/',
     '/docs/getting-started/',
     '/docs/theming/',
     '/docs/themes/raster/',

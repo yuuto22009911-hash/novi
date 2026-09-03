@@ -27,6 +27,7 @@ const NAV_LINKS: readonly {
   { href: '/docs/components/button/', label: 'コンポーネント', match: ['/docs/components'] },
   { href: '/docs/theming/', label: 'テーマの調整', match: ['/docs/theming', '/docs/themes'] },
   { href: '/docs/lookbook/', label: 'Lookbook', match: ['/docs/lookbook'], apart: true },
+  { href: '/en/', label: 'EN', match: ['/en'], apart: true },
 ]
 
 /**

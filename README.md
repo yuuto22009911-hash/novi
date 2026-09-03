@@ -8,6 +8,8 @@ React Aria Components を土台にした React UI ライブラリ。
 
 > **開発初期です。** API は変わる可能性があります。
 
+**English**: [README.en.md](./README.en.md)
+
 - ドキュメント: https://novi-42r.pages.dev
 - AI 向け: [llms.txt](https://novi-42r.pages.dev/llms.txt) / [llms-full.txt](https://novi-42r.pages.dev/llms-full.txt) / [MCP サーバ](./packages/mcp/README.md)
 

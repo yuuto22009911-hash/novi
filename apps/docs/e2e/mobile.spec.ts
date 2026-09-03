@@ -37,6 +37,7 @@ const PAGES = [
   '/docs/theming/',
   '/docs/getting-started/',
   '/docs/why/',
+  '/en/',
   '/docs/lookbook/',
   // 4列の比較表と8色の一覧を持つ。375px で表が枠を破っていないか
   '/docs/themes/flatlay/',
