@@ -25,7 +25,7 @@ const themeComponents = {
  * **3テーマを並べて比べる画面だけが使う。** 通常のデモは `useNoviTheme()` を使うこと。
  * こちらを使うと、そのデモはヘッダーのテーマ切替に追従しなくなる。
  */
-export function themeComponentsFor(name: ThemeName) {
+export function themeComponentsFor<N extends ThemeName>(name: N): (typeof themeComponents)[N] {
   return themeComponents[name]
 }
 

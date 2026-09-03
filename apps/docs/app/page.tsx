@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { LazyMount } from '../components/lazy-mount'
+import { ModalTriptych } from '../components/modal-triptych'
 
 // デモはライブラリ全体を引き込むため遅延させる（T-38）。
 // ファーストビューの Hero だけが初回に組み上がり、下の2つは近づいてから
@@ -23,11 +24,22 @@ export default function HomePage() {
           1つの core に、複数の美学。
         </h1>
         <p className="mb-8 max-w-[38em] text-lg leading-[1.9] text-site-muted">
-          挙動とアクセシビリティは <code className="font-mono text-base">@novi-ui/core</code>{' '}
-          が一手に引き受け、テーマは構造とスタイルだけを持ちます。
-          右上でテーマを切り替えてください。
+          同じ JSX の Modal を、3つのテーマで開いたところです。Raster は浮き、Tactile
+          はせり上がり、Flatlay は紙ごと差し替わる。変わるのは色や角丸ではなく{' '}
+          <strong className="font-medium text-site-fg">DOM の組み立て方</strong>
+          です。挙動とアクセシビリティは <code className="font-mono text-base">@novi-ui/core</code>{' '}
+          が引き受けるので、どれも同じ props、同じキーボード操作で動きます。
+        </p>
+
+        <ModalTriptych />
+      </section>
+
+      <section className="flex flex-col gap-6">
+        <h2 className="text-2xl font-medium tracking-[-0.015em]">右上でテーマを切り替える</h2>
+        <p className="max-w-[38em] text-sm leading-[1.9] text-site-muted">
+          ここから下のデモはヘッダーのテーマ選択に追従します。
           <strong className="font-medium text-site-fg">
-            下のコードは1文字も変わらないまま、見た目だけが変わります。
+            コードは1文字も変わらないまま、見た目だけが変わります。
           </strong>
         </p>
 
