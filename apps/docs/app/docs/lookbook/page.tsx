@@ -19,8 +19,9 @@ export default function LookbookPage() {
           服の色決めと同じ道具立て — トーンイントーン、カラーウェイ、ルックブック — で UI
           の色を設計しています。作っているのはアパレルを営む人間で、これはその見本帳です。
           トーン（明度と彩度のレシピ）はモデルが所有し、色は名前と由来を持ちます。
-          右上でモデルを切り替えると、見本帳もそのモデルの染料に掛け替わります。 使うときは{' '}
-          <code className="font-mono text-[0.875em]">data-novi-color</code>{' '}
+          右上でモデルを切り替えると、見本帳もそのモデルの染料に掛け替わります。
+          染料は服に仕立てて初めて発色が分かるので、試着室で同じ一着を全色に着せ替えられます。
+          使うときは <code className="font-mono text-[0.875em]">data-novi-color</code>{' '}
           に色の名前を渡すだけです。
         </p>
       </header>
@@ -37,11 +38,11 @@ export default function LookbookPage() {
             },
             {
               t: '相方が組で付く',
-              d: '差し色は考えなくていい。選んだ色の相方が secondary として付いてきます。2色刷り（Raster）とバイカラー（Tactile）、いつでも同じセット内の色です。',
+              d: '差し色は考えなくていい。選んだ色の相方が secondary として付いてきます。2色刷り（Raster）、バイカラー（Tactile）、ダブルエントリー（Flatlay）、いつでも同じセット内の色です。',
             },
             {
               t: '染料と生地',
-              d: 'トーンはモデルの持ち物です。Raster は染まらない紙、Tactile は染まる生地。切り替えても、色相の顔ぶれだけが替わります。',
+              d: 'トーンはモデルの持ち物です。Raster は染まらない紙、Tactile は染まる生地、Flatlay は罫線だけが染まる文具。切り替えても、色相の顔ぶれだけが替わります。',
             },
           ].map((item) => (
             <div key={item.t} className="flex flex-col gap-2 border-t border-site-border pt-4">
