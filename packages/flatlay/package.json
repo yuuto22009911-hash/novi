@@ -47,6 +47,7 @@
     "tailwind-variants": "^3.3.1"
   },
   "devDependencies": {
+    "@internationalized/date": "^3.12.3",
     "@novi-ui/raster": "workspace:*",
     "@novi-ui/tactile": "workspace:*",
     "@size-limit/preset-small-lib": "^13.0.3",

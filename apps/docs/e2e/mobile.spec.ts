@@ -100,6 +100,21 @@ for (const theme of THEME_NAMES) {
   })
 }
 
+for (const theme of THEME_NAMES) {
+  test(`${theme}: DatePicker を開いても横スクロールが発生しない`, async ({ page }) => {
+    await page.goto('/docs/components/datepicker/')
+    await page.getByLabel('テーマ').selectOption(theme)
+
+    await page.locator('[data-testid="preview"] [data-slot="trigger"]').click()
+    await expect(page.locator('[data-slot="calendarGrid"]')).toBeVisible()
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    )
+    expect(overflow).toBeLessThanOrEqual(0)
+  })
+}
+
 test('ヘッダーのリンクが1行のまま保たれ、タップターゲットが 44px 以上ある', async ({ page }) => {
   await page.goto('/')
 

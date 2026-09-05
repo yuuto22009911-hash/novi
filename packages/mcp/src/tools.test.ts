@@ -64,11 +64,12 @@ describe('get_component（AC-04-2）', () => {
   })
 
   it('未知の名前には未実装と答え、代替を提案しない', () => {
-    const missing = getComponent('DatePicker')
+    // FileUpload は未実装（DatePicker が入るまではそちらで検査していた）
+    const missing = getComponent('FileUpload')
     expect(missing).toContain('ありません')
     expect(missing).toContain('代用しないでください')
     expect(missing).toContain('react-aria-components')
-    // Select は「日付選択の代替」ではない。候補として名前を押し出さない
+    // Input は「ファイル添付の代替」ではない。候補として名前を押し出さない
     expect(missing).not.toContain('代わりに')
   })
 
@@ -145,7 +146,7 @@ describe('search_components（AC-04-4 / FR-06 / ADR-A4）', () => {
   })
 
   it('未実装のものには代替を提案しない（ADR-A4）', () => {
-    const output = searchComponents('日付を選ばせたい')
+    const output = searchComponents('ファイルを添付させたい')
     expect(output).toContain('ありません')
     expect(output).toContain('代用しないでください')
     // 「近いもの」として実装済みコンポーネントを候補に挙げてはいけない

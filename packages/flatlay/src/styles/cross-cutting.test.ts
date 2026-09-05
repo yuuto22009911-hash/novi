@@ -171,6 +171,7 @@ describe('帳票の行（FR-07 / ADR-F7）', () => {
     ['input', flatlay.inputStyles as StyleFn, 'inputWrapper'],
     ['number-field', flatlay.numberFieldStyles as StyleFn, 'inputWrapper'],
     ['combo-box', flatlay.comboBoxStyles as StyleFn, 'inputWrapper'],
+    ['date-picker', flatlay.datePickerStyles as StyleFn, 'inputWrapper'],
     ['pagination', flatlay.paginationStyles as StyleFn, 'item'],
     ['select', flatlay.selectStyles as StyleFn, 'trigger'],
     ['tabs', flatlay.tabsStyles as StyleFn, 'tab'],
@@ -206,6 +207,7 @@ describe('MVP の網羅（G1 / AC-03-2）', () => {
     CheckboxGroup: 'CheckboxGroup',
     ColorPicker: 'ColorPicker',
     ComboBox: 'ComboBox',
+    DatePicker: 'DatePicker',
     Input: 'Input',
     Menu: 'Menu',
     Modal: 'Modal',
@@ -239,7 +241,7 @@ describe('MVP の網羅（G1 / AC-03-2）', () => {
     // Checkbox/CheckboxGroup、Radio/RadioGroup、Progress/Spinner は対で1コンポーネント
     const paired = ['CheckboxGroup', 'RadioGroup', 'Spinner']
     // MVP を締めたあとに足したもの。MVP の数（20）は歴史的な値として動かさない
-    const postMvp = ['ColorPicker', 'NumberField', 'ComboBox', 'Pagination', 'Table']
+    const postMvp = ['ColorPicker', 'NumberField', 'ComboBox', 'Pagination', 'Table', 'DatePicker']
     expect(Object.keys(IMPLEMENTED).length - paired.length - postMvp.length).toBe(
       NOVI_MVP_COMPONENT_COUNT,
     )

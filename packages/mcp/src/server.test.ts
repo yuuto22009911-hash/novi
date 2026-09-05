@@ -82,7 +82,7 @@ describe('4ツールの応答', () => {
   })
 
   it('search_components が未実装に代替提案をしない（AC-04-4 / FR-06）', async () => {
-    const output = await call('search_components', { query: '日付を選ばせたい' })
+    const output = await call('search_components', { query: 'ファイルを添付させたい' })
     expect(output).toContain('代用しないでください')
     expect(output).not.toContain('一致したコンポーネント')
   })

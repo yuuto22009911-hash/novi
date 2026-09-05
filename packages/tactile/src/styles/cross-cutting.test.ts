@@ -166,6 +166,7 @@ describe('タッチの寸法（FR-07 / FR-08）', () => {
     ['input', tactile.inputStyles as StyleFn, 'inputWrapper'],
     ['number-field', tactile.numberFieldStyles as StyleFn, 'inputWrapper'],
     ['combo-box', tactile.comboBoxStyles as StyleFn, 'inputWrapper'],
+    ['date-picker', tactile.datePickerStyles as StyleFn, 'inputWrapper'],
     ['pagination', tactile.paginationStyles as StyleFn, 'item'],
     ['select', tactile.selectStyles as StyleFn, 'trigger'],
     ['tabs', tactile.tabsStyles as StyleFn, 'tab'],
