@@ -75,7 +75,7 @@ export function SelectItem({ id, isDisabled, children, className }: SelectItemPr
  * 矢印キーで移動、Escape で閉じてトリガーへフォーカスが戻る。
  *
  * トリガーは `<button>` で編集可能要素ではないため IME の変換は発生しない。
- * テキスト入力を伴う選択が必要な場合は ComboBox を使う（MVP の対象外）。
+ * テキスト入力を伴う選択が必要な場合は ComboBox を使う。
  *
  * @example
  * <Select label="都道府県" selectedKey={pref} onSelectionChange={setPref}>

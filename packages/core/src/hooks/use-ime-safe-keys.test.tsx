@@ -169,3 +169,33 @@ describe('useImeSafeKeys', () => {
     clearSpy.mockRestore()
   })
 })
+
+describe('useImeSafeKeys: capture 段の遮断', () => {
+  /** 同じ input に別のハンドラ（React Aria が付けるもの相当）を並べる。 */
+  function WithSibling({ sibling }: { sibling: (key: string) => void }) {
+    const keyProps = useImeSafeKeys<HTMLInputElement>()
+    return <input aria-label="入力" {...keyProps} onKeyDown={(e) => sibling(e.key)} />
+  }
+
+  it('変換中の Enter は同じ要素の他のハンドラにも届かない', () => {
+    vi.useFakeTimers()
+    const sibling = vi.fn()
+    render(<WithSibling sibling={sibling} />)
+    const input = screen.getByLabelText('入力')
+
+    fireEvent.compositionStart(input)
+    fireEvent.keyDown(input, { key: 'Enter', isComposing: true })
+
+    expect(sibling).not.toHaveBeenCalled()
+    vi.useRealTimers()
+  })
+
+  it('変換していなければ他のハンドラに届く', () => {
+    const sibling = vi.fn()
+    render(<WithSibling sibling={sibling} />)
+
+    fireEvent.keyDown(screen.getByLabelText('入力'), { key: 'Enter' })
+
+    expect(sibling).toHaveBeenCalledExactlyOnceWith('Enter')
+  })
+})

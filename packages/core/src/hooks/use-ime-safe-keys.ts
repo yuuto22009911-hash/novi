@@ -6,7 +6,7 @@ const IME_KEY_CODE = 229
 
 export type ImeSafeKeyProps<E extends Element> = Pick<
   DOMAttributes<E>,
-  'onKeyDown' | 'onCompositionStart' | 'onCompositionEnd'
+  'onKeyDown' | 'onKeyDownCapture' | 'onCompositionStart' | 'onCompositionEnd'
 >
 
 /**
@@ -59,17 +59,42 @@ export function useImeSafeKeys<E extends Element = HTMLElement>(
     }, 0)
   }, [])
 
+  const isComposing = useCallback(
+    (event: KeyboardEvent<E>) =>
+      event.nativeEvent.isComposing ||
+      event.nativeEvent.keyCode === IME_KEY_CODE ||
+      composingRef.current,
+    [],
+  )
+
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<E>) => {
-      const native = event.nativeEvent
-      if (native.isComposing || native.keyCode === IME_KEY_CODE || composingRef.current) return
+      if (isComposing(event)) return
       onKeyDown?.(event)
     },
-    [onKeyDown],
+    [onKeyDown, isComposing],
+  )
+
+  /**
+   * 変換中のキーを**同じ要素に付いた他のハンドラにも渡さない**。
+   *
+   * 利用者の `onKeyDown` を包むだけでは、React Aria が同じ input に付ける
+   * ハンドラ（ComboBox の Enter で決定、NumberField の矢印で増減）が
+   * 変換中の Enter / 矢印で発火する。capture 段で伝播を止めれば、
+   * 同じ要素の bubble 段のハンドラも走らない（React は各リスナの前に
+   * `isPropagationStopped` を見る）。Escape も止まるが、変換中の Escape は
+   * IME の取り消しであってダイアログを閉じる操作ではないので、それで正しい。
+   */
+  const handleKeyDownCapture = useCallback(
+    (event: KeyboardEvent<E>) => {
+      if (isComposing(event)) event.stopPropagation()
+    },
+    [isComposing],
   )
 
   return {
     onKeyDown: handleKeyDown,
+    onKeyDownCapture: handleKeyDownCapture,
     onCompositionStart: handleCompositionStart,
     onCompositionEnd: handleCompositionEnd,
   }

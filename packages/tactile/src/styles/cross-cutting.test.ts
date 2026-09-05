@@ -165,6 +165,7 @@ describe('タッチの寸法（FR-07 / FR-08）', () => {
     ['button', tactile.buttonStyles as StyleFn, 'root'],
     ['input', tactile.inputStyles as StyleFn, 'inputWrapper'],
     ['number-field', tactile.numberFieldStyles as StyleFn, 'inputWrapper'],
+    ['combo-box', tactile.comboBoxStyles as StyleFn, 'inputWrapper'],
     ['select', tactile.selectStyles as StyleFn, 'trigger'],
     ['tabs', tactile.tabsStyles as StyleFn, 'tab'],
     ['accordion', tactile.accordionStyles as StyleFn, 'trigger'],
@@ -181,6 +182,7 @@ describe('タッチの寸法（FR-07 / FR-08）', () => {
   it.each([
     ['select', tactile.selectStyles as StyleFn, 'option'],
     ['menu', tactile.menuStyles as StyleFn, 'item'],
+    ['combo-box', tactile.comboBoxStyles as StyleFn, 'option'],
   ])('%s: 一覧の行が 48px 以上（誤タップは一覧で最も起きる）', (name, fn, slot) => {
     for (const size of NOVI_SIZES) {
       const px = heightPx(fn({ size })[slot]?.() ?? '')
@@ -192,6 +194,7 @@ describe('タッチの寸法（FR-07 / FR-08）', () => {
   it.each([
     ['input', tactile.inputStyles as StyleFn, 'input'],
     ['number-field', tactile.numberFieldStyles as StyleFn, 'input'],
+    ['combo-box', tactile.comboBoxStyles as StyleFn, 'input'],
     ['textarea', tactile.textareaStyles as StyleFn, 'textarea'],
   ])('%s: 入力の文字が 16px 未満にならない（AC-01-3）', (name, fn, slot) => {
     // iOS Safari は 16px 未満の入力欄でフォーカス時にページごと拡大し、レイアウトが飛ぶ
