@@ -19,7 +19,7 @@ const PAIRED_CONTRACTS = ['CheckboxGroup', 'RadioGroup', 'Spinner']
  * **MVP の数（20）は歴史的な値として動かさない。** ここに列挙する形にしておくと、
  * 契約が増えたことに気づかず通る、という抜け方をしない。
  */
-const POST_MVP_CONTRACTS = ['ColorPicker']
+const POST_MVP_CONTRACTS = ['ColorPicker', 'NumberField']
 
 describe('slot 契約レジストリ', () => {
   it('MVP 20 コンポーネント + 追加分の契約がある', () => {
@@ -87,6 +87,16 @@ describe('architecture.md §6 との一致', () => {
     Spinner: ['root', 'circle', 'label'],
     Skeleton: ['root'],
     Modal: ['backdrop', 'panel', 'header', 'title', 'closeButton', 'body', 'footer'],
+    NumberField: [
+      'root',
+      'label',
+      'inputWrapper',
+      'input',
+      'decrement',
+      'increment',
+      'description',
+      'errorMessage',
+    ],
     Popover: ['root', 'arrow', 'content'],
     Tooltip: ['root', 'arrow', 'content'],
     Menu: [

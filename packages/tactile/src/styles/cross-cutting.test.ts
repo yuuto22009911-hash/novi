@@ -164,6 +164,7 @@ describe('タッチの寸法（FR-07 / FR-08）', () => {
   const CONTROLS: [name: string, fn: StyleFn, slot: string][] = [
     ['button', tactile.buttonStyles as StyleFn, 'root'],
     ['input', tactile.inputStyles as StyleFn, 'inputWrapper'],
+    ['number-field', tactile.numberFieldStyles as StyleFn, 'inputWrapper'],
     ['select', tactile.selectStyles as StyleFn, 'trigger'],
     ['tabs', tactile.tabsStyles as StyleFn, 'tab'],
     ['accordion', tactile.accordionStyles as StyleFn, 'trigger'],
@@ -190,6 +191,7 @@ describe('タッチの寸法（FR-07 / FR-08）', () => {
 
   it.each([
     ['input', tactile.inputStyles as StyleFn, 'input'],
+    ['number-field', tactile.numberFieldStyles as StyleFn, 'input'],
     ['textarea', tactile.textareaStyles as StyleFn, 'textarea'],
   ])('%s: 入力の文字が 16px 未満にならない（AC-01-3）', (name, fn, slot) => {
     // iOS Safari は 16px 未満の入力欄でフォーカス時にページごと拡大し、レイアウトが飛ぶ

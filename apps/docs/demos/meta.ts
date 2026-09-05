@@ -70,6 +70,18 @@ export const DEMO_META: DemoMeta[] = [
     code: `<Switch defaultSelected>メール通知を受け取る</Switch>`,
   },
   {
+    component: 'NumberField',
+    title: 'NumberField',
+    note: '数量・単価・個数など「増減する数」に使う。電話番号や郵便番号は数字でも数値ではないので Input を使う。',
+    imports: ['NumberField'],
+    code: `<NumberField label="数量" defaultValue={1} minValue={0} step={1} />
+<NumberField
+  label="単価"
+  defaultValue={1200}
+  formatOptions={{ style: 'currency', currency: 'JPY' }}
+/>`,
+  },
+  {
     component: 'Select',
     title: 'Select',
     note: '選択肢が多いなら検索できる ComboBox を使う（未実装）。20件を超えたら Select は苦しい。',
