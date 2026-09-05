@@ -36,6 +36,15 @@ export function SignInForm() {
 
 const ATTRIBUTES = `<html data-novi-theme="raster" data-novi-scheme="dark" data-novi-color="brick">`
 
+const AGENTS = `# Give Claude Code / Cursor / Codex / Copilot the conventions and the component list
+npx skills add yuuto22009911-hash/novi --skill novi-ui
+
+# Install through the shadcn CLI (npm install + @import / @source injected into globals.css; no source is copied)
+npx shadcn@latest add https://novi-42r.pages.dev/r/raster.json
+
+# MCP server (read-only, offline)
+claude mcp add novi-ui -- npx -y @novi-ui/mcp`
+
 const THEMES = [
   {
     pkg: '@novi-ui/raster',
@@ -166,6 +175,17 @@ export default function EnglishPage() {
             </Link>
           </li>
         </ul>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <H2>Using it with AI agents</H2>
+        <P>
+          A skill, a shadcn-compatible registry and an MCP server. All three are generated from the
+          same intermediate representation, so they never drift from the code. The registry injects
+          the <code className="font-mono text-[0.9em]">@source</code> line too, so the usual failure
+          (everything unstyled) cannot happen.
+        </P>
+        <Code>{AGENTS}</Code>
       </section>
 
       <section className="flex flex-col gap-4">

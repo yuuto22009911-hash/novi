@@ -17,12 +17,14 @@
     "check:source": "node scripts/check-source-rules.mjs",
     "check:handwritten": "node scripts/check-handwritten-api.mjs",
     "accuracy": "node accuracy/run.mjs",
-    "check:dist": "node scripts/check-dist-rules.mjs && turbo run check:treeshaking && turbo run check:security",
+    "check:dist": "node scripts/check-dist-rules.mjs && turbo run check:treeshaking && turbo run check:security && pnpm check:skill",
     "format": "biome check --write .",
     "size": "turbo run size",
     "changeset": "changeset",
     "release": "turbo run build && pnpm publish -r --access public --no-git-checks",
-    "check:changeset": "node scripts/check-changeset-mcp.mjs"
+    "check:changeset": "node scripts/check-changeset-mcp.mjs",
+    "generate:skill": "node apps/docs/scripts/generate-skill.mjs",
+    "check:skill": "node scripts/check-skill.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.9",

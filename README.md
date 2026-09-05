@@ -11,7 +11,7 @@ React Aria Components を土台にした React UI ライブラリ。
 **English**: [README.en.md](./README.en.md)
 
 - ドキュメント: https://novi-42r.pages.dev
-- AI 向け: [llms.txt](https://novi-42r.pages.dev/llms.txt) / [llms-full.txt](https://novi-42r.pages.dev/llms-full.txt) / [MCP サーバ](./packages/mcp/README.md)
+- AI 向け: [llms.txt](https://novi-42r.pages.dev/llms.txt) / [llms-full.txt](https://novi-42r.pages.dev/llms-full.txt) / [MCP サーバ](./packages/mcp/README.md) / [Skill](./skills/novi-ui/SKILL.md)
 
 ## パッケージ
 
@@ -70,6 +70,21 @@ Provider は要らない。テーマ・配色・ダークは `<html>` の属性�
 ```
 
 詳しくは [はじめに](https://novi-42r.pages.dev/docs/getting-started/) と [Lookbook](https://novi-42r.pages.dev/docs/lookbook/)。
+
+## AI エージェントと使う
+
+3 つとも同じ中間表現（IR）から生成しているので、実装とずれない。
+
+```bash
+# Claude Code / Cursor / Codex / Copilot に規約と部品一覧を渡す
+npx skills add yuuto22009911-hash/novi --skill novi-ui
+
+# shadcn CLI で導入（npm インストールと globals.css への @import / @source 注入。ソースはコピーしない）
+npx shadcn@latest add https://novi-42r.pages.dev/r/raster.json
+
+# MCP サーバ（読み取り専用・オフライン）
+claude mcp add novi-ui -- npx -y @novi-ui/mcp
+```
 
 ## なぜ core と テーマ を分けるのか
 

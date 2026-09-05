@@ -40,6 +40,10 @@ const EXCEPTIONS = {
   'scripts/check-handwritten-api.mjs': 'この検査自身。判定の例をコメントに含む',
   'AGENTS.md': 'リポジトリの規約。API の写しではなく作業手順',
   'packages/mcp/README.md': '設定方法と安全性の説明。props の一覧を含まない',
+  // 手書きではなく生成物。鮮度は check:skill が IR と突き合わせて守る
+  'skills/novi-ui/SKILL.md': 'IR から生成（apps/docs/scripts/generate-skill.mjs）',
+  'skills/novi-ui/references/components.md':
+    'IR から生成（同上）。props / slot の表はここが唯一の写し',
 }
 
 /** @type {{id: string, test: (text: string) => number[], message: string}[]} */

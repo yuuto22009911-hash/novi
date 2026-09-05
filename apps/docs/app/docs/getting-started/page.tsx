@@ -34,6 +34,15 @@ document.documentElement.dataset.noviScheme = 'light'
 // 属性を消せば OS の設定に追従する
 delete document.documentElement.dataset.noviScheme`
 
+const AGENTS = `# Claude Code / Cursor / Codex / Copilot に規約と部品一覧を渡す
+npx skills add yuuto22009911-hash/novi --skill novi-ui
+
+# shadcn CLI で導入する（npm インストールと globals.css への @import / @source 注入。ソースはコピーしない）
+npx shadcn@latest add https://novi-42r.pages.dev/r/raster.json
+
+# MCP サーバ（読み取り専用・オフライン）
+claude mcp add novi-ui -- npx -y @novi-ui/mcp`
+
 const THEMES = [
   {
     pkg: '@novi-ui/raster',
@@ -170,6 +179,17 @@ export default function GettingStartedPage() {
           </div>
         </dl>
         <Code>{TOGGLE}</Code>
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <h2 className="text-xl font-medium tracking-tight">AI エージェントと使う</h2>
+        <p className="max-w-[40rem] text-base leading-[1.9] text-site-muted">
+          Skill・レジストリ・MCP
+          の3つを用意しています。どれも同じ中間表現から生成しているので、実装とずれません。shadcn
+          のレジストリは <code className="font-mono text-[0.875em]">@source</code>{' '}
+          まで注入するので、導入の事故（無スタイル）が起きません。
+        </p>
+        <Code>{AGENTS}</Code>
       </section>
 
       <section className="flex flex-col gap-4">

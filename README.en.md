@@ -14,6 +14,7 @@ it changes how the DOM is assembled.
   [llms.txt](https://novi-42r.pages.dev/llms.txt) (ja) ·
   [llms-full.txt](https://novi-42r.pages.dev/llms-full.txt) (ja) ·
   [MCP server](./packages/mcp/README.md)
+- Agent skill: [skills/novi-ui/SKILL.md](./skills/novi-ui/SKILL.md)
 - 日本語版 README: [README.md](./README.md)
 
 ## Packages
@@ -68,6 +69,21 @@ No provider is required. Theme, colour scheme and colourway are attributes on `<
 
 Prop names follow the React Aria conventions: `isDisabled` rather than `disabled`,
 `onPress` rather than `onClick`.
+
+## Using it with AI agents
+
+All three are generated from the same intermediate representation, so they never drift from the code.
+
+```bash
+# Give Claude Code / Cursor / Codex / Copilot the conventions and the component list
+npx skills add yuuto22009911-hash/novi --skill novi-ui
+
+# Install through the shadcn CLI (npm install + @import / @source injected into globals.css; no source is copied)
+npx shadcn@latest add https://novi-42r.pages.dev/r/raster.json
+
+# MCP server (read-only, offline)
+claude mcp add novi-ui -- npx -y @novi-ui/mcp
+```
 
 ## Why split core and themes
 
