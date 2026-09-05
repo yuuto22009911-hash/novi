@@ -27,6 +27,7 @@ export interface ComponentEntry {
   importName: string
   props: PropEntry[]
   example: string
+  keyboard: { keys: string; action: string }[]
   slots: { all: string[]; required: string[] }
 }
 

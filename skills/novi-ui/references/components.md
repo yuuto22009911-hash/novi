@@ -8,6 +8,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 折りたたみできる項目の集合。
 
 - Accessibility: 見出しは heading の中の button として提示され、Enter / Space で開閉する。 展開状態は `aria-expanded`、パネルとの対応は `aria-controls` で伝わる
+- Keyboard: Enter / Space → 開閉; Tab → 見出しを順に移動
 - Slots (`data-slot`): `root`, `item`, `heading`, `trigger`, `indicator`, `panel` (required: `root`, `item`, `heading`, `trigger`, `panel`)
 - Docs: https://novi-42r.pages.dev/docs/components/accordion/
 
@@ -79,6 +80,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 階層の中で現在どこにいるかを示す。
 
 - Accessibility: `nav[aria-label]` として提示され、現在地は `aria-current="page"`。区切り記号は `aria-hidden`
+- Keyboard: Tab → リンクを順に移動; Enter → 移動する
 - Slots (`data-slot`): `root`, `list`, `item`, `link`, `separator`, `current` (required: `root`, `list`, `item`)
 - Docs: https://novi-42r.pages.dev/docs/components/breadcrumbs/
 
@@ -103,6 +105,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 ボタン。
 
 - Accessibility: Enter / Space で発火する。`onPress` はマウス・タッチ・ペン・キーボードを統一的に扱う。 `isLoading` 中の spinner は `aria-hidden`
+- Keyboard: Enter / Space → 押す
 - Slots (`data-slot`): `root`, `startContent`, `label`, `endContent`, `spinner` (required: `root`, `label`)
 - Docs: https://novi-42r.pages.dev/docs/components/button/
 
@@ -132,6 +135,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 情報のまとまりを囲む器。
 
 - Accessibility: `onPress` を渡したときだけ button になり、Enter / Space で発火してフォーカスリングが付く。 渡さなければ非対話の器のままで、タブ順に入らない
+- Keyboard: Enter / Space → 押す（`onPress` があるときだけフォーカスに入る）
 - Slots (`data-slot`): `root`, `header`, `body`, `footer`, `image` (required: `root`, `body`)
 - Docs: https://novi-42r.pages.dev/docs/components/card/
 
@@ -156,6 +160,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 チェックボックス。
 
 - Accessibility: Space でトグルする。ラベルは入力と関連付けられ、ラベル文字の押下でも反応する
+- Keyboard: Space → 切り替える
 - Slots (`data-slot`): `root`, `control`, `indicator`, `label`, `description` (required: `root`, `control`)
 - Docs: https://novi-42r.pages.dev/docs/components/checkbox/
 
@@ -187,6 +192,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 チェックボックスのグループ。ラベル・エラーをまとめて扱う。
 
 - Accessibility: group として提示され、`label` がグループ名になる。エラーはグループに対して1つ出し、 `aria-describedby` で各入力から参照される
+- Keyboard: Tab → 項目を順に移動; Space → 切り替える
 - Slots (`data-slot`): `root`, `label`, `list`, `description`, `errorMessage` (required: `root`, `list`)
 - Docs: https://novi-42r.pages.dev/docs/components/checkboxgroup/
 
@@ -224,6 +230,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 既定で並ぶ。同じ `<ColorPicker />` がテーマによって違う染料を見せる。
 
 - Accessibility: radiogroup として提示され、矢印キーで色を移動する。選択は色だけでなく `indicator` でも示す。各色には名前が読み上げられる
+- Keyboard: ← → ↑ ↓ → 色を移動して選ぶ
 - Slots (`data-slot`): `root`, `label`, `description`, `errorMessage`, `list`, `item`, `swatch`, `indicator`, `itemLabel` (required: `root`, `list`, `item`, `swatch`)
 - Docs: https://novi-42r.pages.dev/docs/components/colorpicker/
 
@@ -263,6 +270,7 @@ return (
 IME 変換中の Enter と矢印キーは一覧に届かない（変換確定で誤選択しない）。
 
 - Accessibility: 入力欄は `role="combobox"`、一覧は `role="listbox"`。ArrowDown で開いて項目を移動、 Enter で決定、Escape で閉じる。IME 変換中の Enter と矢印キーは抑制される。 `description` と `errorMessage` は `aria-describedby` で関連付く
+- Keyboard: 文字を打つ → 絞り込んで開く; ↓ ↑ → 開いて項目を移動; Enter → 決定; Escape → 閉じる
 - Slots (`data-slot`): `root`, `label`, `inputWrapper`, `input`, `trigger`, `icon`, `popover`, `listbox`, `option`, `description`, `errorMessage` (required: `root`, `inputWrapper`, `input`, `popover`, `listbox`, `option`)
 - Docs: https://novi-42r.pages.dev/docs/components/combobox/
 
@@ -308,6 +316,7 @@ IME 変換中の Enter と矢印キーは一覧に届かない（変換確定で
 文字列や `Date` は受けない。`parseDate('2026-09-05')` で作る（ADR-B6）。
 
 - Accessibility: 年 / 月 / 日の各マスは `spinbutton` で、矢印キーの上下で値が変わり、左右で隣のマスへ移る。 トリガーでカレンダーが開き、矢印キーで日を移動、Enter で決定、Escape で閉じる。 `minValue` / `maxValue` の外と `isDateUnavailable` の日は選べない。 `description` と `errorMessage` は `aria-describedby` で関連付く
+- Keyboard: ↑ ↓ → マスの値を増減; ← → → 隣のマスへ; Backspace → マスを空にする; ← → ↑ ↓（カレンダー） → 日を移動; PageUp / PageDown（カレンダー） → 前後の月へ; Enter（カレンダー） → 日を決定; Escape → カレンダーを閉じる
 - Slots (`data-slot`): `root`, `label`, `inputWrapper`, `dateInput`, `segment`, `trigger`, `icon`, `popover`, `calendar`, `calendarHeader`, `calendarTitle`, `prevButton`, `nextButton`, `calendarGrid`, `calendarCell`, `description`, `errorMessage` (required: `root`, `inputWrapper`, `dateInput`, `segment`, `trigger`, `popover`, `calendar`, `calendarGrid`, `calendarCell`)
 - Docs: https://novi-42r.pages.dev/docs/components/datepicker/
 
@@ -347,6 +356,7 @@ IME 変換中の Enter と矢印キーは一覧に届かない（変換確定で
 IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 
 - Accessibility: `label` は必須。`description` と `errorMessage` は `aria-describedby` で関連付く。 IME 変換中の Enter は抑制されるため、変換確定が送信に化けない
+- Keyboard: Enter → フォームを送信（IME 変換中は送信しない）; Tab → 次の欄へ
 - Slots (`data-slot`): `root`, `label`, `inputWrapper`, `input`, `startContent`, `endContent`, `description`, `errorMessage` (required: `root`, `inputWrapper`, `input`)
 - Docs: https://novi-42r.pages.dev/docs/components/input/
 
@@ -389,6 +399,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 
 - Accessibility: 矢印キーで移動、Enter で決定、Escape で閉じる。開いている間はメニュー外を読み上げ対象から外す。 IME 変換中の Enter は抑制される
+- Keyboard: Enter / Space / ↓（トリガー） → 開く; ↑ ↓ → 項目を移動; Enter → 決定; Escape → 閉じる
 - Slots (`data-slot`): `trigger`, `popover`, `list`, `item`, `itemLabel`, `itemDescription`, `itemShortcut`, `separator`, `section`, `sectionLabel` (required: `trigger`, `popover`, `list`, `item`)
 - Docs: https://novi-42r.pages.dev/docs/components/menu/
 
@@ -418,6 +429,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 モーダルダイアログ。開いている間フォーカスは内側に閉じ込められ、Escape で閉じる。
 
 - Accessibility: 開いている間フォーカスは内側に閉じ込められ、Escape で閉じる （`isKeyboardDismissDisabled` で無効化できる）。閉じるボタンには `aria-label` がある
+- Keyboard: Tab / Shift+Tab → 中の要素を巡回（外へ出ない）; Escape → 閉じる
 - Slots (`data-slot`): `backdrop`, `panel`, `header`, `title`, `closeButton`, `body`, `footer` (required: `backdrop`, `panel`, `body`)
 - Docs: https://novi-42r.pages.dev/docs/components/modal/
 
@@ -447,6 +459,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 空欄は `NaN` ではなく `null` として `onChange` に渡す（ADR-B2）。
 
 - Accessibility: `label` は必須。ArrowUp / ArrowDown で `step` ずつ増減し、`minValue` / `maxValue` で止まる。 増減ボタンは名前を持つ。`description` と `errorMessage` は `aria-describedby` で関連付く。 IME 変換中の Enter は抑制される
+- Keyboard: ↑ ↓ → `step` ずつ増減; PageUp / PageDown → 大きく増減; Home / End → 最小 / 最大へ
 - Slots (`data-slot`): `root`, `label`, `inputWrapper`, `input`, `decrement`, `increment`, `description`, `errorMessage` (required: `root`, `inputWrapper`, `input`)
 - Docs: https://novi-42r.pages.dev/docs/components/numberfield/
 
@@ -491,6 +504,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 ページによらず一定なので、進めても幅が揺れない。
 
 - Accessibility: 根要素は `nav` で名前を持つ（既定「ページ送り」）。現在ページは `aria-current="page"`。 前へ / 次へは端で無効になる。省略記号は読み上げの対象にしない。 各ボタンは Tab で辿れ、Enter / Space で押せる
+- Keyboard: Tab → ボタンを順に移動; Enter / Space → そのページへ
 - Slots (`data-slot`): `root`, `list`, `item`, `prev`, `next`, `ellipsis` (required: `root`, `list`, `item`, `prev`, `next`)
 - Docs: https://novi-42r.pages.dev/docs/components/pagination/
 
@@ -516,6 +530,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 トリガーに紐づいて浮かぶ小さな面。Escape で閉じてトリガーへフォーカスが戻る。
 
 - Accessibility: Escape で閉じ、フォーカスはトリガーへ戻る
+- Keyboard: Enter / Space（トリガー） → 開く; Escape → 閉じてトリガーへ戻る
 - Slots (`data-slot`): `root`, `arrow`, `content` (required: `root`, `content`)
 - Docs: https://novi-42r.pages.dev/docs/components/popover/
 
@@ -589,6 +604,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 ラジオボタンのグループ。矢印キーで項目間を移動できる。
 
 - Accessibility: radiogroup として提示され、矢印キーで項目間を移動する。Tab はグループ単位で出入りする
+- Keyboard: ↑ ↓ ← → → 項目を移動して選ぶ; Tab → グループの外へ
 - Slots (`data-slot`): `root`, `label`, `list`, `description`, `errorMessage` (required: `root`, `list`)
 - Docs: https://novi-42r.pages.dev/docs/components/radiogroup/
 
@@ -625,6 +641,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 
 - Accessibility: 矢印キーで移動、Enter で決定、Escape で閉じてトリガーへフォーカスが戻る。 IME 変換中の Enter は抑制されるため、変換確定で誤決定しない
+- Keyboard: Enter / Space / ↓ → 開く; ↑ ↓ → 項目を移動; Enter → 決定; Escape → 閉じてトリガーへ戻る; 文字 → 頭文字の項目へ飛ぶ
 - Slots (`data-slot`): `root`, `label`, `trigger`, `value`, `icon`, `popover`, `listbox`, `option`, `description`, `errorMessage` (required: `root`, `trigger`, `value`, `popover`, `listbox`, `option`)
 - Docs: https://novi-42r.pages.dev/docs/components/select/
 
@@ -705,6 +722,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 状態が形状だけで伝わりにくいテーマもあるため、ラベルの併記を推奨する。
 
 - Accessibility: Space で切り替える。状態は `aria-checked` で伝わるが、色と形だけに依存せずラベルを併記する
+- Keyboard: Space → 切り替える
 - Slots (`data-slot`): `root`, `track`, `thumb`, `label`, `description` (required: `root`, `track`, `thumb`)
 - Docs: https://novi-42r.pages.dev/docs/components/switch/
 
@@ -738,6 +756,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 狭い画面では**表そのものが横にスクロールする**。列を隠すかどうかはアプリの判断（ADR-B5）。
 
 - Accessibility: 根要素は `role="grid"` で `aria-label` を持つ。並べ替えできる見出しは `aria-sort` を持ち、 Enter / Space で切り替わる。行は矢印キーで移動でき、`selectionMode` があれば Space で選べる。 行が 0 件のときは `renderEmptyState` の内容が本体に出る
+- Keyboard: ↑ ↓ ← → → 行とセルを移動; Home / End → 行頭 / 行末へ; Space → 行を選ぶ（`selectionMode` があるとき）; Enter / Space（見出し） → 並べ替え
 - Slots (`data-slot`): `root`, `header`, `column`, `sortIcon`, `body`, `row`, `cell`, `empty` (required: `root`, `header`, `column`, `body`, `row`, `cell`)
 - Docs: https://novi-42r.pages.dev/docs/components/table/
 
@@ -775,6 +794,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 同じ階層の内容を切り替える。矢印キーでタブ間を移動できる。
 
 - Accessibility: 矢印キーでタブ間を移動し、Tab キーはパネルへ移る。選択中のタブは `aria-selected`
+- Keyboard: ← →（縦は ↑ ↓） → タブを移動して選ぶ; Home / End → 最初 / 最後のタブへ; Tab → パネルの中へ
 - Slots (`data-slot`): `root`, `list`, `tab`, `indicator`, `panel` (required: `root`, `list`, `tab`, `panel`)
 - Docs: https://novi-42r.pages.dev/docs/components/tabs/
 
@@ -807,6 +827,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 複数行テキスト入力。
 
 - Accessibility: `label` は必須。`description` と `errorMessage` は `aria-describedby` で関連付く。 改行が入る入力のため Enter では送信しない
+- Keyboard: Enter → 改行; Tab → 次の欄へ
 - Slots (`data-slot`): `root`, `label`, `inputWrapper`, `textarea`, `description`, `errorMessage` (required: `root`, `inputWrapper`, `textarea`)
 - Docs: https://novi-42r.pages.dev/docs/components/textarea/
 
@@ -844,6 +865,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 `prefers-reduced-motion` が有効なときは出入りのアニメーションを行わない。
 
 - Accessibility: live region として読み上げられる。閉じるボタンには `aria-label` がある
+- Keyboard: Tab → 通知の中のボタンへ; Enter / Space（閉じる） → 通知を閉じる
 - Slots (`data-slot`): `region`, `root`, `icon`, `content`, `title`, `description`, `closeButton`, `action` (required: `region`, `root`, `content`)
 - Docs: https://novi-42r.pages.dev/docs/components/toast/
 
@@ -877,6 +899,7 @@ const queue = createToastQueue()
 操作に必須の情報は本文かラベルに書く。
 
 - Accessibility: ホバーとフォーカスの両方で開く。触れないと読めないため、操作に必須の情報は置かない
+- Keyboard: Tab（フォーカス） → 表示; Escape → 隠す
 - Slots (`data-slot`): `root`, `arrow`, `content` (required: `root`, `content`)
 - Docs: https://novi-42r.pages.dev/docs/components/tooltip/
 

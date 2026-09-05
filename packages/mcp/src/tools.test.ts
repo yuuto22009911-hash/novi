@@ -45,6 +45,12 @@ describe('get_component（AC-04-2）', () => {
     expect(output).toContain('Enter / Space')
   })
 
+  it('キーボード操作を表で返し、対話しない部品には節を出さない', () => {
+    expect(output).toContain('## キーボード')
+    expect(output).toMatch(/- Enter \/ Space: 押す/)
+    expect(getComponent('Badge')).not.toContain('## キーボード')
+  })
+
   it('import 文を実際に使える形で示す', () => {
     expect(output).toContain("import { Button } from '@novi-ui/raster'")
   })
@@ -217,6 +223,7 @@ describe('テーマがまだ実装していない状態', () => {
         importName: 'Button',
         props: [{ name: 'variant', required: false, type: 'NoviVariant', doc: '' }],
         example: '<Button>保存</Button>',
+        keyboard: [{ keys: 'Enter / Space', action: '押す' }],
         slots: { all: ['root', 'label'], required: ['root', 'label'] },
       },
       {
@@ -229,6 +236,7 @@ describe('テーマがまだ実装していない状態', () => {
         importName: 'DatePicker',
         props: [{ name: 'value', required: false, type: 'string', doc: '' }],
         example: '<DatePicker />',
+        keyboard: [],
         slots: { all: ['root'], required: ['root'] },
       },
     ],

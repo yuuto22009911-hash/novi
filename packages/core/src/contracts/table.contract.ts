@@ -45,6 +45,11 @@ export interface TableSortDescriptor {
  * Enter / Space で切り替わる。行は矢印キーで移動でき、`selectionMode` があれば Space で選べる。
  * 行が 0 件のときは `renderEmptyState` の内容が本体に出る
  *
+ * @keyboard ↑ ↓ ← →: 行とセルを移動
+ * @keyboard Home / End: 行頭 / 行末へ
+ * @keyboard Space: 行を選ぶ（`selectionMode` があるとき）
+ * @keyboard Enter / Space（見出し）: 並べ替え
+ *
  * @example
  * <Table aria-label="注文一覧" sortDescriptor={sort} onSortChange={setSort}>
  *   <TableHeader>

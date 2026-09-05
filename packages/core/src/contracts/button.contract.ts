@@ -20,6 +20,8 @@ export type ButtonRequiredSlot = (typeof buttonRequiredSlots)[number]
  * @a11y Enter / Space で発火する。`onPress` はマウス・タッチ・ペン・キーボードを統一的に扱う。
  * `isLoading` 中の spinner は `aria-hidden`
  *
+ * @keyboard Enter / Space: 押す
+ *
  * @example
  * <Button variant="solid" color="primary" onPress={() => save()}>
  *   保存

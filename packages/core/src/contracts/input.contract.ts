@@ -35,6 +35,9 @@ export type InputRequiredSlot = (typeof inputRequiredSlots)[number]
  * @a11y `label` は必須。`description` と `errorMessage` は `aria-describedby` で関連付く。
  * IME 変換中の Enter は抑制されるため、変換確定が送信に化けない
  *
+ * @keyboard Enter: フォームを送信（IME 変換中は送信しない）
+ * @keyboard Tab: 次の欄へ
+ *
  * @example
  * <Input
  *   label="メールアドレス"

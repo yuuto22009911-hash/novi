@@ -37,6 +37,11 @@ export type MenuRequiredSlot = (typeof menuRequiredSlots)[number]
  * @a11y 矢印キーで移動、Enter で決定、Escape で閉じる。開いている間はメニュー外を読み上げ対象から外す。
  * IME 変換中の Enter は抑制される
  *
+ * @keyboard Enter / Space / ↓（トリガー）: 開く
+ * @keyboard ↑ ↓: 項目を移動
+ * @keyboard Enter: 決定
+ * @keyboard Escape: 閉じる
+ *
  * @example
  * <Menu onAction={(key) => run(key)}>
  *   <Button>操作</Button>

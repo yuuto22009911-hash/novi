@@ -18,6 +18,8 @@ export type CheckboxRequiredSlot = (typeof checkboxRequiredSlots)[number]
  *
  * @a11y Space でトグルする。ラベルは入力と関連付けられ、ラベル文字の押下でも反応する
  *
+ * @keyboard Space: 切り替える
+ *
  * @example
  * <Checkbox isSelected={agreed} onChange={setAgreed}>
  *   利用規約に同意する
@@ -57,6 +59,9 @@ export type CheckboxGroupRequiredSlot = (typeof checkboxGroupRequiredSlots)[numb
  *
  * @a11y group として提示され、`label` がグループ名になる。エラーはグループに対して1つ出し、
  * `aria-describedby` で各入力から参照される
+ *
+ * @keyboard Tab: 項目を順に移動
+ * @keyboard Space: 切り替える
  *
  * @example
  * <CheckboxGroup label="通知方法" value={ways} onChange={setWays}>

@@ -44,6 +44,12 @@ export type SelectRequiredSlot = (typeof selectRequiredSlots)[number]
  * @a11y 矢印キーで移動、Enter で決定、Escape で閉じてトリガーへフォーカスが戻る。
  * IME 変換中の Enter は抑制されるため、変換確定で誤決定しない
  *
+ * @keyboard Enter / Space / ↓: 開く
+ * @keyboard ↑ ↓: 項目を移動
+ * @keyboard Enter: 決定
+ * @keyboard Escape: 閉じてトリガーへ戻る
+ * @keyboard 文字: 頭文字の項目へ飛ぶ
+ *
  * @example
  * <Select label="都道府県" selectedKey={pref} onSelectionChange={setPref}>
  *   <SelectItem id="tokyo">東京都</SelectItem>

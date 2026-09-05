@@ -27,6 +27,9 @@ export type PaginationRequiredSlot = (typeof paginationRequiredSlots)[number]
  * 前へ / 次へは端で無効になる。省略記号は読み上げの対象にしない。
  * 各ボタンは Tab で辿れ、Enter / Space で押せる
  *
+ * @keyboard Tab: ボタンを順に移動
+ * @keyboard Enter / Space: そのページへ
+ *
  * @example
  * <Pagination total={10} page={page} onChange={setPage} />
  */

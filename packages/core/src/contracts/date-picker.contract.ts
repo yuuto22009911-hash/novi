@@ -61,6 +61,14 @@ export type DatePickerRequiredSlot = (typeof datePickerRequiredSlots)[number]
  * `minValue` / `maxValue` の外と `isDateUnavailable` の日は選べない。
  * `description` と `errorMessage` は `aria-describedby` で関連付く
  *
+ * @keyboard ↑ ↓: マスの値を増減
+ * @keyboard ← →: 隣のマスへ
+ * @keyboard Backspace: マスを空にする
+ * @keyboard ← → ↑ ↓（カレンダー）: 日を移動
+ * @keyboard PageUp / PageDown（カレンダー）: 前後の月へ
+ * @keyboard Enter（カレンダー）: 日を決定
+ * @keyboard Escape: カレンダーを閉じる
+ *
  * @example
  * <DatePicker label="出荷日" value={date} onChange={setDate} minValue={today} />
  */

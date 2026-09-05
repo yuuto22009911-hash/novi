@@ -195,7 +195,7 @@ ${c.example ?? ''}
 \`\`\`
 
 **アクセシビリティ**: ${c.a11y}
-`
+${c.keyboard.length > 0 ? `\n**キーボード**:\n${c.keyboard.map((k) => `- ${k.keys}: ${k.action}`).join('\n')}\n` : ''}`
   })
 
   const numericByTheme = Object.entries(themes)

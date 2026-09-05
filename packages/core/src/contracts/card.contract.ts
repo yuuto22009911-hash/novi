@@ -19,6 +19,8 @@ export type CardRequiredSlot = (typeof cardRequiredSlots)[number]
  * @a11y `onPress` を渡したときだけ button になり、Enter / Space で発火してフォーカスリングが付く。
  * 渡さなければ非対話の器のままで、タブ順に入らない
  *
+ * @keyboard Enter / Space: 押す（`onPress` があるときだけフォーカスに入る）
+ *
  * @example
  * <Card>
  *   <CardHeader>売上</CardHeader>

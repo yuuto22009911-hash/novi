@@ -36,6 +36,9 @@ export type ToastRequiredSlot = (typeof toastRequiredSlots)[number]
  *
  * @a11y live region として読み上げられる。閉じるボタンには `aria-label` がある
  *
+ * @keyboard Tab: 通知の中のボタンへ
+ * @keyboard Enter / Space（閉じる）: 通知を閉じる
+ *
  * @example
  * // キューはアプリで1つ作って使い回す
  * const queue = createToastQueue()

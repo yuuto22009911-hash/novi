@@ -136,6 +136,16 @@ export function validateComponentIndex(index) {
       push(`${at}.keywords: 空でない文字列の配列が必要です`)
     }
 
+    // キーボード操作表。対話しない部品は空配列でよい
+    if (
+      !Array.isArray(component.keyboard) ||
+      !component.keyboard.every(
+        (k) => isPlainObject(k) && isNonEmptyString(k.keys) && isNonEmptyString(k.action),
+      )
+    ) {
+      push(`${at}.keyboard: { keys, action } の配列が必要です`)
+    }
+
     if (!Array.isArray(component.implementedBy)) {
       push(`${at}.implementedBy: 配列が必要です`)
     } else {

@@ -37,6 +37,10 @@ export type NumberFieldRequiredSlot = (typeof numberFieldRequiredSlots)[number]
  * 増減ボタンは名前を持つ。`description` と `errorMessage` は `aria-describedby` で関連付く。
  * IME 変換中の Enter は抑制される
  *
+ * @keyboard ↑ ↓: `step` ずつ増減
+ * @keyboard PageUp / PageDown: 大きく増減
+ * @keyboard Home / End: 最小 / 最大へ
+ *
  * @example
  * <NumberField
  *   label="数量"

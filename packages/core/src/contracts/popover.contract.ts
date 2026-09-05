@@ -21,6 +21,9 @@ export type NoviPlacement = 'top' | 'bottom' | 'start' | 'end' | 'left' | 'right
  *
  * @a11y Escape で閉じ、フォーカスはトリガーへ戻る
  *
+ * @keyboard Enter / Space（トリガー）: 開く
+ * @keyboard Escape: 閉じてトリガーへ戻る
+ *
  * @example
  * <Popover placement="bottom">
  *   <Button>詳細</Button>

@@ -48,6 +48,11 @@ export type ComboBoxRequiredSlot = (typeof comboBoxRequiredSlots)[number]
  * Enter で決定、Escape で閉じる。IME 変換中の Enter と矢印キーは抑制される。
  * `description` と `errorMessage` は `aria-describedby` で関連付く
  *
+ * @keyboard 文字を打つ: 絞り込んで開く
+ * @keyboard ↓ ↑: 開いて項目を移動
+ * @keyboard Enter: 決定
+ * @keyboard Escape: 閉じる
+ *
  * @example
  * <ComboBox label="都道府県" onSelectionChange={setPref}>
  *   <ComboBoxItem id="tokyo">東京都</ComboBoxItem>

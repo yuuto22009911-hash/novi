@@ -51,6 +51,8 @@ export interface NoviColorOption {
  * @a11y radiogroup として提示され、矢印キーで色を移動する。選択は色だけでなく
  * `indicator` でも示す。各色には名前が読み上げられる
  *
+ * @keyboard ← → ↑ ↓: 色を移動して選ぶ
+ *
  * @example
  * // 色 id を書かない。未指定ならテーマの既定色から始まる
  * const [color, setColor] = useState<string>()
