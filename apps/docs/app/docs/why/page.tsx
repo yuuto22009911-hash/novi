@@ -216,9 +216,8 @@ export default function WhyPage() {
       <section className="flex flex-col gap-4">
         <H2>向いていない場合</H2>
         <P>
-          業務画面の一覧と入力に要る Table、ComboBox、DatePicker はまだありません。これらは React
-          Aria
-          が挙動を持っているので次に足す予定ですが、今日それが要るなら別のライブラリが早いです。ドキュメントは日本語だけで、バージョンは
+          日付の入力（DatePicker）はまだありません。React Aria
+          が挙動を持っているので次に足す予定です。表の列リサイズ・仮想スクロール・行内編集、Slider、ファイル添付も持っていません。今日それが要るなら別のライブラリが早いです。ドキュメントは日本語が一次で、バージョンは
           0.x です。API は変わります。
         </P>
       </section>

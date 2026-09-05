@@ -171,9 +171,10 @@ export default function EnglishPage() {
       <section className="flex flex-col gap-4">
         <H2>What is not here yet</H2>
         <P>
-          Table, ComboBox, DatePicker, Pagination, Slider and NumberField are not implemented. React
-          Aria provides the behaviour for all of them, so they are next, but if you need them today
-          another library will be faster. The version is 0.x and the API will change.
+          DatePicker is not implemented yet; React Aria provides the behaviour, so it is next. There
+          is no column resizing, virtual scrolling or inline editing in Table, and no Slider or file
+          upload. If you need those today another library will be faster. The version is 0.x and the
+          API will change.
         </P>
       </section>
 
