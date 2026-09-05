@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getComponent, PropsTable, SlotTable } from '../../../../components/api-tables'
 import { ComponentDemo } from '../../../../components/component-demo'
+import { DEMO_EXTRAS } from '../../../../demos/extras'
 import { DEMO_META, DEMO_SLUGS, findDemoMeta } from '../../../../demos/meta'
 
 export function generateStaticParams() {
@@ -31,6 +32,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   if (demo === undefined) notFound()
 
   const { a11y } = getComponent(demo.component)
+  const extras = DEMO_EXTRAS[demo.component]
 
   return (
     <div className="flex gap-12">
@@ -97,6 +99,30 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         </header>
 
         <ComponentDemo slug={slug} />
+
+        {extras !== undefined && (
+          <section className="flex flex-col gap-4">
+            <h2 className="text-xl font-medium tracking-tight">使い分け</h2>
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div className="flex flex-col gap-2 border-t border-site-border pt-3">
+                <h3 className="font-medium">こうする</h3>
+                <ul className="flex list-disc flex-col gap-2 pl-5 text-sm leading-[1.7] text-site-muted">
+                  {extras.dos.map((d) => (
+                    <li key={d}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex flex-col gap-2 border-t border-site-border pt-3">
+                <h3 className="font-medium">こうしない</h3>
+                <ul className="flex list-disc flex-col gap-2 pl-5 text-sm leading-[1.7] text-site-muted">
+                  {extras.donts.map((d) => (
+                    <li key={d}>{d}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* 折り返し以下の表はスクロールされるまで描画を省く（T-38）。
             contain-intrinsic-size が概算の高さを確保し、スクロールバーの飛びを防ぐ */}

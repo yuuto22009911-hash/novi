@@ -80,7 +80,8 @@ test('デモの JSX がテーマ切替で変わらない（AC-01-4）', async ({
   await page.goto('/docs/components/button/')
 
   const bodyOf = async () => {
-    const code = await page.getByTestId('code-example').textContent()
+    // 例が増えてコード例は複数ある。主デモ（先頭）で見る
+    const code = await page.getByTestId('code-example').first().textContent()
     return { code: code ?? '', body: (code ?? '').split('\n').slice(1).join('\n') }
   }
 
