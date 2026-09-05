@@ -103,6 +103,21 @@ export {
 export { Skeleton, type SkeletonStyleProps, skeletonStyles } from './skeleton'
 export { Spinner, type SpinnerStyleProps, spinnerStyles } from './spinner'
 export { Switch, type SwitchStyleProps, switchStyles } from './switch'
+export {
+  Table,
+  TableBody,
+  type TableBodyProps,
+  TableCell,
+  type TableCellProps,
+  TableColumn,
+  type TableColumnProps,
+  TableHeader,
+  type TableHeaderProps,
+  TableRow,
+  type TableRowProps,
+  type TableStyleProps,
+  tableStyles,
+} from './table'
 export { TabContent, TabItem, TabItems, Tabs, type TabsStyleProps, tabsStyles } from './tabs'
 export { TextArea, type TextareaStyleProps, textareaStyles } from './textarea'
 export {

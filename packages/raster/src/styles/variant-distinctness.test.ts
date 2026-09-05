@@ -10,6 +10,7 @@ import { paginationStyles } from '../pagination/pagination.styles'
 import { radioStyles } from '../radio/radio.styles'
 import { selectStyles } from '../select/select.styles'
 import { switchStyles } from '../switch/switch.styles'
+import { tableStyles } from '../table/table.styles'
 import { textareaStyles } from '../textarea/textarea.styles'
 
 /**
@@ -42,6 +43,7 @@ const WITH_SIZE: [name: string, styles: StyleFn, slot: string][] = [
   ['Radio', radioStyles as unknown as StyleFn, 'control'],
   ['Switch', switchStyles as unknown as StyleFn, 'track'],
   ['Pagination', paginationStyles as unknown as StyleFn, 'item'],
+  ['Table', tableStyles as unknown as StyleFn, 'cell'],
 ]
 
 /** color 語彙を持つコンポーネント。 */
