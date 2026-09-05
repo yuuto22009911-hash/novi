@@ -50,6 +50,8 @@ describe('メインエントリ', () => {
         "menuSlots",
         "modalRequiredSlots",
         "modalSlots",
+        "numberFieldRequiredSlots",
+        "numberFieldSlots",
         "popoverRequiredSlots",
         "popoverSlots",
         "progressRequiredSlots",

@@ -66,6 +66,7 @@ export {
   ModalTitle,
   modalStyles,
 } from './modal'
+export { NumberField, type NumberFieldStyleProps, numberFieldStyles } from './number-field'
 export {
   Popover,
   PopoverContent,

@@ -1,0 +1,139 @@
+'use client'
+
+import type { NumberFieldProps } from '@novi-ui/core'
+import { useImeSafeKeys } from '@novi-ui/core/client'
+import {
+  Button,
+  FieldError,
+  Group,
+  Input,
+  Label,
+  NumberField as RACNumberField,
+  Text,
+} from 'react-aria-components'
+import { numberFieldStyles } from './number-field.styles'
+
+function MinusIcon() {
+  return (
+    <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" aria-hidden="true">
+      <path d="M3.5 8h9" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function PlusIcon() {
+  return (
+    <svg viewBox="0 0 16 16" width="1em" height="1em" fill="none" aria-hidden="true">
+      <path d="M8 3.5v9M3.5 8h9" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+/**
+ * 数値の入力。矢印キーと増減ボタンで `step` ずつ刻む。
+ *
+ * **増減ボタンは入力欄の左右に、枠いっぱいの正方形で置く。** 片手で持った端末で
+ * 親指が届く位置に押す面がある（Raster は右端に細く、Flatlay は罫線のセル）。
+ * 空欄は `NaN` ではなく `null` で `onChange` に渡す（ADR-B2）。
+ *
+ * @example
+ * <NumberField label="数量" defaultValue={1} minValue={0} step={1} />
+ */
+export function NumberField({
+  variant,
+  size,
+  radius,
+  label,
+  placeholder,
+  description,
+  errorMessage,
+  name,
+  value,
+  defaultValue,
+  onChange,
+  minValue,
+  maxValue,
+  step,
+  formatOptions,
+  onKeyDown,
+  isDisabled,
+  isReadOnly,
+  isRequired,
+  isInvalid,
+  className,
+  classNames,
+  id,
+}: NumberFieldProps) {
+  const s = numberFieldStyles({ variant, size, radius })
+  const keyProps = useImeSafeKeys<HTMLInputElement>(onKeyDown)
+
+  return (
+    <RACNumberField
+      id={id}
+      name={name}
+      // RAC は空欄を NaN で表す。外には出さない（ADR-B2）
+      value={value === null ? Number.NaN : value}
+      defaultValue={defaultValue}
+      onChange={(next) => onChange?.(Number.isNaN(next) ? null : next)}
+      minValue={minValue}
+      maxValue={maxValue}
+      step={step}
+      formatOptions={formatOptions}
+      isDisabled={isDisabled}
+      isReadOnly={isReadOnly}
+      isRequired={isRequired}
+      isInvalid={isInvalid}
+      data-slot="root"
+      className={s.root({ class: [className, classNames?.root] })}
+    >
+      {label !== undefined && (
+        <Label data-slot="label" className={s.label({ class: classNames?.label })}>
+          {label}
+        </Label>
+      )}
+
+      <Group
+        data-slot="inputWrapper"
+        className={s.inputWrapper({ class: classNames?.inputWrapper })}
+      >
+        <Button
+          slot="decrement"
+          data-slot="decrement"
+          className={s.decrement({ class: classNames?.decrement })}
+        >
+          <MinusIcon />
+        </Button>
+        <Input
+          data-slot="input"
+          placeholder={placeholder}
+          className={s.input({ class: classNames?.input })}
+          {...keyProps}
+        />
+        <Button
+          slot="increment"
+          data-slot="increment"
+          className={s.increment({ class: classNames?.increment })}
+        >
+          <PlusIcon />
+        </Button>
+      </Group>
+
+      {description !== undefined && (
+        <Text
+          slot="description"
+          data-slot="description"
+          className={s.description({ class: classNames?.description })}
+        >
+          {description}
+        </Text>
+      )}
+
+      <FieldError
+        data-slot="errorMessage"
+        className={s.errorMessage({ class: classNames?.errorMessage })}
+      >
+        {errorMessage}
+      </FieldError>
+    </RACNumberField>
+  )
+}

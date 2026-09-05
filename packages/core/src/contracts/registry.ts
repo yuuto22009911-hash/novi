@@ -14,6 +14,7 @@ import { colorPickerRequiredSlots, colorPickerSlots } from './color-picker.contr
 import { inputRequiredSlots, inputSlots } from './input.contract'
 import { menuRequiredSlots, menuSlots } from './menu.contract'
 import { modalRequiredSlots, modalSlots } from './modal.contract'
+import { numberFieldRequiredSlots, numberFieldSlots } from './number-field.contract'
 import { popoverRequiredSlots, popoverSlots } from './popover.contract'
 import {
   progressRequiredSlots,
@@ -63,6 +64,7 @@ export const NOVI_CONTRACTS = {
   Input: { slots: inputSlots, required: inputRequiredSlots },
   Menu: { slots: menuSlots, required: menuRequiredSlots },
   Modal: { slots: modalSlots, required: modalRequiredSlots },
+  NumberField: { slots: numberFieldSlots, required: numberFieldRequiredSlots },
   Popover: { slots: popoverSlots, required: popoverRequiredSlots },
   Progress: { slots: progressSlots, required: progressRequiredSlots },
   Radio: { slots: radioSlots, required: radioRequiredSlots },

@@ -74,6 +74,20 @@ function SwitchDemo() {
   return <Switch defaultSelected>メール通知を受け取る</Switch>
 }
 
+function NumberFieldDemo() {
+  const { NumberField } = useNoviTheme()
+  return (
+    <div className="flex w-full max-w-xs flex-col gap-[var(--novi-gap-stack)]">
+      <NumberField label="数量" defaultValue={1} minValue={0} step={1} />
+      <NumberField
+        label="単価"
+        defaultValue={1200}
+        formatOptions={{ style: 'currency', currency: 'JPY' }}
+      />
+    </div>
+  )
+}
+
 function SelectDemo() {
   const { Select, SelectItem } = useNoviTheme()
   return (
@@ -300,6 +314,7 @@ export const DEMO_RENDERERS: Record<string, () => React.ReactNode> = {
   checkbox: () => <CheckboxDemo />,
   radio: () => <RadioDemo />,
   switch: () => <SwitchDemo />,
+  numberfield: () => <NumberFieldDemo />,
   select: () => <SelectDemo />,
   card: () => <CardDemo />,
   badge: () => <BadgeDemo />,
