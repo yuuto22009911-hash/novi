@@ -25,6 +25,8 @@ export type SwitchRequiredSlot = (typeof switchRequiredSlots)[number]
  *
  * @a11y Space で切り替える。状態は `aria-checked` で伝わるが、色と形だけに依存せずラベルを併記する
  *
+ * @keyboard Space: 切り替える
+ *
  * @example
  * <Switch isSelected={enabled} onChange={setEnabled}>
  *   メール通知を受け取る

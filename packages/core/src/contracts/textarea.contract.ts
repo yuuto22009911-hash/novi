@@ -26,6 +26,9 @@ export type TextareaRequiredSlot = (typeof textareaRequiredSlots)[number]
  * @a11y `label` は必須。`description` と `errorMessage` は `aria-describedby` で関連付く。
  * 改行が入る入力のため Enter では送信しない
  *
+ * @keyboard Enter: 改行
+ * @keyboard Tab: 次の欄へ
+ *
  * @example
  * <TextArea label="備考" rows={4} maxLength={500} />
  */

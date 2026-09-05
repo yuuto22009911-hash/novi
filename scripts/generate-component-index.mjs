@@ -188,9 +188,10 @@ function extractProps(source, interfaceName) {
  * - `a11y`      `@a11y`。支援技術とキーボードの挙動
  * - `keywords`  `@keywords`。MCP の検索語
  * - `example`   `@example`
+ * - `keyboard`  `@keyboard`。1 行に「キー: 動作」。対話しない部品には無い
  */
 function extractDoc(source, interfaceName) {
-  const empty = { summary: '', notes: null, a11y: null, keywords: [], example: null }
+  const empty = { summary: '', notes: null, a11y: null, keywords: [], example: null, keyboard: [] }
 
   const start = source.indexOf(`export interface ${interfaceName} `)
   if (start === -1) return empty
@@ -203,7 +204,7 @@ function extractDoc(source, interfaceName) {
     .split('\n')
     .map((line) => line.replace(/^\s*\*\s?/, '').trimEnd())
 
-  const sections = { prose: [], a11y: [], keywords: [], example: [] }
+  const sections = { prose: [], a11y: [], keywords: [], example: [], keyboard: [] }
   let current = 'prose'
 
   for (const line of lines) {
@@ -231,6 +232,15 @@ function extractDoc(source, interfaceName) {
     a11y: sections.a11y.join(' ').replace(/\s+/g, ' ').trim() || null,
     keywords: sections.keywords.join(' ').split(/\s+/).filter(Boolean),
     example: sections.example.join('\n').trim() || null,
+    // 「キー: 動作」を分解する。区切りは最初のコロン（全角も可）
+    keyboard: sections.keyboard
+      .map((line) => line.trim())
+      .filter((line) => line !== '')
+      .map((line) => {
+        const at = line.search(/[:：]/)
+        if (at === -1) throw new Error(`@keyboard は「キー: 動作」の形で書いてください: ${line}`)
+        return { keys: line.slice(0, at).trim(), action: line.slice(at + 1).trim() }
+      }),
   }
 }
 
@@ -267,6 +277,7 @@ const components = Object.entries(NOVI_CONTRACTS)
       importName: exportName,
       props: extractProps(source, interfaceName),
       example: doc.example,
+      keyboard: doc.keyboard,
       slots: {
         all: [...contract.slots],
         required: [...contract.required],

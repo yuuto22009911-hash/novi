@@ -23,6 +23,9 @@ export type BreadcrumbsRequiredSlot = (typeof breadcrumbsRequiredSlots)[number]
  *
  * @a11y `nav[aria-label]` として提示され、現在地は `aria-current="page"`。区切り記号は `aria-hidden`
  *
+ * @keyboard Tab: リンクを順に移動
+ * @keyboard Enter: 移動する
+ *
  * @example
  * <Breadcrumbs>
  *   <Breadcrumb href="/">ホーム</Breadcrumb>

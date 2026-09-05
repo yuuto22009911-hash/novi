@@ -31,7 +31,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const demo = findDemoMeta(slug)
   if (demo === undefined) notFound()
 
-  const { a11y } = getComponent(demo.component)
+  const { a11y, keyboard } = getComponent(demo.component)
   const extras = DEMO_EXTRAS[demo.component]
 
   return (
@@ -142,6 +142,25 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
         <section className="flex flex-col gap-4 [contain-intrinsic-size:auto_200px] [content-visibility:auto]">
           <h2 className="text-xl font-medium tracking-tight">アクセシビリティ</h2>
+          {keyboard.length > 0 && (
+            <table className="w-full max-w-[40rem] border-collapse text-sm">
+              <caption className="sr-only">キーボード操作</caption>
+              <thead>
+                <tr className="border-b border-site-border text-left text-site-muted">
+                  <th className="w-[14rem] py-2 pr-4 font-normal">キー</th>
+                  <th className="py-2 font-normal">動作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {keyboard.map((k) => (
+                  <tr key={k.keys} className="border-b border-site-border align-top">
+                    <td className="py-2 pr-4 font-mono text-[0.875em] text-site-fg">{k.keys}</td>
+                    <td className="py-2 text-site-muted">{k.action}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
           <ul className="flex list-disc flex-col gap-2 pl-6 max-w-[40rem] text-base leading-[1.6] text-site-muted">
             {/* 契約の @a11y をそのまま出す。ページごとに書き直すとテーマや実装とズレる */}
             {a11y !== null && <li>{a11y}</li>}

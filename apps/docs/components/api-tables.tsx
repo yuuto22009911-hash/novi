@@ -16,6 +16,7 @@ interface ComponentEntry {
   importName: string
   props: PropRow[]
   example: string | null
+  keyboard: { keys: string; action: string }[]
   slots: { all: string[]; required: string[] }
 }
 

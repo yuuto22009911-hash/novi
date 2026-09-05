@@ -47,6 +47,9 @@ export type RadioGroupRequiredSlot = (typeof radioGroupRequiredSlots)[number]
  *
  * @a11y radiogroup として提示され、矢印キーで項目間を移動する。Tab はグループ単位で出入りする
  *
+ * @keyboard ↑ ↓ ← →: 項目を移動して選ぶ
+ * @keyboard Tab: グループの外へ
+ *
  * @example
  * <RadioGroup label="配送方法" value={method} onChange={setMethod}>
  *   <Radio value="standard">通常</Radio>

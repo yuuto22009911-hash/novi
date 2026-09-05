@@ -130,6 +130,9 @@ export function createTools(source: ComponentIndex) {
       '## アクセシビリティ',
       '',
       component.a11y,
+      ...(component.keyboard.length > 0
+        ? ['', '## キーボード', '', ...component.keyboard.map((k) => `- ${k.keys}: ${k.action}`)]
+        : []),
       '',
       `> Novi UI ${version} の情報です。`,
     ].join('\n')

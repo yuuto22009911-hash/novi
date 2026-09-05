@@ -33,6 +33,9 @@ export type ModalRequiredSlot = (typeof modalRequiredSlots)[number]
  * @a11y 開いている間フォーカスは内側に閉じ込められ、Escape で閉じる
  * （`isKeyboardDismissDisabled` で無効化できる）。閉じるボタンには `aria-label` がある
  *
+ * @keyboard Tab / Shift+Tab: 中の要素を巡回（外へ出ない）
+ * @keyboard Escape: 閉じる
+ *
  * @example
  * <Modal isOpen={isOpen} onOpenChange={setIsOpen} size="md">
  *   <ModalTitle>削除しますか</ModalTitle>

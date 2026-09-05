@@ -18,6 +18,10 @@ export type TabsRequiredSlot = (typeof tabsRequiredSlots)[number]
  *
  * @a11y 矢印キーでタブ間を移動し、Tab キーはパネルへ移る。選択中のタブは `aria-selected`
  *
+ * @keyboard ← →（縦は ↑ ↓）: タブを移動して選ぶ
+ * @keyboard Home / End: 最初 / 最後のタブへ
+ * @keyboard Tab: パネルの中へ
+ *
  * @example
  * <Tabs selectedKey={tab} onSelectionChange={setTab}>
  *   <TabItems>

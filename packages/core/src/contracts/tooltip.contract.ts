@@ -21,6 +21,9 @@ export type TooltipRequiredSlot = (typeof tooltipRequiredSlots)[number]
  *
  * @a11y ホバーとフォーカスの両方で開く。触れないと読めないため、操作に必須の情報は置かない
  *
+ * @keyboard Tab（フォーカス）: 表示
+ * @keyboard Escape: 隠す
+ *
  * @example
  * <Tooltip content="コピーする">
  *   <Button>複製</Button>

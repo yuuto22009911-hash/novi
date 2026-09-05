@@ -180,7 +180,7 @@ ${components
 ${c.summary}${c.notes ? `\n\n${c.notes}` : ''}
 
 - Accessibility: ${c.a11y ?? '—'}
-- Slots (\`data-slot\`): ${c.slots.all.map((s) => `\`${s}\``).join(', ')} (required: ${c.slots.required.map((s) => `\`${s}\``).join(', ')})
+${c.keyboard.length > 0 ? `- Keyboard: ${c.keyboard.map((k) => `${k.keys} → ${k.action}`).join('; ')}\n` : ''}- Slots (\`data-slot\`): ${c.slots.all.map((s) => `\`${s}\``).join(', ')} (required: ${c.slots.required.map((s) => `\`${s}\``).join(', ')})
 - Docs: ${SITE}/docs/components/${slugOf(c.name)}/
 
 \`\`\`tsx
