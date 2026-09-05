@@ -16,8 +16,15 @@ export function Preview({
   children,
   className,
   color,
+  testId = 'preview',
   theme,
 }: {
+  /**
+   * `data-testid`。既定の `preview` は**ページに 1 つ**にする。
+   * 視覚回帰と e2e が `[data-testid="preview"]` を主デモとして厳密に引くため、
+   * 追加の例は `example` を渡して区別する。
+   */
+  testId?: string
   /**
    * 外枠と内側の余白を外す。
    *
@@ -47,7 +54,7 @@ export function Preview({
 
   return (
     <div
-      data-testid="preview"
+      data-testid={testId}
       {...{ [THEME_ATTR]: theme ?? selected }}
       {...(scheme === null ? {} : { [SCHEME_ATTR]: scheme })}
       {...(color === undefined ? {} : { 'data-novi-color': color })}
