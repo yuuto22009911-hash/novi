@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "node ../../scripts/generate-component-index.mjs --out apps/docs/.generated/component-index.json && node scripts/generate-llms-txt.mjs && node scripts/generate-modal-stage.mjs",
+    "generate": "node ../../scripts/generate-component-index.mjs --out apps/docs/.generated/component-index.json && node scripts/generate-llms-txt.mjs && node scripts/generate-modal-stage.mjs && node scripts/generate-registry.mjs",
     "dev": "pnpm generate && next dev",
     "build": "pnpm generate && next build",
     "start": "next start",
