@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { badgeStyles } from '../badge/badge.styles'
 import { buttonStyles } from '../button/button.styles'
 import { checkboxStyles } from '../checkbox/checkbox.styles'
+import { comboBoxStyles } from '../combo-box/combo-box.styles'
 import { inputStyles } from '../input/input.styles'
 import { numberFieldStyles } from '../number-field/number-field.styles'
 import { radioStyles } from '../radio/radio.styles'
@@ -27,6 +28,7 @@ const WITH_VARIANT: [name: string, styles: StyleFn, slot: string][] = [
   ['Button', buttonStyles as unknown as StyleFn, 'root'],
   ['Input', inputStyles as unknown as StyleFn, 'inputWrapper'],
   ['NumberField', numberFieldStyles as unknown as StyleFn, 'inputWrapper'],
+  ['ComboBox', comboBoxStyles as unknown as StyleFn, 'inputWrapper'],
   ['TextArea', textareaStyles as unknown as StyleFn, 'inputWrapper'],
   ['Select', selectStyles as unknown as StyleFn, 'trigger'],
   ['Badge', badgeStyles as unknown as StyleFn, 'root'],

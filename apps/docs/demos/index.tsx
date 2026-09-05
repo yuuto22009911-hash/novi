@@ -88,6 +88,24 @@ function NumberFieldDemo() {
   )
 }
 
+function ComboBoxDemo() {
+  const { ComboBox, ComboBoxItem } = useNoviTheme()
+  return (
+    <div className="w-full max-w-xs">
+      <ComboBox label="都道府県" placeholder="文字で絞り込めます">
+        <ComboBoxItem id="hokkaido">北海道</ComboBoxItem>
+        <ComboBoxItem id="miyagi">宮城県</ComboBoxItem>
+        <ComboBoxItem id="tokyo">東京都</ComboBoxItem>
+        <ComboBoxItem id="kanagawa">神奈川県</ComboBoxItem>
+        <ComboBoxItem id="aichi">愛知県</ComboBoxItem>
+        <ComboBoxItem id="osaka">大阪府</ComboBoxItem>
+        <ComboBoxItem id="hiroshima">広島県</ComboBoxItem>
+        <ComboBoxItem id="fukuoka">福岡県</ComboBoxItem>
+      </ComboBox>
+    </div>
+  )
+}
+
 function SelectDemo() {
   const { Select, SelectItem } = useNoviTheme()
   return (
@@ -315,6 +333,7 @@ export const DEMO_RENDERERS: Record<string, () => React.ReactNode> = {
   radio: () => <RadioDemo />,
   switch: () => <SwitchDemo />,
   numberfield: () => <NumberFieldDemo />,
+  combobox: () => <ComboBoxDemo />,
   select: () => <SelectDemo />,
   card: () => <CardDemo />,
   badge: () => <BadgeDemo />,

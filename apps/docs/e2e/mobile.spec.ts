@@ -83,6 +83,23 @@ for (const theme of THEME_NAMES) {
   })
 }
 
+for (const theme of THEME_NAMES) {
+  test(`${theme}: ComboBox を開いても横スクロールが発生しない`, async ({ page }) => {
+    await page.goto('/docs/components/combobox/')
+    await page.getByLabel('テーマ').selectOption(theme)
+
+    // 入力欄に文字を打って絞り込んだ状態。Flatlay はフロー内に展開して後続を押し下げる
+    const input = page.locator('[data-testid="preview"]').getByRole('combobox')
+    await input.fill('県')
+    await expect(page.locator('[data-slot="listbox"]')).toBeVisible()
+
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth,
+    )
+    expect(overflow).toBeLessThanOrEqual(0)
+  })
+}
+
 test('ヘッダーのリンクが1行のまま保たれ、タップターゲットが 44px 以上ある', async ({ page }) => {
   await page.goto('/')
 

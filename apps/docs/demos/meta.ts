@@ -82,9 +82,21 @@ export const DEMO_META: DemoMeta[] = [
 />`,
   },
   {
+    component: 'ComboBox',
+    title: 'ComboBox',
+    note: '選択肢が 20 件を超えるならこちら。値が決まっていて自由入力を許したくないなら Select、一覧に無い値も受けるなら allowsCustomValue。',
+    imports: ['ComboBox', 'ComboBoxItem'],
+    code: `<ComboBox label="都道府県">
+  <ComboBoxItem id="hokkaido">北海道</ComboBoxItem>
+  <ComboBoxItem id="tokyo">東京都</ComboBoxItem>
+  <ComboBoxItem id="osaka">大阪府</ComboBoxItem>
+  <ComboBoxItem id="fukuoka">福岡県</ComboBoxItem>
+</ComboBox>`,
+  },
+  {
     component: 'Select',
     title: 'Select',
-    note: '選択肢が多いなら検索できる ComboBox を使う（未実装）。20件を超えたら Select は苦しい。',
+    note: '選択肢が 20 件を超えたら、文字で絞り込める ComboBox を使う。Select は全部を目で追える数まで。',
     imports: ['Select', 'SelectItem'],
     code: `<Select label="都道府県">
   <SelectItem id="tokyo">東京都</SelectItem>

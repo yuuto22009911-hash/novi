@@ -170,6 +170,7 @@ describe('帳票の行（FR-07 / ADR-F7）', () => {
     ['button', flatlay.buttonStyles as StyleFn, 'root'],
     ['input', flatlay.inputStyles as StyleFn, 'inputWrapper'],
     ['number-field', flatlay.numberFieldStyles as StyleFn, 'inputWrapper'],
+    ['combo-box', flatlay.comboBoxStyles as StyleFn, 'inputWrapper'],
     ['select', flatlay.selectStyles as StyleFn, 'trigger'],
     ['tabs', flatlay.tabsStyles as StyleFn, 'tab'],
   ]
@@ -203,6 +204,7 @@ describe('MVP の網羅（G1 / AC-03-2）', () => {
     Checkbox: 'Checkbox',
     CheckboxGroup: 'CheckboxGroup',
     ColorPicker: 'ColorPicker',
+    ComboBox: 'ComboBox',
     Input: 'Input',
     Menu: 'Menu',
     Modal: 'Modal',
@@ -234,7 +236,7 @@ describe('MVP の網羅（G1 / AC-03-2）', () => {
     // Checkbox/CheckboxGroup、Radio/RadioGroup、Progress/Spinner は対で1コンポーネント
     const paired = ['CheckboxGroup', 'RadioGroup', 'Spinner']
     // MVP を締めたあとに足したもの。MVP の数（20）は歴史的な値として動かさない
-    const postMvp = ['ColorPicker', 'NumberField']
+    const postMvp = ['ColorPicker', 'NumberField', 'ComboBox']
     expect(Object.keys(IMPLEMENTED).length - paired.length - postMvp.length).toBe(
       NOVI_MVP_COMPONENT_COUNT,
     )

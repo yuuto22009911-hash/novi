@@ -169,3 +169,96 @@ describe('useImeSafeKeys', () => {
     clearSpy.mockRestore()
   })
 })
+
+describe('useImeSafeKeys: capture 段の遮断', () => {
+  /** 同じ input に別のハンドラ（React Aria が付けるもの相当）を並べる。 */
+  function WithSibling({ sibling }: { sibling: (key: string) => void }) {
+    const keyProps = useImeSafeKeys<HTMLInputElement>()
+    // React Aria は mergeProps で両方のハンドラを呼ぶ。同じ順序で並べる
+    return (
+      <input
+        aria-label="入力"
+        {...keyProps}
+        onKeyDown={(e) => {
+          keyProps.onKeyDown?.(e)
+          sibling(e.key)
+        }}
+      />
+    )
+  }
+
+  it('変換中の Enter は同じ要素の他のハンドラにも届かない', () => {
+    vi.useFakeTimers()
+    const sibling = vi.fn()
+    render(<WithSibling sibling={sibling} />)
+    const input = screen.getByLabelText('入力')
+
+    fireEvent.compositionStart(input)
+    fireEvent.keyDown(input, { key: 'Enter', isComposing: true })
+
+    expect(sibling).not.toHaveBeenCalled()
+    vi.useRealTimers()
+  })
+
+  it('isComposing が立たない環境（keyCode 229）でも他のハンドラに届かない', () => {
+    const sibling = vi.fn()
+    render(<WithSibling sibling={sibling} />)
+
+    fireEvent.keyDown(screen.getByLabelText('入力'), { key: 'Enter', keyCode: 229 })
+
+    expect(sibling).not.toHaveBeenCalled()
+  })
+
+  it('compositionend 直後の同一タスクでは他のハンドラに届かない', () => {
+    vi.useFakeTimers()
+    const sibling = vi.fn()
+    render(<WithSibling sibling={sibling} />)
+    const input = screen.getByLabelText('入力')
+
+    fireEvent.compositionStart(input)
+    fireEvent.compositionEnd(input)
+    fireEvent.keyDown(input, { key: 'Enter' })
+    expect(sibling).not.toHaveBeenCalled()
+
+    // 次のタスクで解除され、以後は届く
+    act(() => {
+      vi.advanceTimersByTime(1)
+    })
+    fireEvent.keyDown(input, { key: 'Enter' })
+    expect(sibling).toHaveBeenCalledTimes(1)
+    vi.useRealTimers()
+  })
+
+  it('capture を付けず onKeyDown だけを使っても抑制は効く（後方互換）', () => {
+    const handler = vi.fn()
+    function OnlyBubble() {
+      const { onKeyDown, onCompositionStart, onCompositionEnd } = useImeSafeKeys<HTMLInputElement>(
+        (event) => handler(event.key),
+      )
+      return (
+        <input
+          aria-label="入力"
+          onKeyDown={onKeyDown}
+          onCompositionStart={onCompositionStart}
+          onCompositionEnd={onCompositionEnd}
+        />
+      )
+    }
+    render(<OnlyBubble />)
+    const input = screen.getByLabelText('入力')
+
+    fireEvent.compositionStart(input)
+    fireEvent.keyDown(input, { key: 'Enter', isComposing: true })
+
+    expect(handler).not.toHaveBeenCalled()
+  })
+
+  it('変換していなければ他のハンドラに届く', () => {
+    const sibling = vi.fn()
+    render(<WithSibling sibling={sibling} />)
+
+    fireEvent.keyDown(screen.getByLabelText('入力'), { key: 'Enter' })
+
+    expect(sibling).toHaveBeenCalledExactlyOnceWith('Enter')
+  })
+})

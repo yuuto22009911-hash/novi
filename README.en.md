@@ -26,7 +26,7 @@ it changes how the DOM is assembled.
 | [`@novi-ui/flatlay`](https://www.npmjs.com/package/@novi-ui/flatlay) | Theme 3: no z-axis. Nothing floats; Modal becomes a full-page takeover |
 | [`@novi-ui/mcp`](https://www.npmjs.com/package/@novi-ui/mcp) | MCP server for AI agents. Read-only and offline |
 
-All three themes implement **23 components (25 contracts)** and expose an identical public API.
+All three themes implement **24 components (26 contracts)** and expose an identical public API.
 
 ## Getting started
 

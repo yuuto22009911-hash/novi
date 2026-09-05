@@ -48,6 +48,13 @@ export {
   type ColorPickerStyleProps,
   colorPickerStyles,
 } from './color-picker'
+export {
+  ComboBox,
+  ComboBoxItem,
+  type ComboBoxItemProps,
+  type ComboBoxStyleProps,
+  comboBoxStyles,
+} from './combo-box'
 export { Input, type InputStyleProps, inputStyles } from './input'
 export {
   Menu,
