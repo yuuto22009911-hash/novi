@@ -16,6 +16,7 @@ import { inputRequiredSlots, inputSlots } from './input.contract'
 import { menuRequiredSlots, menuSlots } from './menu.contract'
 import { modalRequiredSlots, modalSlots } from './modal.contract'
 import { numberFieldRequiredSlots, numberFieldSlots } from './number-field.contract'
+import { paginationRequiredSlots, paginationSlots } from './pagination.contract'
 import { popoverRequiredSlots, popoverSlots } from './popover.contract'
 import {
   progressRequiredSlots,
@@ -67,6 +68,7 @@ export const NOVI_CONTRACTS = {
   Menu: { slots: menuSlots, required: menuRequiredSlots },
   Modal: { slots: modalSlots, required: modalRequiredSlots },
   NumberField: { slots: numberFieldSlots, required: numberFieldRequiredSlots },
+  Pagination: { slots: paginationSlots, required: paginationRequiredSlots },
   Popover: { slots: popoverSlots, required: popoverRequiredSlots },
   Progress: { slots: progressSlots, required: progressRequiredSlots },
   Radio: { slots: radioSlots, required: radioRequiredSlots },

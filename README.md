@@ -23,7 +23,7 @@ React Aria Components を土台にした React UI ライブラリ。
 | [`@novi-ui/flatlay`](https://www.npmjs.com/package/@novi-ui/flatlay) | テーマ3: z 軸なし。浮く層が無く、Modal は全画面のテイクオーバーになる   |
 | [`@novi-ui/mcp`](https://www.npmjs.com/package/@novi-ui/mcp)         | AI エージェント向け MCP サーバ。読み取り専用・オフライン                |
 
-3テーマとも **24 コンポーネント（26 契約）** を実装し、公開 API は完全に同一。
+3テーマとも **25 コンポーネント（27 契約）** を実装し、公開 API は完全に同一。
 
 ## 使い始める
 

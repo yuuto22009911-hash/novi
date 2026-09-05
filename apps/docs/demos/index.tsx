@@ -119,6 +119,11 @@ function SelectDemo() {
   )
 }
 
+function PaginationDemo() {
+  const { Pagination } = useNoviTheme()
+  return <Pagination total={12} defaultPage={5} />
+}
+
 function CardDemo() {
   const { Card, CardBody, CardFooter, CardHeader } = useNoviTheme()
   return (
@@ -335,6 +340,7 @@ export const DEMO_RENDERERS: Record<string, () => React.ReactNode> = {
   numberfield: () => <NumberFieldDemo />,
   combobox: () => <ComboBoxDemo />,
   select: () => <SelectDemo />,
+  pagination: () => <PaginationDemo />,
   card: () => <CardDemo />,
   badge: () => <BadgeDemo />,
   avatar: () => <AvatarDemo />,

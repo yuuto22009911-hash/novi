@@ -12,6 +12,11 @@
 
 export { type ImeSafeKeyProps, useImeSafeKeys } from '../hooks/use-ime-safe-keys'
 export {
+  type PaginationRangeOptions,
+  type PaginationSlot as PaginationRangeSlot,
+  paginationRange,
+} from '../pagination/range'
+export {
   INFLOW_PORTAL_PROP,
   type InflowPortalProps,
   InflowPortalProvider,
