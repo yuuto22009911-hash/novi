@@ -55,6 +55,7 @@ export {
   type ComboBoxStyleProps,
   comboBoxStyles,
 } from './combo-box'
+export { DatePicker, type DatePickerStyleProps, datePickerStyles } from './date-picker'
 export { Input, type InputStyleProps, inputStyles } from './input'
 export {
   Menu,

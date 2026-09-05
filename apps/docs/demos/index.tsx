@@ -1,5 +1,6 @@
 'use client'
 
+import { parseDate } from '@internationalized/date'
 import { useState } from 'react'
 import { useNoviTheme } from '../lib/theme-components'
 
@@ -102,6 +103,20 @@ function ComboBoxDemo() {
         <ComboBoxItem id="hiroshima">広島県</ComboBoxItem>
         <ComboBoxItem id="fukuoka">福岡県</ComboBoxItem>
       </ComboBox>
+    </div>
+  )
+}
+
+function DatePickerDemo() {
+  const { DatePicker } = useNoviTheme()
+  return (
+    <div className="w-full max-w-xs">
+      <DatePicker
+        label="出荷日"
+        defaultValue={parseDate('2026-09-05')}
+        minValue={parseDate('2026-09-01')}
+        description="9月1日以降"
+      />
     </div>
   )
 }
@@ -382,6 +397,7 @@ export const DEMO_RENDERERS: Record<string, () => React.ReactNode> = {
   switch: () => <SwitchDemo />,
   numberfield: () => <NumberFieldDemo />,
   combobox: () => <ComboBoxDemo />,
+  datepicker: () => <DatePickerDemo />,
   select: () => <SelectDemo />,
   pagination: () => <PaginationDemo />,
   table: () => <TableDemo />,

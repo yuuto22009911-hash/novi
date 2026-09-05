@@ -94,6 +94,18 @@ export const DEMO_META: DemoMeta[] = [
 </ComboBox>`,
   },
   {
+    component: 'DatePicker',
+    title: 'DatePicker',
+    note: '値は文字列でも Date でもなく @internationalized/date の CalendarDate。parseDate("2026-09-05") で作る。期間を選ぶ用途は未実装。',
+    imports: ['DatePicker'],
+    code: `// import { parseDate, today, getLocalTimeZone } from '@internationalized/date'
+<DatePicker
+  label="出荷日"
+  defaultValue={parseDate('2026-09-05')}
+  minValue={today(getLocalTimeZone())}
+/>`,
+  },
+  {
     component: 'Select',
     title: 'Select',
     note: '選択肢が 20 件を超えたら、文字で絞り込める ComboBox を使う。Select は全部を目で追える数まで。',
