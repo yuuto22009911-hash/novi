@@ -76,6 +76,7 @@ export {
   modalStyles,
 } from './modal'
 export { NumberField, type NumberFieldStyleProps, numberFieldStyles } from './number-field'
+export { Pagination, type PaginationStyleProps, paginationStyles } from './pagination'
 export { Popover, PopoverContent, type PopoverStyleProps, popoverStyles } from './popover'
 export { Progress, type ProgressStyleProps, progressStyles } from './progress'
 export {

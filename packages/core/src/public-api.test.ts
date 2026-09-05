@@ -54,6 +54,8 @@ describe('メインエントリ', () => {
         "modalSlots",
         "numberFieldRequiredSlots",
         "numberFieldSlots",
+        "paginationRequiredSlots",
+        "paginationSlots",
         "popoverRequiredSlots",
         "popoverSlots",
         "progressRequiredSlots",
@@ -109,6 +111,7 @@ describe('client エントリ', () => {
         "ToastRegion",
         "ToastStateContext",
         "inflowPortalProps",
+        "paginationRange",
         "useImeSafeKeys",
       ]
     `)

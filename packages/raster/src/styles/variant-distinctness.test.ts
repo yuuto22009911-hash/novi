@@ -6,6 +6,7 @@ import { checkboxStyles } from '../checkbox/checkbox.styles'
 import { comboBoxStyles } from '../combo-box/combo-box.styles'
 import { inputStyles } from '../input/input.styles'
 import { numberFieldStyles } from '../number-field/number-field.styles'
+import { paginationStyles } from '../pagination/pagination.styles'
 import { radioStyles } from '../radio/radio.styles'
 import { selectStyles } from '../select/select.styles'
 import { switchStyles } from '../switch/switch.styles'
@@ -40,6 +41,7 @@ const WITH_SIZE: [name: string, styles: StyleFn, slot: string][] = [
   ['Checkbox', checkboxStyles as unknown as StyleFn, 'control'],
   ['Radio', radioStyles as unknown as StyleFn, 'control'],
   ['Switch', switchStyles as unknown as StyleFn, 'track'],
+  ['Pagination', paginationStyles as unknown as StyleFn, 'item'],
 ]
 
 /** color 語彙を持つコンポーネント。 */

@@ -104,6 +104,13 @@ export const DEMO_META: DemoMeta[] = [
 </Select>`,
   },
   {
+    component: 'Pagination',
+    title: 'Pagination',
+    note: '一覧は 1 画面で読み切れる件数で切る。無限スクロールは読み終わりが分からず、業務の一覧では戻れないことが嫌われる。',
+    imports: ['Pagination'],
+    code: `<Pagination total={12} defaultPage={5} />`,
+  },
+  {
     component: 'Card',
     title: 'Card',
     note: 'カード全体を押せるようにするなら onPress を渡す。中にボタンを置くと押し分けが曖昧になる。',
