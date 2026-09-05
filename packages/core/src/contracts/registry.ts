@@ -33,6 +33,7 @@ import {
 import { selectRequiredSlots, selectSlots } from './select.contract'
 import { skeletonRequiredSlots, skeletonSlots } from './skeleton.contract'
 import { switchRequiredSlots, switchSlots } from './switch.contract'
+import { tableRequiredSlots, tableSlots } from './table.contract'
 import { tabsRequiredSlots, tabsSlots } from './tabs.contract'
 import { textareaRequiredSlots, textareaSlots } from './textarea.contract'
 import { toastRequiredSlots, toastSlots } from './toast.contract'
@@ -77,6 +78,7 @@ export const NOVI_CONTRACTS = {
   Skeleton: { slots: skeletonSlots, required: skeletonRequiredSlots },
   Spinner: { slots: spinnerSlots, required: spinnerRequiredSlots },
   Switch: { slots: switchSlots, required: switchRequiredSlots },
+  Table: { slots: tableSlots, required: tableRequiredSlots },
   Tabs: { slots: tabsSlots, required: tabsRequiredSlots },
   Textarea: { slots: textareaSlots, required: textareaRequiredSlots },
   Toast: { slots: toastSlots, required: toastRequiredSlots },

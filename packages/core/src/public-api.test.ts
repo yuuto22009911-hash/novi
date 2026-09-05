@@ -72,6 +72,8 @@ describe('メインエントリ', () => {
         "spinnerSlots",
         "switchRequiredSlots",
         "switchSlots",
+        "tableRequiredSlots",
+        "tableSlots",
         "tabsRequiredSlots",
         "tabsSlots",
         "textareaRequiredSlots",

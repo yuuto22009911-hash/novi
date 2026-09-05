@@ -111,6 +111,26 @@ export const DEMO_META: DemoMeta[] = [
     code: `<Pagination total={12} defaultPage={5} />`,
   },
   {
+    component: 'Table',
+    title: 'Table',
+    note: '列が 5 つを超えるなら、狭い画面では表ではなく 1 件 1 ブロックに組み替える。表は横にスクロールさせ、ページはさせない。',
+    imports: ['Table', 'TableBody', 'TableCell', 'TableColumn', 'TableHeader', 'TableRow'],
+    code: `<Table aria-label="注文一覧" sortDescriptor={sort} onSortChange={setSort}>
+  <TableHeader>
+    <TableColumn id="no" isRowHeader>注文番号</TableColumn>
+    <TableColumn id="customer">顧客</TableColumn>
+    <TableColumn id="amount" allowsSorting align="end">金額</TableColumn>
+  </TableHeader>
+  <TableBody renderEmptyState={() => '該当する注文はありません'}>
+    <TableRow id="1042">
+      <TableCell>#1042</TableCell>
+      <TableCell>山田 花子</TableCell>
+      <TableCell align="end">¥12,800</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`,
+  },
+  {
     component: 'Card',
     title: 'Card',
     note: 'カード全体を押せるようにするなら onPress を渡す。中にボタンを置くと押し分けが曖昧になる。',

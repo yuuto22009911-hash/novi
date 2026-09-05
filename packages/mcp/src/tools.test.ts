@@ -153,9 +153,16 @@ describe('search_components（AC-04-4 / FR-06 / ADR-A4）', () => {
   })
 
   it('未実装の語が実装済みの語に部分一致しても引っかからない', () => {
-    // `table` が `tab` に当たると、Table を Tabs として答えてしまう
-    const output = searchComponents('データを table で並べたい')
+    // `toaster` が `toast` に当たると、無関係なものを Toast として答えてしまう
+    // （Table が入るまでは `table` → `tab` で検査していた）
+    const output = searchComponents('toaster の設定画面')
     expect(output).not.toContain('一致したコンポーネント')
+  })
+
+  it('table は Table に当たり、Tabs には当たらない', () => {
+    const output = searchComponents('データを table で並べたい')
+    expect(output).toContain('Table')
+    expect(output).not.toMatch(/\bTabs\b/)
   })
 
   it('空の検索語には検索語を求める', () => {

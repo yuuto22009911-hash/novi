@@ -39,6 +39,7 @@ const IMPLEMENTED: Record<string, string> = {
   Skeleton: 'Skeleton',
   Spinner: 'Spinner',
   Switch: 'Switch',
+  Table: 'Table',
   Tabs: 'Tabs',
   Textarea: 'TextArea',
   Toast: 'NoviToastRegion',
@@ -59,7 +60,7 @@ describe('MVP の網羅（T-34）', () => {
     // Checkbox/CheckboxGroup、Radio/RadioGroup、Progress/Spinner は対で1コンポーネント
     const paired = ['CheckboxGroup', 'RadioGroup', 'Spinner']
     // MVP を締めたあとに足したもの。MVP の数（20）は歴史的な値として動かさない
-    const postMvp = ['ColorPicker', 'NumberField', 'ComboBox', 'Pagination']
+    const postMvp = ['ColorPicker', 'NumberField', 'ComboBox', 'Pagination', 'Table']
     expect(Object.keys(IMPLEMENTED).length - paired.length - postMvp.length).toBe(
       NOVI_MVP_COMPONENT_COUNT,
     )

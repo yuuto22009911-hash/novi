@@ -15,7 +15,7 @@ pnpm add @novi-ui/core
 | # | 責務 | 具体物 |
 |---|---|---|
 | 1 | 公開 API の型契約 | `NoviVariant` / `NoviSize` / `NoviColor` / `NoviRadius` と `VariantMap` |
-| 2 | slot 語彙 | 27 契約（25 コンポーネント）分の slot 名と必須/任意の区別、`NOVI_CONTRACTS` |
+| 2 | slot 語彙 | 28 契約（26 コンポーネント）分の slot 名と必須/任意の区別、`NOVI_CONTRACTS` |
 | 3 | 挙動フック | `useImeSafeKeys`（日本語入力の誤送信対策） |
 | 4 | トークン規約 | `--novi-*` の命名規則、`base.css`（reset / `@layer` / ライト・ダーク） |
 | 5 | 不安定 API の封じ込め | 上流の `UNSTABLE_*` を安定名で再公開 |

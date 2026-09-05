@@ -124,6 +124,49 @@ function PaginationDemo() {
   return <Pagination total={12} defaultPage={5} />
 }
 
+const TABLE_ROWS = [
+  { id: '1042', customer: '山田 花子', amount: 12800 },
+  { id: '1043', customer: '佐藤 健', amount: 4200 },
+  { id: '1044', customer: '鈴木 一郎', amount: 31000 },
+  { id: '1045', customer: '高橋 美咲', amount: 9800 },
+]
+
+function TableDemo() {
+  const { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } = useNoviTheme()
+  const [sort, setSort] = useState<{ column: string; direction: 'ascending' | 'descending' }>({
+    column: 'amount',
+    direction: 'descending',
+  })
+  const rows = [...TABLE_ROWS].sort((a, b) =>
+    sort.direction === 'ascending' ? a.amount - b.amount : b.amount - a.amount,
+  )
+  return (
+    // 表は自分の枠の中で横にスクロールする。ページは横に伸びない（ADR-B5）
+    <div className="w-full overflow-x-auto">
+      <Table aria-label="注文一覧" sortDescriptor={sort} onSortChange={setSort}>
+        <TableHeader>
+          <TableColumn id="no" isRowHeader>
+            注文番号
+          </TableColumn>
+          <TableColumn id="customer">顧客</TableColumn>
+          <TableColumn id="amount" allowsSorting align="end">
+            金額
+          </TableColumn>
+        </TableHeader>
+        <TableBody renderEmptyState={() => '該当する注文はありません'}>
+          {rows.map((r) => (
+            <TableRow key={r.id} id={r.id}>
+              <TableCell>#{r.id}</TableCell>
+              <TableCell>{r.customer}</TableCell>
+              <TableCell align="end">¥{r.amount.toLocaleString('ja-JP')}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
+}
+
 function CardDemo() {
   const { Card, CardBody, CardFooter, CardHeader } = useNoviTheme()
   return (
@@ -341,6 +384,7 @@ export const DEMO_RENDERERS: Record<string, () => React.ReactNode> = {
   combobox: () => <ComboBoxDemo />,
   select: () => <SelectDemo />,
   pagination: () => <PaginationDemo />,
+  table: () => <TableDemo />,
   card: () => <CardDemo />,
   badge: () => <BadgeDemo />,
   avatar: () => <AvatarDemo />,
