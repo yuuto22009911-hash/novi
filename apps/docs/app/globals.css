@@ -29,21 +29,11 @@
 }
 
 @layer base {
+  /* サイト UI はライトだけ。OS のダーク設定には追従しない（2026-09-05 決定）。
+     ダークを見せるのはプレビューの中だけで、ヘッダーの「ダーク」で明示的に切り替える。
+     色見本を比べる場所なので、外枠は常に同じ明るさに固定する */
   :root {
-    color-scheme: light dark;
-  }
-
-  /* サイト UI のダークは prefers-color-scheme で決める。
-     テーマ切替（プレビュー内）とは別系統 */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-site-bg: oklch(15% 0 0);
-      --color-site-fg: oklch(95% 0 0);
-      --color-site-muted: oklch(70% 0 0);
-      --color-site-border: oklch(27% 0 0);
-      --color-site-subtle: oklch(20% 0 0);
-      --color-site-accent: oklch(74% 0.14 250);
-    }
+    color-scheme: light;
   }
 
   body {

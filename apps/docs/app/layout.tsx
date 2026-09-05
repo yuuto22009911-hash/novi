@@ -65,8 +65,7 @@ const initScript = `
 try {
   var d = document.documentElement;
   d.setAttribute('${THEME_ATTR}', localStorage.getItem('${STORAGE_KEY.theme}') || '${DEFAULT_THEME}');
-  var s = localStorage.getItem('${STORAGE_KEY.scheme}');
-  if (s) d.setAttribute('${SCHEME_ATTR}', s);
+  d.setAttribute('${SCHEME_ATTR}', localStorage.getItem('${STORAGE_KEY.scheme}') || 'light');
 } catch (e) {}
 `.trim()
 

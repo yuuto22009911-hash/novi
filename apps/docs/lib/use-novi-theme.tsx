@@ -28,7 +28,8 @@ const ThemeContext = createContext<ThemeState | null>(null)
  */
 export function NoviThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<ThemeName>(DEFAULT_THEME)
-  const [scheme, setSchemeState] = useState<ColorScheme | null>(null)
+  // プレビューは OS に追従させず light から始める。ダークはヘッダーで明示的に選ぶ
+  const [scheme, setSchemeState] = useState<ColorScheme | null>('light')
 
   useEffect(() => {
     const root = document.documentElement

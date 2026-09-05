@@ -28,26 +28,28 @@ test('スキーム切替が全体に効き、リロード後も維持される�
   await expect(page.locator('html')).toHaveAttribute('data-novi-scheme', 'dark')
 })
 
-test('明示的な light 指定が OS 設定より優先される（AC-06-3 / core）', async ({ browser }) => {
+test('OS がダークでもサイトとプレビューはライトで始まり、ダークは明示的に選ぶ', async ({
+  browser,
+}) => {
   // OS がダーク設定の環境を再現する
   const context = await browser.newContext({ colorScheme: 'dark' })
   const page = await context.newPage()
   await page.goto('/docs/components/button/')
 
-  const preview = page.locator('[data-testid="preview"]')
-
-  // スキーム未指定。OS がダークなのでダーク値が使われるはず
-  const osDrivenBg = await preview.evaluate((el) => getComputedStyle(el).backgroundColor)
-
-  // 明示的に light を選ぶ（トグルなので2回押して light に到達させる）
-  await page.getByRole('button', { name: 'ダーク' }).click()
-  await page.getByRole('button', { name: 'ライト' }).click()
+  // サイト UI は OS に追従しない（2026-09-05 決定）。プレビューも light で始まる
   await expect(page.locator('html')).toHaveAttribute('data-novi-scheme', 'light')
+  const body = page.locator('body')
+  const preview = page.locator('[data-testid="preview"]')
+  const lightBody = await body.evaluate((el) => getComputedStyle(el).backgroundColor)
+  const lightPreview = await preview.evaluate((el) => getComputedStyle(el).backgroundColor)
 
-  const explicitLightBg = await preview.evaluate((el) => getComputedStyle(el).backgroundColor)
-
-  // OS がダークでも、明示 light ならライト値が勝つ
-  expect(explicitLightBg).not.toBe(osDrivenBg)
+  // ダークはヘッダーで明示的に選んだときだけ。効くのはプレビューで、サイト UI は変わらない
+  await page.getByRole('button', { name: 'ダーク' }).click()
+  await expect(page.locator('html')).toHaveAttribute('data-novi-scheme', 'dark')
+  expect(await preview.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe(
+    lightPreview,
+  )
+  expect(await body.evaluate((el) => getComputedStyle(el).backgroundColor)).toBe(lightBody)
   await context.close()
 })
 
