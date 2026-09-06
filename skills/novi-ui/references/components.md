@@ -1,6 +1,6 @@
 # Novi UI — component reference
 
-Generated from the slot contracts (version 0.5.0). Props are identical across
+Generated from the slot contracts (version 0.6.0). Props are identical across
 `@novi-ui/raster`, `@novi-ui/tactile` and `@novi-ui/flatlay`; only the import package changes.
 
 ## Accordion

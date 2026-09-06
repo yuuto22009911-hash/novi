@@ -24,6 +24,7 @@
     "release": "turbo run build && pnpm publish -r --access public --no-git-checks",
     "check:changeset": "node scripts/check-changeset-mcp.mjs",
     "generate:skill": "node apps/docs/scripts/generate-skill.mjs",
+    "version-packages": "changeset version && node scripts/generate-component-index.mjs --out apps/docs/.generated/component-index.json && pnpm generate:skill",
     "check:skill": "node scripts/check-skill.mjs"
   },
   "devDependencies": {
