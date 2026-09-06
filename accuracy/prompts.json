@@ -3,138 +3,233 @@
   "prompts": [
     {
       "id": "button",
-      "components": ["Button"],
+      "components": [
+        "Button"
+      ],
       "instruction": "保存と取消のボタンを横に並べてください。保存の方を目立たせ、保存中は押せないようにしてください。"
     },
     {
       "id": "input",
-      "components": ["Input"],
+      "components": [
+        "Input"
+      ],
       "instruction": "メールアドレスを入力させるフォームの一部を作ってください。必須で、何に使うかの説明も添えてください。"
     },
     {
       "id": "textarea",
-      "components": ["Textarea"],
+      "components": [
+        "Textarea"
+      ],
       "instruction": "問い合わせ内容を書かせる複数行の入力欄を作ってください。500文字までであることを伝えてください。"
     },
     {
       "id": "checkbox",
-      "components": ["Checkbox"],
+      "components": [
+        "Checkbox"
+      ],
       "instruction": "利用規約に同意させるチェックを1つ作ってください。"
     },
     {
       "id": "checkbox-group",
-      "components": ["Checkbox", "CheckboxGroup"],
+      "components": [
+        "Checkbox",
+        "CheckboxGroup"
+      ],
       "instruction": "通知の受け取り方を、メール・SMS・アプリの中から複数選ばせてください。"
     },
     {
       "id": "radio-group",
-      "components": ["Radio", "RadioGroup"],
+      "components": [
+        "Radio",
+        "RadioGroup"
+      ],
       "instruction": "配送方法を、通常と速達のどちらか1つだけ選ばせてください。"
     },
     {
       "id": "select",
-      "components": ["Select"],
+      "components": [
+        "Select"
+      ],
       "instruction": "都道府県を一覧から1つ選ばせてください。選択肢は東京都・大阪府・北海道の3つで構いません。"
     },
     {
       "id": "switch",
-      "components": ["Switch"],
+      "components": [
+        "Switch"
+      ],
       "instruction": "メール通知を受け取るかどうかを切り替えられるようにしてください。"
     },
     {
       "id": "modal",
-      "components": ["Modal", "Button"],
+      "components": [
+        "Modal",
+        "Button"
+      ],
       "instruction": "削除の確認ダイアログを作ってください。取り消せないことを伝え、削除と取消のボタンを置いてください。"
     },
     {
       "id": "popover",
-      "components": ["Popover", "Button"],
+      "components": [
+        "Popover",
+        "Button"
+      ],
       "instruction": "「詳細」ボタンを押すと、補足の文章が浮かんで出るようにしてください。"
     },
     {
       "id": "tooltip",
-      "components": ["Tooltip", "Button"],
+      "components": [
+        "Tooltip",
+        "Button"
+      ],
       "instruction": "複製ボタンに「コピーする」という補足を、ホバーで出るようにしてください。"
     },
     {
       "id": "menu",
-      "components": ["Menu", "Button"],
+      "components": [
+        "Menu",
+        "Button"
+      ],
       "instruction": "「操作」ボタンから、名前の変更と削除を選べるメニューを作ってください。"
     },
     {
       "id": "tabs",
-      "components": ["Tabs"],
+      "components": [
+        "Tabs"
+      ],
       "instruction": "プロフィールと設定を切り替えるタブを作ってください。中身は文章1行で構いません。"
     },
     {
       "id": "accordion",
-      "components": ["Accordion"],
+      "components": [
+        "Accordion"
+      ],
       "instruction": "よくある質問を3つ、折りたたんだ状態で並べてください。"
     },
     {
       "id": "card",
-      "components": ["Card"],
+      "components": [
+        "Card"
+      ],
       "instruction": "今月の売上を見せる区画を作ってください。見出しと数字を分けて表示してください。"
     },
     {
       "id": "badge",
-      "components": ["Badge"],
+      "components": [
+        "Badge"
+      ],
       "instruction": "「公開中」という状態を示す小さなラベルを作ってください。"
     },
     {
       "id": "avatar",
-      "components": ["Avatar"],
+      "components": [
+        "Avatar"
+      ],
       "instruction": "利用者の顔写真を表示してください。画像が読めなかったときは名前の頭文字が出るようにしてください。"
     },
     {
       "id": "breadcrumbs",
-      "components": ["Breadcrumbs"],
+      "components": [
+        "Breadcrumbs"
+      ],
       "instruction": "ホーム → ドキュメント → Button という現在地の表示を作ってください。"
     },
     {
       "id": "progress",
-      "components": ["Progress"],
+      "components": [
+        "Progress"
+      ],
       "instruction": "アップロードの進み具合を62%として表示してください。"
     },
     {
       "id": "spinner",
-      "components": ["Spinner"],
+      "components": [
+        "Spinner"
+      ],
       "instruction": "読み込み中であることを示す表示を作ってください。"
     },
     {
       "id": "skeleton",
-      "components": ["Skeleton"],
+      "components": [
+        "Skeleton"
+      ],
       "instruction": "本文が読み込まれるまでの場所取りを2行分出してください。"
     },
     {
       "id": "colorpicker",
-      "components": ["ColorPicker"],
+      "components": [
+        "ColorPicker"
+      ],
       "instruction": "画面の配色を利用者に選ばせたい。用意されている色を並べて、選んだ色が画面に反映されるようにしてください。"
     },
     {
       "id": "toast",
-      "components": ["Toast"],
+      "components": [
+        "Toast"
+      ],
       "instruction": "保存が終わったときに「保存しました」と一時的に知らせてください。"
     },
     {
       "id": "theme-tactile-sheet",
-      "components": ["Modal"],
+      "components": [
+        "Modal"
+      ],
       "instruction": "スマートフォン向けのアプリで、削除の確認を出してください。指で操作する前提のテーマを使ってください。"
     },
     {
       "id": "theme-tactile-color",
-      "components": ["Button"],
+      "components": [
+        "Button"
+      ],
       "instruction": "指で操作する前提のテーマを使い、送信ボタンを茜色にしてください。"
     },
     {
       "id": "theme-flatlay-inflow",
-      "components": ["Select"],
+      "components": [
+        "Select"
+      ],
       "instruction": "紙に印刷して配る注文書の画面を作ってください。開いた選択肢が他の内容に重ならないテーマを使い、数量を選ばせてください。"
     },
     {
       "id": "theme-flatlay-color",
-      "components": ["Button"],
+      "components": [
+        "Button"
+      ],
       "instruction": "重なりを作らないテーマを使い、確定ボタンを青焼き図面の青にしてください。"
+    },
+    {
+      "id": "number-field",
+      "components": [
+        "NumberField"
+      ],
+      "instruction": "購入する個数を入力させてください。1以上10以下で、1ずつ増やしたり減らしたりできるボタンも付けてください。"
+    },
+    {
+      "id": "combo-box",
+      "components": [
+        "ComboBox"
+      ],
+      "instruction": "担当者を、名前を打ち込んで候補を絞り込みながら一覧から1人選ばせてください。候補は佐藤・鈴木・高橋の3人で構いません。"
+    },
+    {
+      "id": "pagination",
+      "components": [
+        "Pagination"
+      ],
+      "instruction": "全部で12ページある一覧の、ページを切り替える部品を作ってください。いま3ページ目にいる状態にしてください。"
+    },
+    {
+      "id": "table",
+      "components": [
+        "Table"
+      ],
+      "instruction": "注文の一覧を、注文番号・顧客名・金額の3列で表にしてください。行は3件で構いません。"
+    },
+    {
+      "id": "date-picker",
+      "components": [
+        "DatePicker"
+      ],
+      "instruction": "配送希望日を選ばせてください。今日より前の日は選べないようにしてください。"
     }
   ]
 }
