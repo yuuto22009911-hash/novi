@@ -65,12 +65,15 @@ jobs:
       # publish に npm を経由しないため更新自体が不要。
 
       # changeset があれば version PR を作り、無ければ publish する。
+      # version では Skill も生成し直す。Skill はバージョン文字列を埋め込んでいるので、
+      # package.json だけ上がると check:skill が「古い」と判定して publish 前に止まる
+      # （2026-09-06 に実際に発生）
       # NODE_AUTH_TOKEN は**設定しない**。空文字でも値として扱われ OIDC に落ちない
       - name: リリース（Changesets + OIDC）
         uses: changesets/action@v1
         with:
           publish: pnpm release
-          version: pnpm changeset version
+          version: pnpm version-packages
           commit: 'chore: release packages'
           title: 'chore: release packages'
         env:

@@ -8,7 +8,7 @@ description: Build React UI with Novi UI (@novi-ui/core plus the raster / tactil
 
 One core, several aesthetics. `@novi-ui/core` owns behaviour, accessibility and the slot
 contracts; a theme package owns structure and style. Switching themes changes how the DOM is
-assembled, not just colours. Version 0.5.0, 29 slot contracts.
+assembled, not just colours. Version 0.6.0, 29 slot contracts.
 
 Full reference: [references/components.md](references/components.md) (props, slots, examples).
 Live docs (Japanese): https://novi-42r.pages.dev — English entry: https://novi-42r.pages.dev/en/
