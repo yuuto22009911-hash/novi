@@ -15,6 +15,31 @@ import { COLOR_SET, cssVariableName, TOKEN_GROUPS } from './tokens.data.mjs'
 const HEADER =
   '/* 自動生成。編集しないこと。src/tokens/raster-tokens.ts と color-set.ts を変更して再生成する。 */\n'
 
+/**
+ * `*.styles.ts` が参照するキーフレーム。**テーマの CSS が持つ。**
+ *
+ * モーションはテーマの美学に属するので core には置かない（core は CSS を持たない原則）。
+ * 参照する側（`animate-[…]`）と定義する側を同じ生成物に置き、
+ * `colors.test.ts` が両者の突き合わせを検査する — 定義漏れは参照だけでは何も起きず、
+ * 静止画としては正しいのでテストも視覚回帰も気づけない。
+ *
+ * `prefers-reduced-motion` の尊重は利用側の `motion-safe:` 修飾子が担う。
+ *
+ * Raster の動きは opacity と translate だけ（ADR-R2）。`novi-indeterminate` の
+ * 移動量は Progress の indicator が軌道の 1/3 幅であることに合わせてあり、
+ * 両端で完全に隠れる。
+ */
+const KEYFRAMES = `  @keyframes novi-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes novi-indeterminate {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(300%); }
+  }
+`
+
 /** @param {Record<string,string>} tokens @param {string} prefix @param {string} indent */
 const decls = (tokens, prefix, indent) =>
   Object.entries(tokens)
@@ -128,6 +153,7 @@ function colorSection(sel) {
 export function buildGlobalCss() {
   return `${HEADER}
 @layer novi.base {
+${KEYFRAMES}
 ${tokenBlock(':root', '  ')}
 
 ${darkBlock("[data-novi-scheme='dark']", '  ')}
@@ -149,6 +175,7 @@ ${colorSection({
 export function buildScopedCss() {
   return `${HEADER}
 @layer novi.base {
+${KEYFRAMES}
 ${tokenBlock("[data-novi-theme='raster']", '  ')}
 
 ${darkBlock("[data-novi-theme='raster'][data-novi-scheme='dark']", '  ')}

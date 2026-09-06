@@ -1,3 +1,5 @@
+import { readdirSync, readFileSync } from 'node:fs'
+import { basename, join } from 'node:path'
 import { chromaOf, contrastRatio, parseOklch } from '@novi-ui/core/testing'
 import { describe, expect, it } from 'vitest'
 import { buildGlobalCss, buildScopedCss } from '../../scripts/theme-css.mjs'
@@ -121,6 +123,36 @@ function blockOf(css: string, selector: string): { body: string; index: number }
   return { body: m[1] as string, index: m.index }
 }
 
+/** `src` 配下の実装ファイル。テストは対象外（説明のために禁止語を書くことがある）。 */
+function sourceFiles(dir: string): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name)
+    if (entry.isDirectory()) return sourceFiles(full)
+    return /\.tsx?$/.test(entry.name) && !/\.test\.tsx?$/.test(entry.name) ? [full] : []
+  })
+}
+
+/**
+ * `animate-[novi-fade-in_120ms_ease-out]` のような任意値から animation 名だけを取り出す。
+ * 名前 → 参照しているファイル名。
+ *
+ * Tailwind の任意値では空白が `_` になるので、名前は shorthand の先頭トークン。
+ * `\w` は `_` を含むため区切りを食う — 文字クラスは明示的に書く。
+ * Tailwind 組み込みの `animate-spin` は対象外（定義は Tailwind が持つ・ADR-R2 の Spinner 例外）。
+ */
+const ANIMATION_REFS: Map<string, string[]> = (() => {
+  const refs = new Map<string, string[]>()
+  // vitest の cwd はパッケージルート（vitest.config.ts のある場所）。
+  // import.meta.url は jsdom 環境で file: にならないので使えない
+  for (const file of sourceFiles(join(process.cwd(), 'src'))) {
+    for (const m of readFileSync(file, 'utf8').matchAll(/animate-\[([a-zA-Z][a-zA-Z0-9-]*)/g)) {
+      const name = m[1] as string
+      refs.set(name, [...(refs.get(name) ?? []), basename(file)])
+    }
+  }
+  return refs
+})()
+
 const VARIANTS = [
   {
     name: 'raster.css',
@@ -202,6 +234,29 @@ describe.each(VARIANTS.map((v) => [v.name, v] as const))('生成 CSS: %s', (_nam
         expect(body).not.toMatch(/success|warning|danger/)
       }
     }
+  })
+
+  /**
+   * 参照と定義の突き合わせ。**参照だけでは何も起きない**のが厄介で、
+   * 定義漏れでも静止画としては正しいため、単体テストも視覚回帰も気づけない。
+   * 実際に `novi-fade-in` / `novi-indeterminate` が無定義のまま出荷されていた。
+   */
+  const definedKeyframes = (): Set<string> =>
+    new Set([...v.css.matchAll(/@keyframes\s+([\w-]+)/g)].map((m) => m[1] as string))
+
+  it('参照している animation 名がすべて @keyframes で定義されている', () => {
+    const defined = definedKeyframes()
+    // 抽出が壊れて0件になると、この検査は何も見ずに通り続ける
+    expect(ANIMATION_REFS.size, 'animate-[…] の参照が1件も取れていない').toBeGreaterThan(0)
+    const missing = [...ANIMATION_REFS]
+      .filter(([name]) => !defined.has(name))
+      .map(([name, files]) => `${name} ← ${files.join(', ')}`)
+    expect(missing, '参照されているのに @keyframes が無い').toEqual([])
+  })
+
+  it('定義した @keyframes がすべて参照されている（死んだ定義を残さない）', () => {
+    const unused = [...definedKeyframes()].filter((name) => !ANIMATION_REFS.has(name))
+    expect(unused, '@keyframes はあるが誰も参照していない').toEqual([])
   })
 
   it('セットに無い色名のセレクタが存在しない = 未知の名前は既定色に落ちる（FR-05）', () => {
