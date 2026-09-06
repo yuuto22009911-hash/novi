@@ -36,6 +36,15 @@ describe('Button: 描画', () => {
     expect(screen.getByRole('button', { name: '保存' })).toBeDefined()
   })
 
+  it('aria-label でアイコンだけのボタンに名前を付けられる', () => {
+    render(
+      <Button aria-label="複製">
+        <svg aria-hidden="true" />
+      </Button>,
+    )
+    expect(screen.getByRole('button', { name: '複製' })).toBeDefined()
+  })
+
   it('type は既定で button（フォーム内で誤って送信しないため）', () => {
     render(<Button>保存</Button>)
     expect(screen.getByRole('button').getAttribute('type')).toBe('button')

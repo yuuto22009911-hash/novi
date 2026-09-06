@@ -104,7 +104,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 
 ボタン。
 
-- Accessibility: Enter / Space で発火する。`onPress` はマウス・タッチ・ペン・キーボードを統一的に扱う。 `isLoading` 中の spinner は `aria-hidden`
+- Accessibility: Enter / Space で発火する。`onPress` はマウス・タッチ・ペン・キーボードを統一的に扱う。 `isLoading` 中の spinner は `aria-hidden`。文字を持たないアイコンだけのボタンには `aria-label` で名前を与える
 - Keyboard: Enter / Space → 押す
 - Slots (`data-slot`): `root`, `startContent`, `label`, `endContent`, `spinner` (required: `root`, `label`)
 - Docs: https://novi-42r.pages.dev/docs/components/button/
@@ -124,6 +124,7 @@ Generated from the slot contracts (version 0.5.0). Props are identical across
 | `isDisabled` | `boolean` |  | 無効化する。`disabled` ではないので注意（React Aria 準拠） |
 | `isLoading` | `boolean` |  | 読み込み中。spinner slot を描画し、操作を受け付けない |
 | `type` | `'button' \| 'submit' \| 'reset'` |  |  |
+| `aria-label` | `string` |  | アイコンだけで文字を持たないボタンの名前。文字があるボタンには不要 |
 | `onPress` | `() => void` |  | 押下時。`onClick` ではないので注意（タッチ・ペン・キーボードを統一的に扱う） |
 | `startContent` | `ReactNode` |  |  |
 | `endContent` | `ReactNode` |  |  |
@@ -523,6 +524,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 | `siblingCount` | `number` |  | 現在ページの両隣に出す数。既定は 1 |
 | `boundaryCount` | `number` |  | 先頭と末尾に必ず出す数。既定は 1 |
 | `isDisabled` | `boolean` |  |  |
+| `aria-label` | `string` |  | `nav` の名前。1 ページに複数置くときに区別する。既定は「ページ送り」 |
 | `classNames` | `ClassNames<typeof paginationSlots>` |  |  |
 
 ## Popover
@@ -777,6 +779,7 @@ IME 変換中の Enter は core の `useImeSafeKeys` により抑制される。
 
 | Prop | Type | Required | Notes |
 |---|---|---|---|
+| `aria-label` | `string` | yes | 表の名前。支援技術が「何の一覧か」を読むために必須 |
 | `size` | `NoviSize` |  |  |
 | `sortDescriptor` | `TableSortDescriptor` |  | 並べ替えの状態。制御したい場合に使う |
 | `onSortChange` | `(descriptor: TableSortDescriptor) => void` |  |  |

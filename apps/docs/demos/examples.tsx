@@ -824,9 +824,8 @@ const tooltip: Renderers = {
     const { Button, Tooltip } = useNoviTheme()
     return (
       <Tooltip content="複製">
-        <Button variant="ghost">
+        <Button variant="ghost" aria-label="複製">
           <CopyIcon />
-          <span className="sr-only">複製</span>
         </Button>
       </Tooltip>
     )

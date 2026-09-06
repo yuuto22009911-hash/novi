@@ -165,12 +165,13 @@ function extractProps(source, interfaceName) {
       continue
     }
 
-    const match = /^([a-zA-Z]+)(\?)?:\s*(.+?);?$/.exec(line)
+    // `'aria-label'?: string` のように引用符で囲む名前も props。囲みは外して持つ
+    const match = /^(?:'([a-zA-Z-]+)'|([a-zA-Z]+))(\?)?:\s*(.+?);?$/.exec(line)
     if (match) {
       props.push({
-        name: match[1],
-        required: match[2] === undefined,
-        type: match[3].replace(/;$/, '').trim(),
+        name: match[1] ?? match[2],
+        required: match[3] === undefined,
+        type: match[4].replace(/;$/, '').trim(),
         doc: doc.replace(/\s+/g, ' ').trim(),
       })
     }
