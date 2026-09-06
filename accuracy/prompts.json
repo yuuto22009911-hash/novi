@@ -135,6 +135,31 @@
       "id": "theme-flatlay-color",
       "components": ["Button"],
       "instruction": "重なりを作らないテーマを使い、確定ボタンを青焼き図面の青にしてください。"
+    },
+    {
+      "id": "number-field",
+      "components": ["NumberField"],
+      "instruction": "購入する個数を入力させてください。1以上10以下で、1ずつ増やしたり減らしたりできるボタンも付けてください。"
+    },
+    {
+      "id": "combo-box",
+      "components": ["ComboBox"],
+      "instruction": "担当者を、名前を打ち込んで候補を絞り込みながら一覧から1人選ばせてください。候補は佐藤・鈴木・高橋の3人で構いません。"
+    },
+    {
+      "id": "pagination",
+      "components": ["Pagination"],
+      "instruction": "全部で12ページある一覧の、ページを切り替える部品を作ってください。いま3ページ目にいる状態にしてください。"
+    },
+    {
+      "id": "table",
+      "components": ["Table"],
+      "instruction": "注文の一覧を、注文番号・顧客名・金額の3列で表にしてください。行は3件で構いません。"
+    },
+    {
+      "id": "date-picker",
+      "components": ["DatePicker"],
+      "instruction": "配送希望日を選ばせてください。今日より前の日は選べないようにしてください。"
     }
   ]
 }
