@@ -1,5 +1,20 @@
 # @novi-ui/raster
 
+## 0.8.0
+
+### Minor Changes
+
+- e8e0087: Button に `aria-label` を追加
+  
+  アイコンだけのボタンに名前を付ける手段が無く、`sr-only` の span を入れる
+  回避策しか無かった。契約に `aria-label` を足し、3 テーマとも根の button に渡す。
+
+### Patch Changes
+
+- Updated dependencies [e8e0087]
+- Updated dependencies [6100863]
+  - @novi-ui/core@0.6.0
+
 ## 0.7.0
 
 ### Minor Changes
