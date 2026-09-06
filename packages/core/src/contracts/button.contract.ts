@@ -18,7 +18,7 @@ export type ButtonRequiredSlot = (typeof buttonRequiredSlots)[number]
  * @keywords ボタン 押下 送信ボタン button
  *
  * @a11y Enter / Space で発火する。`onPress` はマウス・タッチ・ペン・キーボードを統一的に扱う。
- * `isLoading` 中の spinner は `aria-hidden`
+ * `isLoading` 中の spinner は `aria-hidden`。文字を持たないアイコンだけのボタンには `aria-label` で名前を与える
  *
  * @keyboard Enter / Space: 押す
  *
@@ -37,6 +37,8 @@ export interface ButtonProps extends NoviBaseProps {
   /** 読み込み中。spinner slot を描画し、操作を受け付けない */
   isLoading?: boolean
   type?: 'button' | 'submit' | 'reset'
+  /** アイコンだけで文字を持たないボタンの名前。文字があるボタンには不要 */
+  'aria-label'?: string
   /** 押下時。`onClick` ではないので注意（タッチ・ペン・キーボードを統一的に扱う） */
   onPress?: () => void
   startContent?: ReactNode

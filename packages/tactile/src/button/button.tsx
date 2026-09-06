@@ -30,12 +30,14 @@ export function Button({
   className,
   classNames,
   id,
+  'aria-label': ariaLabel,
 }: ButtonProps) {
   const s = buttonStyles({ variant, size, color, radius })
 
   return (
     <RACButton
       id={id}
+      aria-label={ariaLabel}
       type={type}
       // 読み込み中は押せないようにする。見た目だけ変えて押せる状態にしない
       isDisabled={isDisabled === true || isLoading === true}

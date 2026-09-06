@@ -752,11 +752,10 @@ export const DEMO_EXTRAS: Record<string, DemoExtras> = {
       {
         id: 'icon',
         title: 'アイコンボタンの名前',
-        note: 'アイコンだけのボタンは Tooltip で名前を見せ、読み上げ用に sr-only の文字も置く。Tooltip だけでは支援技術に名前が伝わらない。',
+        note: 'アイコンだけのボタンは Tooltip で名前を見せ、`aria-label` で同じ名前を支援技術にも渡す。Tooltip だけでは名前が伝わらない。',
         code: `<Tooltip content="複製">
-  <Button variant="ghost">
+  <Button variant="ghost" aria-label="複製">
     <CopyIcon />
-    <span className="sr-only">複製</span>
   </Button>
 </Tooltip>`,
       },
