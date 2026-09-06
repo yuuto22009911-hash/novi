@@ -1,4 +1,7 @@
-@import "tailwindcss";
+/* 自動走査を止めて、走査先を明示する（@source は下）。
+   自動だと AGENTS.md や Skill の文中にある禁止パターン例（`shadow-[var(--novi-shadow-*)]`）まで
+   クラス候補として拾い、生成 CSS が壊れて dev サーバーが全ページ 500 になる */
+@import "tailwindcss" source(none);
 
 /* テーマのトークンは scoped 版を読む。プレビュー領域の中だけに効かせるため。
    サイト UI までテーマに追従すると、切り替えるたび画面全体が変わって
@@ -8,8 +11,12 @@
 @import "@novi-ui/tactile/tactile.scoped.css";
 @import "@novi-ui/flatlay/flatlay.scoped.css";
 
-/* raster の dist を Tailwind の走査対象に加える。
-   これがないとテーマが出力するクラスの CSS が生成されない */
+/* 走査先。サイト自身のコードと、テーマが出力するクラスを持つ dist。
+   dist が無いとテーマのクラスの CSS が生成されない */
+@source "../app";
+@source "../components";
+@source "../demos";
+@source "../lib";
 @source "../../../packages/raster/dist";
 @source "../../../packages/tactile/dist";
 @source "../../../packages/flatlay/dist";
