@@ -34,7 +34,7 @@ TS 7.0 は Go 製ネイティブコンパイラで型チェックが約10倍速�
 そのため TypeScript を組み込んで使うツール（`react-docgen-typescript` 等）が動かない。
 
 本プロジェクトは **props 表・`llms.txt`・MCP 応答をすべて TS ソースから自動生成する**設計
-（[03-docs-site](./specs/03-docs-site/requirements.md) FR-05 / [04-ai-integration](./specs/04-ai-integration/requirements.md) FR-01）
+（[03-docs-site](../specs/03-docs-site/requirements.md) FR-05 / [04-ai-integration](../specs/04-ai-integration/requirements.md) FR-01）
 を採っており、この API が使えないと中核の「唯一の真実から生成する」構造が成立しない。
 
 20 コンポーネント規模のライブラリでは型チェック速度は律速ではないため、
@@ -118,7 +118,7 @@ export function Button({ variant = 'solid', size = 'md', ...props }: ButtonProps
 
 2. **API 命名は独自に作らず、React Aria / HeroUI / shadcn の慣習に寄せる**
    LLM は事前知識でコードを書くため、独自命名は生成精度を落とす。
-   詳細な対応表は [architecture.md](./architecture.md) の「API 命名規約」を参照。
+   詳細な対応表は [architecture.md](../architecture.md) の「API 命名規約」を参照。
 
 3. **`core` は CSS を1行も持たない**（`base.css` のリセット/レイヤ定義を除く）
    スタイルが core に漏れた瞬間、テーマが構造を変えられなくなる。

@@ -7,7 +7,7 @@
 | Reviewer | yuuto |
 | Last Updated | 2026-08-19 |
 | Architecture | [../../architecture.md](../../architecture.md) |
-| Steering | [../../steering.md](../../steering.md) |
+| Steering | [steering](../../steering/project.md) |
 
 > 本書中の MUST / MUST NOT / SHOULD / SHOULD NOT / MAY は RFC 2119 に従う。
 
@@ -168,7 +168,7 @@ core の slot 語彙が固まらないと、テーマ実装が全部書き直し
 
 ## Constraints
 - `react-aria-components` / `react` / `react-dom` は **peerDependencies**（多重ロード防止）
-- ランタイム依存の追加は **Ask first**（steering.md の境界定義）
+- ランタイム依存の追加は **Ask first**（steering の境界定義）
 - slot 語彙の変更は全テーマに波及するため **Ask first**、かつ `1.0` 以降は **major** 扱い
 - 個人開発のため、1コンポーネントの契約 = 1PR の粒度を保つ
 

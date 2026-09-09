@@ -10,6 +10,22 @@ packages/mcp      AI エージェント向け MCP サーバ。読み取り専用
 apps/docs         ドキュメントサイト（静的エクスポート）
 ```
 
+## 仕様書は `.claude/` にある
+
+実装に手を入れる前に読む。**要件（FR）と受け入れ基準（AC）はここが正本**で、
+実装から推測して書き足してはいけない。
+
+```
+.claude/steering/project.md   不変ルール。技術スタック・コード規約・境界。全 spec が参照する
+.claude/architecture.md       core × theme 分離設計、slot 契約、ADR
+.claude/specs/<NN-name>/      requirements.md（FR / AC）/ design.md / tasks.md
+.claude/STATUS.md             既知の落とし穴と対処の台帳
+.claude/README.md             上記の読む順ガイド
+```
+
+`packages/core` を触るなら `specs/01-core/`、テーマなら `02-theme-raster` /
+`05-theme-tactile` / `07-theme-flatlay`、MCP なら `04-ai-integration` が対応する。
+
 ## AI 向けの出力はすべて生成物
 
 props 表・`llms.txt`・MCP の応答は、**契約から生成した1つの中間表現（IR）だけ**を読む。
@@ -61,19 +77,19 @@ component-index.json  →  docs の props 表 / llms.txt / @novi-ui/mcp
 
 ## 落とし穴（すべて実際に踏んだ）
 
-| 症状 | 原因と対処 |
-|---|---|
-| 任意 slot を呼ぶと型エラー | slot 定義に型注釈を付けている。`satisfies` を使う |
-| `'use client'` が成果物に無い | import 先のディレクティブは引き上げられない。**エントリ自身**に書く |
-| `tv({ extend, base })` が効かない | slot ベースでは `base` は無視される。`slots` を使う |
-| 拡張したクラスが variant に負ける | `extend` は base に足される。呼び出し側の `classNames` を使う |
-| 2つの variant が同じ見た目 | `variant` を最後に宣言する。先に書くと `size` に負ける |
-| ダークで文字が見えない | 背景を設定する面は**文字色も設定する**。`surface-contrast.test.ts` が検出 |
-| 契約テストで必須 slot が全部欠落 | オーバーレイは portal に描画される。`baseElement` を見る |
-| 1コンポーネント import が重い | 1ファイルにバンドルすると tree-shaking が効かない。`unbundle: true` |
-| ビルドが Node で落ちる | `.node-version`（22.22.2）に合わせる。tsdown が `^22.18.0 \|\| >=24.11.0` を要求 |
-| 視覚回帰の基準を手元で撮った | **撮ってはいけない。** 判定は CI（Linux）で行うため環境が違う。Actions の「視覚回帰の基準を更新」を対象ブランチで実行する |
-| 手元で通るのに CI だけ落ちる | 生成物を読むタスクは turbo に依存を宣言する。手元は既にビルド済みなので気づけない（IR 生成が全テーマの dist を読む） |
+| 症状                              | 原因と対処                                                                                                                |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 任意 slot を呼ぶと型エラー        | slot 定義に型注釈を付けている。`satisfies` を使う                                                                         |
+| `'use client'` が成果物に無い     | import 先のディレクティブは引き上げられない。**エントリ自身**に書く                                                       |
+| `tv({ extend, base })` が効かない | slot ベースでは `base` は無視される。`slots` を使う                                                                       |
+| 拡張したクラスが variant に負ける | `extend` は base に足される。呼び出し側の `classNames` を使う                                                             |
+| 2つの variant が同じ見た目        | `variant` を最後に宣言する。先に書くと `size` に負ける                                                                    |
+| ダークで文字が見えない            | 背景を設定する面は**文字色も設定する**。`surface-contrast.test.ts` が検出                                                 |
+| 契約テストで必須 slot が全部欠落  | オーバーレイは portal に描画される。`baseElement` を見る                                                                  |
+| 1コンポーネント import が重い     | 1ファイルにバンドルすると tree-shaking が効かない。`unbundle: true`                                                       |
+| ビルドが Node で落ちる            | `.node-version`（22.22.2）に合わせる。tsdown が `^22.18.0 \|\| >=24.11.0` を要求                                          |
+| 視覚回帰の基準を手元で撮った      | **撮ってはいけない。** 判定は CI（Linux）で行うため環境が違う。Actions の「視覚回帰の基準を更新」を対象ブランチで実行する |
+| 手元で通るのに CI だけ落ちる      | 生成物を読むタスクは turbo に依存を宣言する。手元は既にビルド済みなので気づけない（IR 生成が全テーマの dist を読む）      |
 
 ## 検証の原則
 

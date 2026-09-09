@@ -48,7 +48,7 @@ graph TD
 | `@novi-ui/core/testing` | 契約テストスイート | **しない**（dev 専用） |
 | `@novi-ui/core/base.css` | reset / `@layer` / トークン | する（1回だけ import） |
 
-> steering.md の「公開エントリは1パッケージ1つ」ルールの**明示的な例外**。
+> steering の「公開エントリは1パッケージ1つ」ルールの**明示的な例外**。
 > `testing` は devDependency 側でしか使われず、アプリケーションコードには一切現れないため、
 > AI が誤用する経路がない。`base.css` も同様に import 文が1行あるだけで、コンポーネント API ではない。
 

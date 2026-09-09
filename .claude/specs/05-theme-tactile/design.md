@@ -330,7 +330,7 @@ Raster の実装で判明した「テーマを増やすときに触る場所」�
 | MCP | `list_components` が「実装しているテーマ」に tactile を返す（IR 由来なので IR 登録で自動反映されることを**確認**する） | AC-04-1（04 spec） |
 | accuracy | プロンプト22件をテーマ指定ありで実行し、tactile 指定時に tactile の import が出ることを確認 | ADR-A5 |
 | 視覚回帰 / mobile / theme-switching e2e | tactile 分のプロジェクト追加。**320px と 375px の2幅**で検査 | STATUS #24, #25 |
-| リリース設定 | `package.json` に `repository` 宣言（**無いと publish の瞬間に 422**・STATUS #19）。初回は手動 publish → Trusted Publisher 設定（STATUS #20） | steering.md |
+| リリース設定 | `package.json` に `repository` 宣言（**無いと publish の瞬間に 422**・STATUS #19）。初回は手動 publish → Trusted Publisher 設定（STATUS #20） | steering |
 
 ---
 

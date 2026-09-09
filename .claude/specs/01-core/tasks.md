@@ -15,9 +15,9 @@
 
 ## Phase 1: モノレポ基盤
 
-- [x] **T-01**: pnpm workspace + Turborepo 初期化。`pnpm-workspace.yaml` / `turbo.json` / ルート `package.json` (1.5h) → [steering.md](../../steering.md) リポジトリ構成, NFR:ビルド時間
+- [x] **T-01**: pnpm workspace + Turborepo 初期化。`pnpm-workspace.yaml` / `turbo.json` / ルート `package.json` (1.5h) → [steering](../../steering/project.md) リポジトリ構成, NFR:ビルド時間
 - [x] **T-02**: TypeScript 基盤。`tsconfig.base.json`（strict + `noUncheckedIndexedAccess`）と各パッケージの継承設定 (1h) → NFR:型
-- [x] **T-03**: Biome 設定。lint / format ルールを確定 (1h) → [steering.md](../../steering.md) Code Style
+- [x] **T-03**: Biome 設定。lint / format ルールを確定 (1h) → [steering](../../steering/project.md) Code Style
 - [x] **T-04**: `packages/core` 雛形。`package.json`（`exports` に `.` / `./testing` / `./base.css`、`sideEffects: false`、peerDeps 設定）+ `tsdown.config.ts` (1.5h) → NFR:Tree-shaking, ADR-C1
 - [x] **T-05**: CI ワークフロー。typecheck / test / lint / build を PR で回す (1.5h) → NFR:型, NFR:カバレッジ（CI がこれらの強制手段になる）
 
@@ -114,12 +114,12 @@
 > **T-35 は docs アプリ（[03-docs-site](../03-docs-site/tasks.md) T-01）が出来てから実施する。**
 > 静的検査（T-30c: メインエントリに react の import が無いこと）は実装・CI 済みで、
 > RSC が壊れる原因はこれで潰してあるが、実アプリでの確認は別途行う。
-- [ ] **T-35b**: 初回 publish。`npm publish --access public` で `@novi-ui/core` を手動公開する (1h) → [steering.md](../../steering.md) 公開（publish）
+- [ ] **T-35b**: 初回 publish。`npm publish --access public` で `@novi-ui/core` を手動公開する (1h) → [steering](../../steering/project.md) 公開（publish）
 
 > **T-35b / T-35c は人の判断と操作が必要。**
 > publish は取り消しの効かない外向きの公開行為なので、実行前に必ず本人が判断する。
 > T-35c の Trusted Publisher 設定は npmjs.com の Web フォーム専用で、CLI に経路がない。
-- [ ] **T-35c**: Trusted Publishing 設定。npmjs.com で Trusted Publisher を追加し、Changesets + GitHub Actions から OIDC 公開できるようにする。`id-token: write` 付与と `NODE_AUTH_TOKEN` 未設定を確認 (2h) → [steering.md](../../steering.md) 公開（publish）
+- [ ] **T-35c**: Trusted Publishing 設定。npmjs.com で Trusted Publisher を追加し、Changesets + GitHub Actions から OIDC 公開できるようにする。`id-token: write` 付与と `NODE_AUTH_TOKEN` 未設定を確認 (2h) → [steering](../../steering/project.md) 公開（publish）
 - [ ] **T-36**: `@novi-ui/raster` 側から契約テストを1件流し、パッケージ間連携が成立することを確認 (1h) → FR-05
 
 **合計見積**: 約 55h

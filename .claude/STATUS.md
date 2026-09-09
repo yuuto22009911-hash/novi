@@ -120,7 +120,7 @@ pnpm changeset   # 変更を記録してコミット・push するだけ
 | 8 | **`variant` は最後に宣言**。先に書くと `size` のクラスに負けて2つの variant が同一になる | raster |
 | 9 | **Node は `.node-version` に集約**。tsdown が `^22.18.0 \|\| >=24.11.0` を要求。`engines` を実態に合わせないと古い Node を許してしまう | ADR-D5 |
 | 10 | **docs は turbo 経由でビルド**。IR 生成がビルド済み core を読むため依存順序が要る | ADR-D6 |
-| 11 | **`pnpm publish` を使う**（`npm publish` / `changeset publish` ではなく）。`workspace:*` が置換されず壊れたパッケージが公開される | steering.md |
+| 11 | **`pnpm publish` を使う**（`npm publish` / `changeset publish` ではなく）。`workspace:*` が置換されず壊れたパッケージが公開される | steering |
 | 12 | **CI で `npm install -g npm@latest` をしない**。npm 自身が壊れる。pnpm 11 は OIDC にネイティブ対応 | release.yml |
 | 19 | **provenance は `repository` の宣言を要求する**。無いと publish の瞬間に 422 で落ちる（`repository.url is ""`）。ビルドもテストも通るため publish するまで気づけない。`check-dist-rules.mjs` で検査する | check:dist |
 | 20 | **OIDC の Trusted Publishing は新規パッケージ名には使えない**。設定にパッケージの存在が要るため、token 交換が 404 になる。名前の初回だけ手で公開し、その後 Trusted Publisher を設定する | T-33 |

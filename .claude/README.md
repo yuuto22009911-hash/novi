@@ -33,7 +33,7 @@ React Aria Components を土台にした、**複数の美学（テーマ）を�
 
 | # | ファイル | 内容 | 誰が読むか |
 |---|---|---|---|
-| 1 | [steering.md](./steering.md) | 全ライブラリ共通の不変ルール。技術スタック・コード規約・コマンド・Git・境界 | 実装前に全員が必ず |
+| 1 | [steering](./steering/project.md) | 全ライブラリ共通の不変ルール。技術スタック・コード規約・コマンド・Git・境界 | 実装前に全員が必ず |
 | 2 | [architecture.md](./architecture.md) | **最重要**。core × theme 分離設計、slot 契約、抽象化の段階設計、API 命名規約 | 実装前に全員が必ず |
 | 3 | [specs/01-core/](./specs/01-core/) | `@novi-ui/core` の要件・設計・タスク | core を触る人 |
 | 4 | [specs/02-theme-raster/](./specs/02-theme-raster/) | `@novi-ui/raster`（1本目・20コンポーネント）の要件・設計・タスク | テーマを作る人 |
@@ -124,7 +124,7 @@ Status は `Draft → In Review → Approved → Implemented` で運用します
 
 - **npm scope は `@novi-ui` で確定**（2026-08-19 取得済み / owner: `kojimanpm__`）。
   `@novi` は既に他者が占有しているため昇格の余地はない。設計書中のパッケージ名の変更は不要
-- **公開は Trusted Publishing（OIDC）で行う**。詳細は [steering.md](./steering.md) の「公開（publish）」を参照。
+- **公開は Trusted Publishing（OIDC）で行う**。詳細は [steering](./steering/project.md) の「公開（publish）」を参照。
   ただし**各パッケージの初回バージョンだけは手動 publish が必要**（Trusted Publisher は公開後にしか設定できない）
 - グローバル CLAUDE.md の「Webデザイン作成」セクション（`/design-init`・`ui-designer`・OKLCH テンプレート）は
   **本プロジェクトでは適用しない**

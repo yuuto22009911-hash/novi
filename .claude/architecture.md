@@ -4,7 +4,7 @@
 |------|-----|
 | Status | **Approved** |
 | Last Updated | 2026-08-19 |
-| Steering | [./steering.md](./steering.md) |
+| Steering | [steering](./steering/project.md) |
 
 > 本書中の MUST / MUST NOT / SHOULD / SHOULD NOT / MAY は RFC 2119 に従う。
 
@@ -353,7 +353,7 @@ export function Modal({ size = 'md', classNames, children, ...props }: ModalProp
 | Toast | **region**, **root**, icon, **content**, title, description, closeButton, action |
 
 > **合計 20 コンポーネント**（Checkbox/CheckboxGroup, Radio/RadioGroup, Progress/Spinner はそれぞれ1コンポーネント扱い）。
-> slot 語彙の追加・変更は **Ask first**（steering.md の境界定義）。全テーマに波及するため。
+> slot 語彙の追加・変更は **Ask first**（steering の境界定義）。全テーマに波及するため。
 
 ---
 
@@ -755,7 +755,7 @@ const wide = tv({ extend: switchStyles, slots: { track: 'w-14' } })
 | `import` 元を間違える | 公開エントリを 1パッケージ 1つに限定 | 全パッケージ |
 | 構造を推測できず独自の div を挟む | 全要素に `data-slot` を出力し、規則を1行で説明可能にする | theme |
 
-さらに、**全コンポーネントの JSDoc に使用例を1つ書く**（steering.md のコード規約）。
+さらに、**全コンポーネントの JSDoc に使用例を1つ書く**（steering のコード規約）。
 IDE 経由で LLM が読むため、これが実質的に最も効く AI 向けドキュメントになる。
 
 ---
@@ -767,7 +767,7 @@ IDE 経由で LLM が読むため、これが実質的に最も効く AI 向け�
 | slot 語彙が2本目のテーマで足りないと判明する | 高 | 中 | §5 の書き下ろし検証を、2本目に着手する前に**全20コンポーネント分**行う。語彙追加は minor では通さず major 扱い |
 | RAC Toast の `UNSTABLE_` が破壊的に変わる | 中 | 中 | ADR-07 で core 1ファイルに封じ込め済み |
 | RAC の verbose さでテーマ実装が想定より重くなる | 中 | 中 | MVP を 20 に絞る。DataTable / DatePicker 等は Non-Goal |
-| v0.1 で抽象化を我慢できず、使われないファクトリを作る | 高 | **高** | §7 の段階設計を steering.md の境界に明記済み。PR レビューで機械的に弾く |
+| v0.1 で抽象化を我慢できず、使われないファクトリを作る | 高 | **高** | §7 の段階設計を steering の境界に明記済み。PR レビューで機械的に弾く |
 | テーマ差が結局「色と角丸」に収束する | 致命 | 中 | 2本目の着手条件として「Modal・Select・Tabs の3つで DOM 構造が実際に違うこと」を必須にする |
 | 個人の稼働が続かず1本目が未完で止まる | 高 | 中 | 1コンポーネント = 1PR で常にリリース可能な状態を保つ。20個揃わなくても公開できる形にする |
 

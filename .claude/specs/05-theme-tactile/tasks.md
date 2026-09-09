@@ -129,7 +129,7 @@
 
 ## Phase 9: リリースと v0.2 の判断
 
-- [x] **T-47**: 0.1.0 公開済み。Trusted Publisher 設定済み（raster と同一: repo `yuuto22009911-hash/novi` / file `release.yml` / permissions `publish`）。Release ワークフローの成功も確認し、自動公開経路を検証済み（Trusted Publisher は既存パッケージにしか設定できない・STATUS #20）→ npmjs で Trusted Publisher 設定 → 以降の自動公開経路を1回検証 (2h) → steering.md 公開手順
+- [x] **T-47**: 0.1.0 公開済み。Trusted Publisher 設定済み（raster と同一: repo `yuuto22009911-hash/novi` / file `release.yml` / permissions `publish`）。Release ワークフローの成功も確認し、自動公開経路を検証済み（Trusted Publisher は既存パッケージにしか設定できない・STATUS #20）→ npmjs で Trusted Publisher 設定 → 以降の自動公開経路を1回検証 (2h) → steering 公開手順
 - [x] **T-48**: **重複の棚卸し（G7・v0.2 の判断）**。Raster / Tactile の `.tsx` を突き合わせ、architecture.md §7 の3基準（バイト単位同一 / スタイル非含有 / 構造の自由を奪わない）で core への引き上げ候補を列挙。**引き上げ自体は Ask first**（slot 契約と同格の変更として扱う）。結果を architecture.md に ADR として追記 (3h) → G7
 - [x] **T-49**: **contract 妥当性の最終レビュー**（Raster T-41 に相当）。2本目でも語彙の追加・削除・差し戻しが 0 だったかを確認し、3本目への申し送りを書く。0 でなければ FR-16 の記録と突き合わせる (2h) → G2, FR-16
 - [ ] **T-50**: 実機確認（人の操作が必要）。iOS Safari / Android Chrome でタップ・シート・safe-area・IME (2h) → NFR:対応環境
