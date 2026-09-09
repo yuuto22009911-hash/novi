@@ -2,7 +2,7 @@
 
 | 項目 | 値 |
 |------|-----|
-| Status | **Draft** |
+| Status | **Approved**（2026-09-09: 実装 37/55 進行中のため Draft から実態に合わせて更新） |
 | Author | yuuto |
 | Reviewer | yuuto |
 | Last Updated | 2026-08-19 |
